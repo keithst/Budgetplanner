@@ -14,6 +14,19 @@ namespace Budgetplanner.Controllers
     {
         ApplicationDbContext db = new ApplicationDbContext();
 
+        public class apiparm
+        {
+            public int id { get; set; }
+            public string desc { get; set; }
+            public decimal total { get; set; }
+        }
+
+        public class sdelete
+        {
+            public int id { get; set; }
+            public bool isDeleted { get; set; }
+        }
+
         [Route("GetHouse")]
         public async Task<List<House>> GetHouse (int id)
         {
@@ -51,6 +64,12 @@ namespace Budgetplanner.Controllers
            return await db.GetUser(id);
         }
 
+        [Route("GetUsersInHouse")]
+        public async Task<List<HouseUser>> GetUsersInHouse(int id)
+        {
+           return await db.GetUsersInHouse(id);
+        }
+
         [Route("AddHouse")]
         public async Task<int> AddHouse (string name, string user)
         {
@@ -61,6 +80,34 @@ namespace Budgetplanner.Controllers
         public async Task<int> AddUserToHouse (int id, string user)
         {
             return await db.AddUserToHouse(id, true, user);
+        }
+
+        [Route("AddAccount")]
+        [HttpPost]
+        public async Task<int> AddAccount (apiparm input)
+        {
+            return await db.AddAccount(input.total, input.desc, input.id);
+        }
+
+        [Route("SDeleteAccount")]
+        [HttpPost]
+        public async Task<int> SDeleteAccount (sdelete input)
+        {
+            return await db.SDeleteAccount(input.id, input.isDeleted);
+        }
+
+        [Route("UpdateAccount")]
+        [HttpPost]
+        public async Task<int> UpdateAccount (apiparm input)
+        {
+            return await db.UpdateAccount(input.id, input.desc);
+        }
+
+        [Route("UpdateAccountTotal")]
+        [HttpPost]
+        public async Task<int> UpdateAccountTotal (apiparm input)
+        {
+            return await db.UpdateAccountTotal(input.id, input.total);
         }
     }
 }

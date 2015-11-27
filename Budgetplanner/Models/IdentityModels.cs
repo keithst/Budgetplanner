@@ -7,6 +7,8 @@ using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Collections.Generic;
 using System.Web.Http;
+using System.Data;
+using System;
 
 namespace Budgetplanner.Models
 {
@@ -99,6 +101,14 @@ namespace Budgetplanner.Models
             return await this.Database.SqlQuery<ApplicationUser>("GetUser @id", idParm).ToListAsync();
         }
 
+        // Get user from house ids
+        public async Task<List<HouseUser>> GetUsersInHouse(int id)
+        {
+            var idParm = new SqlParameter("@id", id);
+
+            return await this.Database.SqlQuery<HouseUser>("GetUsersInHouse @id", idParm).ToListAsync();
+        }
+
         // Add a household
         public async Task<int> AddHouse(string name, string user)
         {
@@ -125,8 +135,8 @@ namespace Budgetplanner.Models
             var descriptionParm = new SqlParameter("@description", description);
             var idParm = new SqlParameter("@id", id);
 
-            return await this.Database.ExecuteSqlCommandAsync("AddAccount @total, @description, @id",
-                totalParm, descriptionParm, idParm);
+            return await this.Database.ExecuteSqlCommandAsync("AddAccount @id, @total, @description",
+                idParm, totalParm, descriptionParm);
         }
 
         // Delete a household
@@ -135,6 +145,32 @@ namespace Budgetplanner.Models
             var idParm = new SqlParameter("@id", id);
 
             return await this.Database.ExecuteSqlCommandAsync("DeleteHouse @id", idParm);
+        }
+
+        // soft delete an account
+        public async Task<int> SDeleteAccount(int id, bool isDeleted)
+        {
+            var idParm = new SqlParameter("@id", id);
+            var isDeletedParm = new SqlParameter("@isDeleted", isDeleted);
+
+            return await this.Database.ExecuteSqlCommandAsync("SDeleteAccount @id, @isDeleted", idParm, isDeletedParm);
+        }
+
+        // update account name
+        public async Task<int> UpdateAccount(int id, string desc)
+        {
+            var descParm = new SqlParameter("@desc", desc);
+            var idParm = new SqlParameter("@id", id);
+
+            return await this.Database.ExecuteSqlCommandAsync("UpdateAccount @id, @desc", idParm, descParm);
+        }
+        // update account value
+        public async Task<int> UpdateAccountTotal(int id, decimal total)
+        {
+            var idParm = new SqlParameter("@id", id);
+            var totalParm = new SqlParameter("@total", total);
+
+            return await this.Database.ExecuteSqlCommandAsync("UpdateAccountTotal @id, @total", idParm, totalParm);
         }
     }
 }

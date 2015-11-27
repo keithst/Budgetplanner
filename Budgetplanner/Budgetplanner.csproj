@@ -240,6 +240,7 @@
     <Compile Include="Models\Budget.cs" />
     <Compile Include="Models\House.cs" />
     <Compile Include="Models\Household.cs" />
+    <Compile Include="Models\HouseUser.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Transaction.cs" />
     <Compile Include="Models\TransactionType.cs" />
@@ -315,6 +316,7 @@
     <Folder Include="Views\BankAccount\" />
     <Folder Include="Views\Budget\" />
     <Folder Include="Views\Household\" />
+    <Folder Include="Views\HouseUser\" />
     <Folder Include="Views\House\" />
     <Folder Include="Views\TransactionType\" />
     <Folder Include="Views\Transaction\" />
