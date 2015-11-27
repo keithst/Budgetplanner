@@ -15,7 +15,7 @@ namespace Budgetplanner.Controllers
         ApplicationDbContext db = new ApplicationDbContext();
 
         [Route("GetHouse")]
-        public async Task<List<Household>> GetHouse (int id)
+        public async Task<List<House>> GetHouse (int id)
         {
             return await db.GetHouse(id);
         }

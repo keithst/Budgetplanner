@@ -48,11 +48,11 @@ namespace Budgetplanner.Models
         public DbSet<TransactionType> TransType { get; set; }
 
         // Get household by id if id is null return all
-        public async Task<List<Household>> GetHouse(int id)
+        public async Task<List<House>> GetHouse(int id)
         {
             var idParm = new SqlParameter("@id", id);
 
-            return await this.Database.SqlQuery<Household>("GetHouse @id", idParm).ToListAsync();
+            return await this.Database.SqlQuery<House>("GetHouse @id", idParm).ToListAsync();
         }
 
         // Get bank accounts from household id
