@@ -17,7 +17,7 @@ namespace Budgetplanner.Models
         public string lname { get; set; }
         public bool isHoH { get; set; }
         public bool isInvited { get; set; }
-        public int HouseId { get; set; }
+        public int? HouseId { get; set; }
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager, string authenticationType)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
@@ -87,32 +87,41 @@ namespace Budgetplanner.Models
             return await this.Database.SqlQuery<Budget>("GetBudget @id", idParm).ToListAsync();
         }
 
+        // Get user
+        public async Task<List<ApplicationUser>> GetUser(string id)
+        {
+            var idParm = new SqlParameter("@id", id);
+
+            return await this.Database.SqlQuery<ApplicationUser>("GetBudget @id", idParm).ToListAsync();
+        }
+
         // Add a household
-        public async Task<int> AddHouse(string name)
+        public async Task<int> AddHouse(string name, string user)
         {
             var nameParm = new SqlParameter("@name", name);
+            var userParm = new SqlParameter("@user", user);
 
-            return await this.Database.ExecuteSqlCommandAsync("AddHouse @name", nameParm);
+            return await this.Database.ExecuteSqlCommandAsync("AddHouse @name, @user", nameParm, userParm);
         }
 
         // Add user to house
-        public async Task<int> AddUserToHouse(int id, string user)
+        public async Task<int> AddUserToHouse(int id, bool isInvited, string user)
         {
             var idParm = new SqlParameter("@id", id);
+            var isInvitedParm = new SqlParameter("@isInvited", isInvited);
             var userParm = new SqlParameter("@user", user);
 
-            return await this.Database.ExecuteSqlCommandAsync("AddUserToHouse @id, @user", idParm, userParm);
+            return await this.Database.ExecuteSqlCommandAsync("AddUserToHouse @id, @isInvited, @isHoH, @user", idParm, isInvitedParm, userParm);
         }
 
         // Add bank account to household
-        public async Task<int> AddBankToHouse(string account, decimal total, string description, int id)
+        public async Task<int> AddAccount(decimal total, string description, int id)
         {
-            var accountParm = new SqlParameter("@account", account);
             var totalParm = new SqlParameter("@total", total);
             var descriptionParm = new SqlParameter("@description", description);
             var idParm = new SqlParameter("@id", id);
 
-            return await this.Database.ExecuteSqlCommandAsync("AddBankToHouse @account, @total, @description, @id", accountParm,
+            return await this.Database.ExecuteSqlCommandAsync("AddAccount @total, @description, @id",
                 totalParm, descriptionParm, idParm);
         }
 

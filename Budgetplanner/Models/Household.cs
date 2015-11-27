@@ -15,6 +15,7 @@ namespace Budgetplanner.Models
         }
         public int id { get; set; }
         public string name { get; set; }
+        public bool isDeleted { get; set; }
 
         public virtual ICollection<BankAccount> Account { get; set; }
         public virtual ICollection<ApplicationUser> User { get; set; }

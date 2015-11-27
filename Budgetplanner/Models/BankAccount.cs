@@ -13,9 +13,9 @@ namespace Budgetplanner.Models
             this.Trans = new HashSet<Transaction>();
         }
         public int id { get; set; }
-        public string AccountNum { get; set; }
+        public bool isDeleted { get; set; }
         public decimal Total { get; set; }
-        public string Description { get; set; }
+        public string Description_ba { get; set; }
 
         public virtual ICollection<Transaction> Trans { get; set; }
     }

@@ -14,10 +14,10 @@ namespace Budgetplanner.Models
         public int TypeId { get; set; }
         public decimal Amount { get; set; }
         public decimal ReconcileAmount { get; set; }
-        public string Description { get; set; }
-        public int year { get; set; }
-        public int month { get; set; }
-        public int day { get; set; }
+        public string Description_t { get; set; }
+        public int year_t { get; set; }
+        public int month_t { get; set; }
+        public int day_t { get; set; }
 
         public virtual TransactionType Type { get; set; }
         public virtual ApplicationUser User { get; set; }

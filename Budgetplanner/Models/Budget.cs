@@ -12,8 +12,8 @@ namespace Budgetplanner.Models
         public int TypeId { get; set; }
         public int HouseId { get; set; }
         public decimal Amount { get; set; }
-        public int year { get; set; }
-        public int month { get; set; }
+        public int year_b { get; set; }
+        public int month_b { get; set; }
 
         public virtual Household House { get; set; }
         public virtual TransactionType Type { get; set; }
