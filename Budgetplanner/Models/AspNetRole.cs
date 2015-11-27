@@ -6,27 +6,21 @@ namespace Budgetplanner.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class BankAccount
+    public partial class AspNetRole
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public BankAccount()
+        public AspNetRole()
         {
-            Transactions = new HashSet<Transaction>();
+            AspNetUsers = new HashSet<AspNetUser>();
         }
 
-        public int id { get; set; }
+        public string Id { get; set; }
 
-        public decimal Total { get; set; }
-
-        public int? Household_id { get; set; }
-
-        public string Description_ba { get; set; }
-
-        public bool isDeleted { get; set; }
-
-        public virtual Household Household { get; set; }
+        [Required]
+        [StringLength(256)]
+        public string Name { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Transaction> Transactions { get; set; }
+        public virtual ICollection<AspNetUser> AspNetUsers { get; set; }
     }
 }

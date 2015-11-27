@@ -1,23 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-
 namespace Budgetplanner.Models
 {
-    public class Household
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
+
+    public partial class Household
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Household()
         {
-            this.Account = new HashSet<BankAccount>();
-            this.User = new HashSet<ApplicationUser>();
+            AspNetUsers = new HashSet<AspNetUser>();
+            BankAccounts = new HashSet<BankAccount>();
+            Budgets = new HashSet<Budget>();
         }
+
         public int id { get; set; }
+
         public string name { get; set; }
+
         public bool isDeleted { get; set; }
 
-        public virtual ICollection<BankAccount> Account { get; set; }
-        public virtual ICollection<ApplicationUser> User { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AspNetUser> AspNetUsers { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BankAccount> BankAccounts { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Budget> Budgets { get; set; }
     }
 }
