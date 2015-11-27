@@ -21,7 +21,7 @@ namespace Budgetplanner.Controllers
         }
 
         [Route("GetAccount")]
-        public async Task<List<BankAccount>> GetAccount (int id)
+        public async Task<List<Account>> GetAccount (int id)
         {
             return await db.GetAccount(id);
         }
@@ -33,15 +33,22 @@ namespace Budgetplanner.Controllers
         }
 
         [Route("GetTransType")]
+        public async Task<List<TransactionType>> GetTransType()
+        {
+            return await db.GetTransType(null);
+        }
+
+
+        [Route("GetTransType")]
         public async Task<List<TransactionType>> GetTransType (int id)
         {
             return await db.GetTransType(id);
         }
 
         [Route("GetUser")]
-        public async Task<List<ApplicationUser>> GetUser (string id)
+        public async Task<List<ApplicationUser>> GetUser(string id)
         {
-            return await db.GetUser(id);
+           return await db.GetUser(id);
         }
 
         [Route("AddHouse")]

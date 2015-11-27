@@ -10,8 +10,8 @@ namespace Budgetplanner.Models
     {
         public int id { get; set; }
         public decimal Total { get; set; }
-        public int House_id { get; set; }
-        public bool isDeleted { get; set; }
+        public int Household_id { get; set; }
         public string Description_ba { get; set; }
+        public bool isDeleted { get; set; }
     }
 }

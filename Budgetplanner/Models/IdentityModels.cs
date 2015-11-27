@@ -47,7 +47,7 @@ namespace Budgetplanner.Models
         public DbSet<Transaction> Trans { get; set; }
         public DbSet<TransactionType> TransType { get; set; }
 
-        // Get household by id if id is null return all
+        // Get household by id
         public async Task<List<House>> GetHouse(int id)
         {
             var idParm = new SqlParameter("@id", id);
@@ -56,11 +56,11 @@ namespace Budgetplanner.Models
         }
 
         // Get bank accounts from household id
-        public async Task<List<BankAccount>> GetAccount(int id)
+        public async Task<List<Account>> GetAccount(int id)
         {
             var idParm = new SqlParameter("@id", id);
 
-            return await this.Database.SqlQuery<BankAccount>("GetAccount @id", idParm).ToListAsync();
+            return await this.Database.SqlQuery<Account>("GetAccount @id", idParm).ToListAsync();
         }
 
         // Get transaction from bank account id
@@ -72,11 +72,15 @@ namespace Budgetplanner.Models
         }
 
         // Get transaction type from transaction, null requests all transaction types
-        public async Task<List<TransactionType>> GetTransType(int id)
+        public async Task<List<TransactionType>> GetTransType(int? id)
         {
-            var idParm = new SqlParameter("@id", id);
+            if (id != null)
+            {
+                var idParm = new SqlParameter("@id", id);
+                return await this.Database.SqlQuery<TransactionType>("GetTransType @id", idParm).ToListAsync();
+            }
+            return await this.Database.SqlQuery<TransactionType>("GetTransType").ToListAsync();
 
-            return await this.Database.SqlQuery<TransactionType>("GetTransType @id", idParm).ToListAsync();
         }
 
         // Get budget from household id
@@ -92,7 +96,7 @@ namespace Budgetplanner.Models
         {
             var idParm = new SqlParameter("@id", id);
 
-            return await this.Database.SqlQuery<ApplicationUser>("GetBudget @id", idParm).ToListAsync();
+            return await this.Database.SqlQuery<ApplicationUser>("GetUser @id", idParm).ToListAsync();
         }
 
         // Add a household
