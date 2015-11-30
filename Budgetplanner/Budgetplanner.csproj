@@ -243,6 +243,7 @@
     <Compile Include="Models\Household.cs" />
     <Compile Include="Models\HouseUser.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Trans.cs" />
     <Compile Include="Models\Transaction.cs" />
     <Compile Include="Models\TransactionType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -322,6 +323,7 @@
     <Folder Include="Views\House\" />
     <Folder Include="Views\TransactionType\" />
     <Folder Include="Views\Transaction\" />
+    <Folder Include="Views\Trans\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

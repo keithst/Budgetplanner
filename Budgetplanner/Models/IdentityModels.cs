@@ -117,6 +117,14 @@ namespace Budgetplanner.Models
             return await this.Database.SqlQuery<Budgeting>("GetBudgetForHouse @id", idParm).ToListAsync();
         }
 
+        //Get transaction based on type
+        public async Task<List<Trans>> GetTransFromType(int type)
+        {
+            var typeParm = new SqlParameter("@type", type);
+
+            return await this.Database.SqlQuery<Trans>("GetTransFromType @type", typeParm).ToListAsync();
+        }
+
         // Add a household
         public async Task<int> AddHouse(string name, string user)
         {
@@ -150,6 +158,24 @@ namespace Budgetplanner.Models
                 amtParm, yearParm, monthParm);
         }
 
+        // Add transaction
+        public async Task<int> AddTrans(string id, int type, decimal amount, decimal ramount, int accountid, string desc, int year, int month,
+            int day)
+        {
+            var idParm = new SqlParameter("@id", id);
+            var typeParm = new SqlParameter("@type", type);
+            var amountParm = new SqlParameter("@amt", amount);
+            var ramountParm = new SqlParameter("@recon", ramount);
+            var accountidParm = new SqlParameter("@accountid", accountid);
+            var descParm = new SqlParameter("@desc", desc);
+            var yearParm = new SqlParameter("@year", year);
+            var monthParm = new SqlParameter("@month", month);
+            var dayParm = new SqlParameter("@day", day);
+
+            return await this.Database.ExecuteSqlCommandAsync("AddTrans @id, @type, @amt, @recon, @accountid, @desc, @year, @month, @day", idParm, typeParm,
+                amountParm, ramountParm, accountidParm, descParm, yearParm, monthParm, dayParm);
+        }
+
         // Delete a household
         public async Task<int> DeleteHouse(int id, string user)
         {
@@ -157,6 +183,14 @@ namespace Budgetplanner.Models
             var userParm = new SqlParameter("@user", user);
 
             return await this.Database.ExecuteSqlCommandAsync("DeleteHouse @id, @user", idParm, userParm);
+        }
+
+        // Delete budget
+        public async Task<int> DeleteBudget(int id)
+        {
+            var idParm = new SqlParameter("@id", id);
+
+            return await this.Database.ExecuteSqlCommandAsync("DeleteBudget @id", idParm);
         }
 
         // soft delete an account

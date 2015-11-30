@@ -43,6 +43,24 @@ namespace Budgetplanner.Controllers
             public int month { get; set; }
         }
 
+        public class transadd
+        {
+            public string id { get; set; }
+            public int type { get; set; }
+            public decimal amount { get; set; }
+            public decimal ramount { get; set; }
+            public int accountid { get; set; }
+            public string desc { get; set; }
+            public int year { get; set; }
+            public int month { get; set; }
+            public int day { get; set; }
+        }
+
+        public class idin
+        {
+            public int id { get; set; }
+        }
+
         [Route("GetHouse")]
         public async Task<List<House>> GetHouse (int id)
         {
@@ -92,6 +110,12 @@ namespace Budgetplanner.Controllers
             return await db.GetBudgetForHouse(id);
         }
 
+        [Route("GetTransFromType")]
+        public async Task<List<Trans>> GetTransFromType(int type)
+        {
+            return await db.GetTransFromType(type);
+        }
+
         [Route("AddHouse")]
         public async Task<int> AddHouse (string name, string user)
         {
@@ -112,11 +136,25 @@ namespace Budgetplanner.Controllers
             return await db.AddBudget(input.type, input.house, input.amount, input.year, input.month);
         }
 
+        [Route("AddTrans")]
+        [HttpPost]
+        public async Task<int> AddTrans (transadd input)
+        {
+            return await db.AddTrans(input.id, input.type, input.amount, input.ramount, input.accountid, input.desc, input.year, input.month, input.day);
+        }
+
         [Route("DeleteHouse")]
         [HttpPost]
         public async Task<int> DeleteHouse (invite input)
         {
             return await db.DeleteHouse(input.id, input.user);
+        }
+
+        [Route("DeleteBudget")]
+        [HttpPost]
+        public async Task<int> DeleteBudget (idin input)
+        {
+            return await db.DeleteBudget(input.id);
         }
 
         [Route("SDeleteAccount")]
