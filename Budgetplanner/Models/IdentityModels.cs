@@ -109,6 +109,14 @@ namespace Budgetplanner.Models
             return await this.Database.SqlQuery<HouseUser>("GetUsersInHouse @id", idParm).ToListAsync();
         }
 
+        //Get budget for household
+        public async Task<List<Budgeting>> GetBudgetForHouse(int id)
+        {
+            var idParm = new SqlParameter("@id", id);
+
+            return await this.Database.SqlQuery<Budgeting>("GetBudgetForHouse @id", idParm).ToListAsync();
+        }
+
         // Add a household
         public async Task<int> AddHouse(string name, string user)
         {
@@ -116,16 +124,6 @@ namespace Budgetplanner.Models
             var userParm = new SqlParameter("@user", user);
 
             return await this.Database.ExecuteSqlCommandAsync("AddHouse @name, @user", nameParm, userParm);
-        }
-
-        // Add user to house
-        public async Task<int> AddUserToHouse(int id, bool isInvited, string user)
-        {
-            var idParm = new SqlParameter("@id", id);
-            var isInvitedParm = new SqlParameter("@isInvited", isInvited);
-            var userParm = new SqlParameter("@user", user);
-
-            return await this.Database.ExecuteSqlCommandAsync("AddUserToHouse @id, @isInvited, @isHoH, @user", idParm, isInvitedParm, userParm);
         }
 
         // Add bank account to household
@@ -139,12 +137,26 @@ namespace Budgetplanner.Models
                 idParm, totalParm, descriptionParm);
         }
 
+        // Add a budget item
+        public async Task<int> AddBudget(int type, int house, decimal amount, int year, int month)
+        {
+            var typeParm = new SqlParameter("@type", type);
+            var houseParm = new SqlParameter("@house", house);
+            var amtParm = new SqlParameter("@amt", amount);
+            var yearParm = new SqlParameter("@year", year);
+            var monthParm = new SqlParameter("@month", month);
+
+            return await this.Database.ExecuteSqlCommandAsync("AddBudget @type, @house, @amt, @year, @month", typeParm, houseParm,
+                amtParm, yearParm, monthParm);
+        }
+
         // Delete a household
-        public async Task<int> DeleteHouse(int id)
+        public async Task<int> DeleteHouse(int id, string user)
         {
             var idParm = new SqlParameter("@id", id);
+            var userParm = new SqlParameter("@user", user);
 
-            return await this.Database.ExecuteSqlCommandAsync("DeleteHouse @id", idParm);
+            return await this.Database.ExecuteSqlCommandAsync("DeleteHouse @id, @user", idParm, userParm);
         }
 
         // soft delete an account
@@ -171,6 +183,46 @@ namespace Budgetplanner.Models
             var totalParm = new SqlParameter("@total", total);
 
             return await this.Database.ExecuteSqlCommandAsync("UpdateAccountTotal @id, @total", idParm, totalParm);
+        }
+
+        // edit budget
+        public async Task<int> EditBudget (int budget, int type, int id, decimal amount, int year, int month)
+        {
+            var budgetParm = new SqlParameter("@budget", budget);
+            var typeParm = new SqlParameter("@type", type);
+            var idParm = new SqlParameter("@id", id);
+            var amountParm = new SqlParameter("@amt", amount);
+            var yearParm = new SqlParameter("@year", year);
+            var monthParm = new SqlParameter("@month", month);
+
+            return await this.Database.ExecuteSqlCommandAsync("EditBudget @budget, @type, @id, @amt, @year, @month", budgetParm,
+                typeParm, idParm, amountParm, yearParm, monthParm);
+        }
+
+        // kick user from house
+        public async Task<int> KickUser (string user, int id)
+        {
+            var userParm = new SqlParameter("@user", user);
+            var idParm = new SqlParameter("@id", id);
+
+            return await this.Database.ExecuteSqlCommandAsync("KickUser @user, @id", userParm, idParm);
+        }
+
+        // invite user to house
+        public async Task<int> InviteUser(string user, int id)
+        {
+            var userParm = new SqlParameter("@user", user);
+            var idParm = new SqlParameter("@id", id);
+
+            return await this.Database.ExecuteSqlCommandAsync("InviteUser @user, @id", userParm, idParm);
+        }
+
+        //join house
+        public async Task<int> JoinUser(string user)
+        {
+            var userParm = new SqlParameter("@user", user);
+
+            return await this.Database.ExecuteSqlCommandAsync("JoinUser @user", userParm);
         }
     }
 }

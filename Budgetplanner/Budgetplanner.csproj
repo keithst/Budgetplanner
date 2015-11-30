@@ -238,6 +238,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BankAccount.cs" />
     <Compile Include="Models\Budget.cs" />
+    <Compile Include="Models\Budgeting.cs" />
     <Compile Include="Models\House.cs" />
     <Compile Include="Models\Household.cs" />
     <Compile Include="Models\HouseUser.cs" />
@@ -314,6 +315,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Views\Account\" />
     <Folder Include="Views\BankAccount\" />
+    <Folder Include="Views\Budgeting\" />
     <Folder Include="Views\Budget\" />
     <Folder Include="Views\Household\" />
     <Folder Include="Views\HouseUser\" />

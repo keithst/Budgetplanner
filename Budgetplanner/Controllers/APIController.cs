@@ -27,6 +27,22 @@ namespace Budgetplanner.Controllers
             public bool isDeleted { get; set; }
         }
 
+        public class invite
+        {
+            public string user { get; set; }
+            public int id { get; set; }
+        }
+
+        public class budgetadd
+        {
+            public int budget { get; set; }
+            public int type { get; set; }
+            public int house { get; set; }
+            public decimal amount { get; set; }
+            public int year { get; set; }
+            public int month { get; set; }
+        }
+
         [Route("GetHouse")]
         public async Task<List<House>> GetHouse (int id)
         {
@@ -70,16 +86,16 @@ namespace Budgetplanner.Controllers
            return await db.GetUsersInHouse(id);
         }
 
+        [Route("GetBudgetForHouse")]
+        public async Task<List<Budgeting>> GetBudgetForHouse(int id)
+        {
+            return await db.GetBudgetForHouse(id);
+        }
+
         [Route("AddHouse")]
         public async Task<int> AddHouse (string name, string user)
         {
             return await db.AddHouse(name, user);
-        }
-
-        [Route("AddUserToHouse")]
-        public async Task<int> AddUserToHouse (int id, string user)
-        {
-            return await db.AddUserToHouse(id, true, user);
         }
 
         [Route("AddAccount")]
@@ -87,6 +103,20 @@ namespace Budgetplanner.Controllers
         public async Task<int> AddAccount (apiparm input)
         {
             return await db.AddAccount(input.total, input.desc, input.id);
+        }
+
+        [Route("AddBudget")]
+        [HttpPost]
+        public async Task<int> AddBudget (budgetadd input)
+        {
+            return await db.AddBudget(input.type, input.house, input.amount, input.year, input.month);
+        }
+
+        [Route("DeleteHouse")]
+        [HttpPost]
+        public async Task<int> DeleteHouse (invite input)
+        {
+            return await db.DeleteHouse(input.id, input.user);
         }
 
         [Route("SDeleteAccount")]
@@ -108,6 +138,34 @@ namespace Budgetplanner.Controllers
         public async Task<int> UpdateAccountTotal (apiparm input)
         {
             return await db.UpdateAccountTotal(input.id, input.total);
+        }
+
+        [Route("EditBudget")]
+        [HttpPost]
+        public async Task<int> EditBudget (budgetadd input)
+        {
+            return await db.EditBudget(input.budget, input.type, input.house, input.amount, input.year, input.month);
+        }
+
+        [Route("KickUser")]
+        [HttpPost]
+        public async Task<int> KickUser (invite input)
+        {
+            return await db.KickUser(input.user, input.id);
+        }
+
+        [Route("InviteUser")]
+        [HttpPost]
+        public async Task<int> InviteUser(invite input)
+        {
+            return await db.InviteUser(input.user, input.id);
+        }
+
+        [Route("JoinUser")]
+        [HttpPost]
+        public async Task<int> JoinUser(invite input)
+        {
+            return await db.JoinUser(input.user);
         }
     }
 }
