@@ -193,6 +193,14 @@ namespace Budgetplanner.Models
             return await this.Database.ExecuteSqlCommandAsync("DeleteBudget @id", idParm);
         }
 
+        // Delete transaction
+        public async Task<int> DeleteTrans(int id)
+        {
+            var idParm = new SqlParameter("@id", id);
+
+            return await this.Database.ExecuteSqlCommandAsync("DeleteTrans @id", idParm);
+        }
+
         // soft delete an account
         public async Task<int> SDeleteAccount(int id, bool isDeleted)
         {
@@ -231,6 +239,25 @@ namespace Budgetplanner.Models
 
             return await this.Database.ExecuteSqlCommandAsync("EditBudget @budget, @type, @id, @amt, @year, @month", budgetParm,
                 typeParm, idParm, amountParm, yearParm, monthParm);
+        }
+
+        // Edit transaction
+        public async Task<int> EditTrans(int id, string user, int type, decimal amount, decimal ramount, int accountid, string desc, int year, int month,
+            int day)
+        {
+            var idParm = new SqlParameter("@id", id);
+            var userParm = new SqlParameter("@user", user);
+            var typeParm = new SqlParameter("@type", type);
+            var amountParm = new SqlParameter("@amt", amount);
+            var ramountParm = new SqlParameter("@recon", ramount);
+            var accountidParm = new SqlParameter("@accountid", accountid);
+            var descParm = new SqlParameter("@desc", desc);
+            var yearParm = new SqlParameter("@year", year);
+            var monthParm = new SqlParameter("@month", month);
+            var dayParm = new SqlParameter("@day", day);
+
+            return await this.Database.ExecuteSqlCommandAsync("EditTrans @id, @user, @type, @amt, @recon, @accountid, @desc, @year, @month, @day", idParm,
+                userParm, typeParm, amountParm, ramountParm, accountidParm, descParm, yearParm, monthParm, dayParm);
         }
 
         // kick user from house

@@ -45,7 +45,8 @@ namespace Budgetplanner.Controllers
 
         public class transadd
         {
-            public string id { get; set; }
+            public int id { get; set; }
+            public string user { get; set; }
             public int type { get; set; }
             public decimal amount { get; set; }
             public decimal ramount { get; set; }
@@ -140,7 +141,7 @@ namespace Budgetplanner.Controllers
         [HttpPost]
         public async Task<int> AddTrans (transadd input)
         {
-            return await db.AddTrans(input.id, input.type, input.amount, input.ramount, input.accountid, input.desc, input.year, input.month, input.day);
+            return await db.AddTrans(input.user, input.type, input.amount, input.ramount, input.accountid, input.desc, input.year, input.month, input.day);
         }
 
         [Route("DeleteHouse")]
@@ -155,6 +156,13 @@ namespace Budgetplanner.Controllers
         public async Task<int> DeleteBudget (idin input)
         {
             return await db.DeleteBudget(input.id);
+        }
+
+        [Route("DeleteTrans")]
+        [HttpPost]
+        public async Task<int> DeleteTrans(idin input)
+        {
+            return await db.DeleteTrans(input.id);
         }
 
         [Route("SDeleteAccount")]
@@ -183,6 +191,13 @@ namespace Budgetplanner.Controllers
         public async Task<int> EditBudget (budgetadd input)
         {
             return await db.EditBudget(input.budget, input.type, input.house, input.amount, input.year, input.month);
+        }
+
+        [Route("EditTrans")]
+        [HttpPost]
+        public async Task<int> EditTrans(transadd input)
+        {
+            return await db.EditTrans(input.id, input.user, input.type, input.amount, input.ramount, input.accountid, input.desc, input.year, input.month, input.day);
         }
 
         [Route("KickUser")]
