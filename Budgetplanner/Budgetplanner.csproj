@@ -255,9 +255,12 @@
     <Content Include="app\app.js" />
     <Content Include="app\controller\acctCtrl.js" />
     <Content Include="app\controller\menuCtrl.js" />
+    <Content Include="app\controller\transCtrl.js" />
     <Content Include="app\factory\httpaccount.js" />
     <Content Include="app\factory\httptrans.js" />
+    <Content Include="app\service.js" />
     <Content Include="app\view\acct.html" />
+    <Content Include="app\view\trans.html" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />

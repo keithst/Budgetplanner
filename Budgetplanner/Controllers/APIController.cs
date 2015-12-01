@@ -60,6 +60,7 @@ namespace Budgetplanner.Controllers
         public class idinput
         {
             public int id { get; set; }
+            public int? type { get; set; }
         }
 
         public class idin
@@ -75,7 +76,7 @@ namespace Budgetplanner.Controllers
 
         [Route("GetAccount")]
         [HttpPost]
-        public async Task<List<Account>> GetAccount (idinput input)
+        public async Task<List<Account>> GetAccount (idin input)
         {
             return await db.GetAccount(input.id);
         }
@@ -118,15 +119,17 @@ namespace Budgetplanner.Controllers
         }
 
         [Route("GetTransFromType")]
-        public async Task<List<Trans>> GetTransFromType(int id)
+        [HttpPost]
+        public async Task<List<Trans>> GetTransFromType(idinput input)
         {
-            return await db.GetTransFromType(null, id);
-        }
-
-        [Route("GetTransFromType")]
-        public async Task<List<Trans>> GetTransFromType(int type, int id)
-        {
-            return await db.GetTransFromType(type, id);
+            if(input.type == null)
+            {
+                return await db.GetTransFromType(null, input.id);
+            }
+            else
+            {
+                return await db.GetTransFromType(input.type, input.id);
+            }
         }
 
         [Route("AddHouse")]

@@ -1,21 +1,21 @@
 ﻿        <table class="settop" tr-ng-grid="" items="act.accounts" fields="['Description_ba', 'Total']"
                on-data-required="act.populate()"
                enable-sorting="false"
-               enable-filtering="false" ng-click="act.populate()">
+               enable-filtering="false">
             <thead>
                 <tr>
-                    <th display-name="Transactions"></th>
                     <th field-name="Description_ba" display-name="Description"></th>
                     <th field-name="Total" display-name="Total"></th>
+                    <th display-name="Transactions"></th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td><a ui-sref="trans">Transactions</a></td>
                     <td field-name="Description_ba"></td>
                     <td field-name="Total"><span>
                         {{gridDisplayItem.Total | currency: "$"}}</span>
                     </td>
+                    <td><button ng-click="act.gotoView(gridItem.id)">View</button></td>
                 </tr>
             </tbody>
         </table>
