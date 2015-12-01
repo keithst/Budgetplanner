@@ -1,21 +1,17 @@
 ﻿<h4 class="settop">Transactions</h4>
-<table tr-ng-grid="" items="tr.transactions" fields="['Amount', 'Description_t']"
+<table tr-ng-grid="" items="tr.merge" fields="['tr.Amount', 'tr.Description_t', 'type.name']"
        on-data-required="tr.populate()"
        enable-sorting="false"
        enable-filtering="false" ng-click="tr.populate()">
     <thead>
         <tr>
-            <th field-name="Amount" display-name="Amount"></th>
-            <th field-name="Description_t" display-name="Description"></th>
+            <th field-name="tr.Amount" display-name="Amount"></th>
+            <th field-name="tr.Description_t" display-name="Description"></th>
+            <th field-name="typr.name" display-name="Type"></th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td field-name="Amount">
-                <span>
-                    {{gridDisplayItem.Amount | currency: "$"}}
-                </span>
-            </td>
         </tr>
     </tbody>
 </table>

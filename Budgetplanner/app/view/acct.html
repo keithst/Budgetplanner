@@ -1,4 +1,5 @@
-﻿        <table class="settop" tr-ng-grid="" items="act.accounts" fields="['Description_ba', 'Total']"
+﻿<h4 class="settop">Accounts</h4>
+        <table tr-ng-grid="" items="act.accounts" fields="['Description_ba', 'Total']"
                on-data-required="act.populate()"
                enable-sorting="false"
                enable-filtering="false">
@@ -12,8 +13,7 @@
             <tbody>
                 <tr>
                     <td field-name="Description_ba"></td>
-                    <td field-name="Total"><span>
-                        {{gridDisplayItem.Total | currency: "$"}}</span>
+                    <td field-name="Total">
                     </td>
                     <td><button ng-click="act.gotoView(gridItem.id)">View</button></td>
                 </tr>

@@ -8,6 +8,12 @@
             });
         }
 
+        f.getTypes = function () {
+            return $http.get('/api/budget/GetTransType').then(function (response) {
+                return response.data;
+            });
+        }
+
         return f;
 
     }
