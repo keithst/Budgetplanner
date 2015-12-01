@@ -1,9 +1,9 @@
 ﻿(function () {
-    angular.module("car-finder").factory('testCarSvc', ['$http', function ($http) {
+    angular.module("app").factory('TransSvc', ['$http', function ($http) {
         var f = {};
 
-        f.getMakes = function (selected) {
-            return $http.post('/api/budget/GetTrans', selected).then(function (response) {
+        f.getTrans = function (selected) {
+            return $http.post('/api/budget/GetTransFromType', selected).then(function (response) {
                 return response.data;
             });
         }

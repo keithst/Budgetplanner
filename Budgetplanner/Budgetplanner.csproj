@@ -253,14 +253,24 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\app.js" />
+    <Content Include="app\controller\acctCtrl.js" />
+    <Content Include="app\controller\menuCtrl.js" />
+    <Content Include="app\factory\httpaccount.js" />
     <Content Include="app\factory\httptrans.js" />
+    <Content Include="app\view\acct.html" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\budget.css" />
+    <Content Include="Content\font-awesome.css" />
+    <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\trNgGrid.min.css" />
     <Content Include="Content\ui-bootstrap-csp.css" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Index.html" />
     <Content Include="Scripts\ai.0.15.0-build58334.js" />
     <Content Include="Scripts\ai.0.15.0-build58334.min.js" />
     <Content Include="Scripts\angular-animate.js" />
@@ -330,6 +340,11 @@
     <Content Include="Scripts\angular-aria.min.js.map" />
     <Content Include="Scripts\angular-animate.min.js.map" />
     <Content Include="Scripts\angular.min.js.map" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\FontAwesome.otf" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-dj.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-er.js" />
@@ -1085,6 +1100,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\trNgGrid.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -1104,8 +1120,6 @@
     <Content Include="Scripts\version.json" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="app\controller\" />
-    <Folder Include="app\view\" />
     <Folder Include="App_Data\" />
     <Folder Include="Views\Account\" />
     <Folder Include="Views\BankAccount\" />

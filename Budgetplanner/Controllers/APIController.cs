@@ -57,6 +57,11 @@ namespace Budgetplanner.Controllers
             public int day { get; set; }
         }
 
+        public class idinput
+        {
+            public int id { get; set; }
+        }
+
         public class idin
         {
             public int id { get; set; }
@@ -69,9 +74,10 @@ namespace Budgetplanner.Controllers
         }
 
         [Route("GetAccount")]
-        public async Task<List<Account>> GetAccount (int id)
+        [HttpPost]
+        public async Task<List<Account>> GetAccount (idinput input)
         {
-            return await db.GetAccount(id);
+            return await db.GetAccount(input.id);
         }
 
         [Route("GetTrans")]

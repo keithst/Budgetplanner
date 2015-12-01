@@ -1,4 +1,4 @@
-﻿var app = angular.module('app', ['ui.router']);
+﻿var app = angular.module('app', ['ui.router', 'trNgGrid']);
 
 app.config(function ($stateProvider, $urlRouterProvider) {
     //
@@ -11,6 +11,11 @@ app.config(function ($stateProvider, $urlRouterProvider) {
           url: "/trans",
           templateUrl: "/app/view/trans.html",
           controller: "transCtrl as tr"
+      })
+      .state('acct', {
+          url: "/acct",
+          templateUrl: "/app/view/acct.html",
+          controller: "acctCtrl as act"
       })
       .state('default', {
           url: "/",
