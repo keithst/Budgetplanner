@@ -112,9 +112,15 @@ namespace Budgetplanner.Controllers
         }
 
         [Route("GetTransFromType")]
-        public async Task<List<Trans>> GetTransFromType(int type)
+        public async Task<List<Trans>> GetTransFromType(int id)
         {
-            return await db.GetTransFromType(type);
+            return await db.GetTransFromType(null, id);
+        }
+
+        [Route("GetTransFromType")]
+        public async Task<List<Trans>> GetTransFromType(int type, int id)
+        {
+            return await db.GetTransFromType(type, id);
         }
 
         [Route("AddHouse")]

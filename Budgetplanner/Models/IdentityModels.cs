@@ -118,11 +118,20 @@ namespace Budgetplanner.Models
         }
 
         //Get transaction based on type
-        public async Task<List<Trans>> GetTransFromType(int type)
+        public async Task<List<Trans>> GetTransFromType(int? type, int id)
         {
-            var typeParm = new SqlParameter("@type", type);
+            if(type != null)
+            {
+                var typeParm = new SqlParameter("@type", type);
+                var idParm = new SqlParameter("@id", id);
 
-            return await this.Database.SqlQuery<Trans>("GetTransFromType @type", typeParm).ToListAsync();
+                return await this.Database.SqlQuery<Trans>("GetTransFromType @id, @type", idParm, typeParm).ToListAsync();
+            }
+            else
+            {
+                var idParm = new SqlParameter("@id", id);
+                return await this.Database.SqlQuery<Trans>("GetTransFromType @id", idParm).ToListAsync();
+            }
         }
 
         // Add a household
