@@ -7,10 +7,66 @@
     self.user = [];
     self.filter = "";
     self.temp = [];
+    self.editmode = false;
+    self.edit = {};
+    self.error = "";
+    self.style = { 'background-color': '#46b946' };
 
     self.selected = {
         id: "",
         type: ""
+    }
+
+    self.toggleedit = function (item) {
+        if (!self.editmode)
+        {
+            self.editmode = true;
+        }
+        self.edit = item;
+    }
+    
+    self.editchange = function () {
+        for(x = 0; x < self.merges.length; x++)
+        {
+            if(self.merges[x] == self.edit)
+            {
+                self.merges[x] = self.edit;
+            }
+        }
+    }
+
+    self.validatedate = function () {
+        var temp = self.edit.rec.date.split('/');
+        var totaler = 0;
+        if(temp.length == 3)
+        {
+            for(x = 0; x < temp.length; x++)
+            {
+                if(isNaN(temp[x]))
+                {
+                    self.style = { 'background-color': '#cc3333' };
+                    self.error = "Bad date";
+                }
+                else
+                {
+                    totaler++;
+                }
+            }
+            if(totaler == temp.length)
+            {
+                self.style = { 'background-color': '#46b946' };
+                self.error = "";
+            }
+        }
+        else
+        {
+            self.style = { 'background-color': '#cc3333' };
+            self.error = "Bad date";
+        }
+    }
+
+    self.closeedit = function (){
+        self.editmode = false;
     }
 
     self.clearfilter = function () {

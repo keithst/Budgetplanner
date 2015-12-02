@@ -14,9 +14,21 @@
             <th field-name="rec.type.name" display-name="Type"></th>
             <th field-name="rec.date" display-name="Date"></th>
             <th field-name="user" display-name="Person"></th>
+            <th display-name="Action"></th>
         </tr>
     </thead>
     <tbody>
-        <tr></tr>
+        <tr>
+            <td><button ng-click="tr.toggleedit(gridItem)">Edit</button></td>
+        </tr>
     </tbody>
 </table>
+<div ng-style="tr.style" ng-show="tr.editmode" class="navbar navbar-fixed-bottom setbottom">
+    <span>Edit Menu</span><br />
+    <span>Amount:</span><input ng-change="tr.editchange()" ng-model="tr.edit.rec.tr.Amount" />
+    <span>Reconcile:</span><input ng-change="tr.editchange()" ng-model="tr.edit.rec.tr.ReconcileAmount" />
+    <span>Description:</span><input ng-change="tr.editchange()" ng-model="tr.edit.rec.tr.Description_t" />
+    <span>Date:</span><input ng-change="tr.validatedate();tr.editchange()" ng-model="tr.edit.rec.date" />
+    <select ng-options="type.id as type.name for type in tr.types" ng-model="tr.edit.rec.type.name" ng-change="tr.editchange()"></select>
+    <button ng-click="tr.closeedit()">Close</button><span>{{tr.error}}</span>
+</div>
