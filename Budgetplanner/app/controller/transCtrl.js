@@ -13,6 +13,13 @@
         type: ""
     }
 
+    self.clearfilter = function () {
+        self.filter = ""
+        if (self.temp.length != 0) {
+            self.merges = self.temp;
+        }
+    }
+
     self.restore = function () {
         if(self.temp.length != 0)
         {
