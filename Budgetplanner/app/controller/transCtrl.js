@@ -3,8 +3,9 @@
 
     self.transactions = [];
     self.types = [];
-    self.merge = [];
+    self.merges = [];
     self.user = [];
+    self.selected = "";
 
     self.selected = {
         id: "",
@@ -17,7 +18,7 @@
     }
 
     self.settable = function (record, name) {
-        self.merge.push({ rec: record, user: name });
+        self.merges.push({ rec: record, user: name });
     }
 
     self.getTransData = function () {
