@@ -5,11 +5,31 @@
     self.types = [];
     self.merges = [];
     self.user = [];
-    self.selected = "";
+    self.filter = "";
+    self.temp = [];
 
     self.selected = {
         id: "",
         type: ""
+    }
+
+    self.restore = function () {
+        if(self.temp.length != 0)
+        {
+            self.merges = self.temp;
+        }
+    }
+
+    self.dofilter = function () {
+        self.temp = self.merges;
+        self.merges = [];
+        for(x = 0; x < self.temp.length; x++)
+        {
+            if(self.temp[x].rec.type.id == self.filter)
+            {
+                self.merges.push(self.temp[x])
+            }
+        }
     }
 
     self.populate = function () {

@@ -1,5 +1,5 @@
 ﻿<h4 class="settop">Transactions</h4>
-<select ng-options="item.rec.type.id as item.rec.type.name for item in tr.merges" ng-model="tr.selected"></select>
+<select ng-options="type.id as type.name for type in tr.types" ng-model="tr.filter" ng-change="tr.restore();tr.dofilter()"></select>
 <table tr-ng-grid="" items="tr.merges" fields="['rec.tr.Amount', 'rec.tr.ReconcileAmount', 'rec.tr.Description_t', 'rec.type.name', 'rec.date', 'user']"
        on-data-required="tr.populate()"
        enable-sorting="false"
@@ -17,4 +17,4 @@
     <tbody>
         <tr></tr>
     </tbody>
-</table>{{tr.types}}{{self.options.types}}
+</table>
