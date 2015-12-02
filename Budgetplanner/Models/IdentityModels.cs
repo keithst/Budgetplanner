@@ -94,11 +94,12 @@ namespace Budgetplanner.Models
         }
 
         // Get user
-        public async Task<List<ApplicationUser>> GetUser(string id)
+        public async Task<List<HouseUser>> GetUser(string userid)
         {
-            var idParm = new SqlParameter("@id", id);
 
-            return await this.Database.SqlQuery<ApplicationUser>("GetUser @id", idParm).ToListAsync();
+            var userParm = new SqlParameter("@user", userid);
+
+            return await this.Database.SqlQuery<HouseUser>("GetUser @user", userParm).ToListAsync();
         }
 
         // Get user from house ids

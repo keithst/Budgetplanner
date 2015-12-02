@@ -1,13 +1,16 @@
 ﻿<h4 class="settop">Transactions</h4>
-<table tr-ng-grid="" items="tr.merge" fields="['tr.Amount', 'tr.Description_t', 'type.name']"
+<table tr-ng-grid="" items="tr.merge" fields="['rec.tr.Amount', 'rec.tr.ReconcileAmount', 'rec.tr.Description_t', 'rec.type.name', 'rec.date', 'user']"
        on-data-required="tr.populate()"
        enable-sorting="false"
-       enable-filtering="false" ng-click="tr.populate()">
+       enable-filtering="false">
     <thead>
         <tr>
-            <th field-name="tr.Amount" display-name="Amount"></th>
-            <th field-name="tr.Description_t" display-name="Description"></th>
-            <th field-name="typr.name" display-name="Type"></th>
+            <th field-name="rec.tr.Amount" display-name="Amount"></th>
+            <th field-name="rec.tr.ReconcileAmount" display-name="Reconcile"></th>
+            <th field-name="rec.tr.Description_t" display-name="Description"></th>
+            <th field-name="rec.typr.name" display-name="Type"></th>
+            <th field-name="rec.date" display-name="Date"></th>
+            <th field-name="user" display-name="Person"></th>
         </tr>
     </thead>
     <tbody>

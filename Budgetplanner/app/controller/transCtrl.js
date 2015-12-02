@@ -4,6 +4,7 @@
     self.transactions = [];
     self.types = [];
     self.merge = [];
+    self.user = [];
 
     self.selected = {
         id: "",
@@ -13,6 +14,10 @@
     self.populate = function () {
         self.selected = $stateParams;
         self.getTransData();
+    }
+
+    self.settable = function (record, name) {
+        self.merge.push({ rec: record, user: name });
     }
 
     self.getTransData = function () {
@@ -32,7 +37,15 @@
                             self.transactions[x].ReconcileAmount *= -1;
                         }
                         self.transactions[x].Amount = $filter('currency')(self.transactions[x].Amount, '$', 2);
-                        self.merge.push({ tr: self.transactions[x], type: self.types[y] });
+                        self.transactions[x].ReconcileAmount = $filter('currency')(self.transactions[x].ReconcileAmount, '$', 2);
+                        var date = self.transactions[x].month_t + '/' + self.transactions[x].day_t + '/' + self.transactions[x].year_t;
+                        var record = { tr: self.transactions[x], type: self.types[y], date: date };
+                        $q.all([TransSvc.getUser({ userid: self.transactions[x].UserId }), record]).then(function (data) {
+                            console.log(data);
+                            self.user = data[0];
+                            var name = self.user[0].fname + ' ' + self.user[0].lname;
+                            self.settable(data[1], name);
+                        });
                     }
                 }
             }

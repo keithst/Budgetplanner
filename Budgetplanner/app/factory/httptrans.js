@@ -14,6 +14,12 @@
             });
         }
 
+        f.getUser = function (selected) {
+            return $http.post('/api/budget/GetUser', selected).then(function (response) {
+                return (response.data);
+            });
+        }
+
         return f;
 
     }

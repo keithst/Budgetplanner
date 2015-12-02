@@ -68,6 +68,11 @@ namespace Budgetplanner.Controllers
             public int id { get; set; }
         }
 
+        public class userparms
+        {
+            public string userid { get; set; }
+        }
+
         [Route("GetHouse")]
         public async Task<List<House>> GetHouse (int id)
         {
@@ -101,9 +106,10 @@ namespace Budgetplanner.Controllers
         }
 
         [Route("GetUser")]
-        public async Task<List<ApplicationUser>> GetUser(string id)
+        [HttpPost]
+        public async Task<List<HouseUser>> GetUser(userparms input)
         {
-           return await db.GetUser(id);
+            return await db.GetUser(input.userid);
         }
 
         [Route("GetUsersInHouse")]
