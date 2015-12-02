@@ -24,16 +24,6 @@
         }
         self.edit = item;
     }
-    
-    self.editchange = function () {
-        for(x = 0; x < self.merges.length; x++)
-        {
-            if(self.merges[x] == self.edit)
-            {
-                self.merges[x] = self.edit;
-            }
-        }
-    }
 
     self.validatedate = function () {
         var temp = self.edit.rec.date.split('/');
@@ -123,7 +113,7 @@
                         self.transactions[x].Amount = $filter('currency')(self.transactions[x].Amount, '$', 2);
                         self.transactions[x].ReconcileAmount = $filter('currency')(self.transactions[x].ReconcileAmount, '$', 2);
                         var date = self.transactions[x].month_t + '/' + self.transactions[x].day_t + '/' + self.transactions[x].year_t;
-                        var record = { tr: self.transactions[x], type: self.types[y], date: date };
+                        var record = { tr: self.transactions[x], type: self.types[y].name, date: date };
                         $q.all([TransSvc.getUser({ userid: self.transactions[x].UserId }), record]).then(function (data) {
                             console.log(data);
                             self.user = data[0];

@@ -2,7 +2,7 @@
 <span>Transaction Type:</span>
 <select ng-options="type.id as type.name for type in tr.types" ng-model="tr.filter" ng-change="tr.restore();tr.dofilter()"></select>
 <button ng-click="tr.clearfilter()">Reset</button>
-<table tr-ng-grid="" items="tr.merges" fields="['rec.tr.Amount', 'rec.tr.ReconcileAmount', 'rec.tr.Description_t', 'rec.type.name', 'rec.date', 'user']"
+<table tr-ng-grid="" items="tr.merges" fields="['rec.tr.Amount', 'rec.tr.ReconcileAmount', 'rec.tr.Description_t', 'rec.type', 'rec.date', 'user']"
        on-data-required="tr.populate()"
        enable-sorting="false"
        enable-filtering="false">
@@ -11,7 +11,7 @@
             <th field-name="rec.tr.Amount" display-name="Amount"></th>
             <th field-name="rec.tr.ReconcileAmount" display-name="Reconcile"></th>
             <th field-name="rec.tr.Description_t" display-name="Description"></th>
-            <th field-name="rec.type.name" display-name="Type"></th>
+            <th field-name="rec.type" display-name="Type"></th>
             <th field-name="rec.date" display-name="Date"></th>
             <th field-name="user" display-name="Person"></th>
             <th display-name="Action"></th>
@@ -25,10 +25,10 @@
 </table>
 <div ng-style="tr.style" ng-show="tr.editmode" class="navbar navbar-fixed-bottom setbottom">
     <span>Edit Menu</span><br />
-    <span>Amount:</span><input ng-change="tr.editchange()" ng-model="tr.edit.rec.tr.Amount" />
-    <span>Reconcile:</span><input ng-change="tr.editchange()" ng-model="tr.edit.rec.tr.ReconcileAmount" />
-    <span>Description:</span><input ng-change="tr.editchange()" ng-model="tr.edit.rec.tr.Description_t" />
-    <span>Date:</span><input ng-change="tr.validatedate();tr.editchange()" ng-model="tr.edit.rec.date" />
-    <select ng-options="type.id as type.name for type in tr.types" ng-model="tr.edit.rec.type.name" ng-change="tr.editchange()"></select>
+    <span>Amount:</span><input ng-model="tr.edit.rec.tr.Amount" />
+    <span>Reconcile:</span><input ng-model="tr.edit.rec.tr.ReconcileAmount" />
+    <span>Description:</span><input ng-model="tr.edit.rec.tr.Description_t" />
+    <span>Date:</span><input ng-change="tr.validatedate()" ng-model="tr.edit.rec.date" />
+    <select ng-options="type.name as type.name for type in tr.types" ng-model="tr.edit.rec.type"></select>
     <button ng-click="tr.closeedit()">Close</button><span>{{tr.error}}</span>
 </div>
