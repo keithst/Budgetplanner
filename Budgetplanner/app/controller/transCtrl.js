@@ -23,6 +23,8 @@
     self.returnmsg = "";
     self.inedit = false;
     self.createmode = false;
+    self.increate = false;
+    self.date = "";
 
     self.master = {
         id: "",
@@ -38,7 +40,7 @@
         user: "",
         type: "",
         amount: "",
-        ramount: "",
+        ramount: 0,
         accountid: "",
         desc: "",
         year: "",
@@ -68,11 +70,23 @@
         id: ""
     }
 
+    self.sendcreate = function () {
+        self.create.accountid = self.selected.id;
+    }
+
     self.createtoggle = function () {
+        self.inedit = true;
         self.createmode = true;
+        self.increate = true;
         $q.all([TransSvc.getUsersHouse({ id: self.selected.house })]).then(function (data) {
             self.user = data[0];
         });
+    }
+
+    self.exitcreate = function () {
+        self.inedit = false;
+        self.createmode = false;
+        self.increate = false;
     }
 
     self.delete = function (item) {
@@ -104,6 +118,12 @@
         $q.all([TransSvc.editTrans(self.edits)]).then(function (data) {
             if (parseInt(data[0].status) >= 200 && parseInt(data[0].status) <= 299) {
                 self.returnmsg = "Edit applied";
+                self.master.id = self.edit.rec.tr.id;
+                self.master.amt = self.edit.rec.tr.Amount;
+                self.master.ramt = self.edit.rec.tr.ReconcileAmount;
+                self.master.desc = self.edit.rec.tr.Description_t;
+                self.master.type = self.edit.rec.type;
+                self.master.date = self.edit.rec.date;
             }
             else
             {
@@ -154,7 +174,7 @@
         self.returnmsg = "";
         self.amt = self.validateamt(self.edit.rec.tr.Amount, true, false);
         self.ramt = self.validateamt(self.edit.rec.tr.ReconcileAmount, false, true);
-        self.validatedate();
+        self.validatedate(self.edit.rec.date);
     }
 
     self.validateamt = function (amt, fixedsign, wildsign) {
@@ -172,7 +192,7 @@
                     if (temp.charAt(1) == '$') {
                         temp = temp.substr(2, temp.length)
                         temp = temp.replace(",", "");
-                        if (isNaN(parseFloat(temp))) {
+                        if (isNaN(temp)) {
                             self.style = { 'background-color': '#cc3333' };
                             self.error = "Amount not a decimal value";
                         }
@@ -199,7 +219,7 @@
                         if (temp.charAt(1) == '$') {
                             temp = temp.substr(2, temp.length)
                             temp = temp.replace(",", "");
-                            if (isNaN(parseFloat(temp))) {
+                            if (isNaN(temp)) {
                                 self.style = { 'background-color': '#cc3333' };
                                 self.error = "Amount not a decimal value";
                             }
@@ -218,7 +238,7 @@
                         if (temp.charAt(0) == '$') {
                             temp = temp.substr(1, temp.length)
                             temp = temp.replace(",", "");
-                            if (isNaN(parseFloat(temp))) {
+                            if (isNaN(temp)) {
                                 self.style = { 'background-color': '#cc3333' };
                                 self.error = "Amount not a decimal value";
                             }
@@ -238,7 +258,7 @@
                     if (temp.charAt(0) == '$') {
                         temp = temp.substr(1, temp.length)
                         temp = temp.replace(",", "");
-                        if (isNaN(parseFloat(temp))) {
+                        if (isNaN(temp)) {
                             self.style = { 'background-color': '#cc3333' };
                             self.error = "Amount not a decimal value";
                         }
@@ -258,11 +278,9 @@
     }
 
     self.toggleedit = function (item) {
-        if (!self.editmode)
-        {
-            self.editmode = true;
-        }
+        self.editmode = true;
         self.inedit = true;
+        self.increate = true;
         self.edit = item;
         self.master.id = self.edit.rec.tr.id;
         self.master.amt = self.edit.rec.tr.Amount;
@@ -273,10 +291,10 @@
         self.fullvalidate();
     }
 
-    self.validatedate = function () {
+    self.validatedate = function (date) {
         if (self.error.length == 0)
         {
-            var temp = self.edit.rec.date.split('/');
+            var temp = date.split('/');
             var totaler = 0;
             if (temp.length == 3) {
                 for (x = 0; x < temp.length; x++) {
@@ -337,17 +355,15 @@
     }
 
     self.closeedit = function (){
+        self.edit.rec.tr.Amount = self.master.amt;
+        self.edit.rec.tr.ReconcileAmount = self.master.ramt;
+        self.edit.rec.tr.Description_t = self.master.desc;
+        self.edit.rec.type = self.master.type;
+        self.edit.rec.date = self.master.date;
+        self.error = ""
         self.editmode = false;
         self.inedit = false;
-        if(self.error.length != 0)
-        {
-            self.edit.rec.tr.Amount = self.master.amt;
-            self.edit.rec.tr.ReconcileAmount = self.master.ramt;
-            self.edit.rec.tr.Description_t = self.master.desc;
-            self.edit.rec.type = self.master.type;
-            self.edit.rec.date = self.master.date;
-            self.error = ""
-        }
+        self.increate = false;
     }
 
     self.clearfilter = function () {

@@ -19,11 +19,11 @@
     </thead>
     <tbody>
         <tr>
-            <td><button ng-click="tr.toggleedit(gridItem)" ng-disabled="tr.inedit">Edit</button><button ng-click="tr.delete(gridItem)">Delete</button></td>
+            <td><button ng-click="tr.toggleedit(gridItem)" ng-disabled="tr.inedit">Edit</button><button ng-click="tr.delete(gridItem)" ng-disabled="tr.inedit">Delete</button></td>
         </tr>
     </tbody>
 </table>
-<button ng-click="tr.createtoggle()">Create</button>
+<button ng-click="tr.createtoggle()" ng-disabled="tr.increate">Create</button>
 <div ng-style="tr.style" ng-show="tr.editmode" class="navbar navbar-fixed-bottom setbottom">
     <span>Edit Menu</span><br />
     <span>Amount:</span><input ng-model="tr.edit.rec.tr.Amount" ng-change="tr.fullvalidate()" />
@@ -35,5 +35,12 @@
 </div>
 <div ng-show="tr.createmode" class="navbar navbar-fixed-bottom setbottom">
     <span>Create Menu</span><br />
-    <select ng-options="user.id as user.UserName for user in tr.user" ng-model="tr.create.user" ng-init="" ng-change=""></select>
+    <input ng-model="tr.create.amount" />
+    <input ng-model="tr.create.ramount" />
+    <input ng-model="tr.create.desc" />
+    <input ng-model="tr.date" />
+    <select ng-options="user.id as user.UserName for user in tr.user" ng-model="tr.create.user"></select>
+    <select ng-options="type.id as type.name for type in tr.types" ng-model="tr.create.type"></select>
+    <button ng-click="tr.sendcreate()">Create</button>
+    <button ng-click="tr.exitcreate()">Close</button>
 </div>

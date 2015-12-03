@@ -34,6 +34,10 @@
             });
         }
 
+        f.addTrans = function (addition) {
+            return $http.post('api/budget/AddTrans', addition);
+        }
+
         return f;
 
     }
