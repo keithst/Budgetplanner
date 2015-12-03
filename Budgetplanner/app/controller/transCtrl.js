@@ -58,7 +58,7 @@
         }
         self.edits.user = self.edit.rec.tr.UserId;
         $q.all([TransSvc.editTrans(self.edits)]).then(function (data) {
-            if (data[0].status = "200") {
+            if (parseInt(data[0].status) >= 200 && parseInt(data[0].status) <= 299) {
                 self.returnmsg = "Edit applied";
             }
             else
