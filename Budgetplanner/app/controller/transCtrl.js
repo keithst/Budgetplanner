@@ -27,7 +27,7 @@
         user: "",
         type: "",
         amount: "",
-        ramount: "",
+        ramount: 0,
         accountid: "",
         desc: "",
         year: "",
@@ -66,12 +66,12 @@
                 self.returnmsg = "Error applying edit";
             }
             self.error = "";
+            self.edits.ramount = 0;
         })
     }
 
     self.setall = function () {
         self.edit.rec.tr.Amount = self.setamtchg(self.edit.rec.tr.Amount)
-        self.edit.rec.tr.ReconcileAmount = self.setamtchg(self.edit.rec.tr.ReconcileAmount)
         self.prev = self.save;
     }
 
@@ -108,12 +108,12 @@
     self.fullvalidate = function () {
         self.error = "";
         self.returnmsg = "";
-        self.amt = self.validateamt(self.edit.rec.tr.Amount);
-        self.ramt = self.validateamt(self.edit.rec.tr.ReconcileAmount);
+        self.amt = self.validateamt(self.edit.rec.tr.Amount, true, false);
+        self.ramt = self.validateamt(self.edit.rec.tr.ReconcileAmount, false, true);
         self.validatedate();
     }
 
-    self.validateamt = function (amt) {
+    self.validateamt = function (amt, fixedsign, wildsign) {
         if (self.error.length == 0)
         {
             var temp = amt;
@@ -123,7 +123,7 @@
                     negative = self.types[x].isWithdrawl;
                 }
             }
-            if (negative) {
+            if (negative && fixedsign) {
                 if (temp.charAt(0) == '-') {
                     if (temp.charAt(1) == '$') {
                         temp = temp.substr(2, temp.length)
@@ -148,21 +148,65 @@
                 }
             }
             else {
-                if (temp.charAt(0) == '$') {
-                    temp = temp.substr(1, temp.length)
-                    temp = temp.replace(",", "");
-                    if (isNaN(parseFloat(temp))) {
-                        self.style = { 'background-color': '#cc3333' };
-                        self.error = "Amount not a decimal value";
+                if (wildsign)
+                {
+                    if(temp.charAt(0) == "-")
+                    {
+                        if (temp.charAt(1) == '$') {
+                            temp = temp.substr(2, temp.length)
+                            temp = temp.replace(",", "");
+                            if (isNaN(parseFloat(temp))) {
+                                self.style = { 'background-color': '#cc3333' };
+                                self.error = "Amount not a decimal value";
+                            }
+                            else {
+                                self.style = { 'background-color': '#46b946' };
+                                self.error = "";
+                            }
+                        }
+                        else {
+                            self.style = { 'background-color': '#cc3333' };
+                            self.error = "Missing $ sign";
+                        }
+                        temp *= -1
                     }
                     else {
-                        self.style = { 'background-color': '#46b946' };
-                        self.error = "";
+                        if (temp.charAt(0) == '$') {
+                            temp = temp.substr(1, temp.length)
+                            temp = temp.replace(",", "");
+                            if (isNaN(parseFloat(temp))) {
+                                self.style = { 'background-color': '#cc3333' };
+                                self.error = "Amount not a decimal value";
+                            }
+                            else {
+                                self.style = { 'background-color': '#46b946' };
+                                self.error = "";
+                            }
+                        }
+                        else {
+                            self.style = { 'background-color': '#cc3333' };
+                            self.error = "Invalid sign detected";
+                        }
                     }
                 }
-                else {
-                    self.style = { 'background-color': '#cc3333' };
-                    self.error = "Missing $ sign";
+                else
+                {
+                    if (temp.charAt(0) == '$') {
+                        temp = temp.substr(1, temp.length)
+                        temp = temp.replace(",", "");
+                        if (isNaN(parseFloat(temp))) {
+                            self.style = { 'background-color': '#cc3333' };
+                            self.error = "Amount not a decimal value";
+                        }
+                        else {
+                            self.style = { 'background-color': '#46b946' };
+                            self.error = "";
+                        }
+                    }
+                    else {
+                        self.style = { 'background-color': '#cc3333' };
+                        self.error = "Missing $ sign";
+                    }
                 }
             }
         }
@@ -175,6 +219,14 @@
             self.editmode = true;
         }
         self.edit = item;
+        if (self.edit.rec.tr.ReconcileAmount.charAt(0) == "-")
+        {
+            self.rnegative = true;
+        }
+        else
+        {
+            self.rnegative = false;
+        }
         self.fullvalidate();
     }
 
@@ -294,7 +346,6 @@
                         if (self.types[y].isWithdrawl)
                         {
                             self.transactions[x].Amount *= -1;
-                            self.transactions[x].ReconcileAmount *= -1;
                         }
                         self.transactions[x].Amount = $filter('currency')(self.transactions[x].Amount, '$', 2);
                         self.transactions[x].ReconcileAmount = $filter('currency')(self.transactions[x].ReconcileAmount, '$', 2);
