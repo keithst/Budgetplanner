@@ -20,6 +20,7 @@
     self.save = "";
     self.amt = "";
     self.ramt = "";
+    self.returnmsg = "";
 
     self.edits = {
         id: "",
@@ -40,6 +41,8 @@
     }
 
     self.updateRec = function () {
+        self.returnmsg = "";
+        self.error = "Processing request"
         self.edits.id = self.edit.rec.tr.id;
         self.edits.year = self.year;
         self.edits.month = self.month;
@@ -54,7 +57,16 @@
             }
         }
         self.edits.user = self.edit.rec.tr.UserId;
-        TransSvc.editTrans(self.edits);
+        $q.all([TransSvc.editTrans(self.edits)]).then(function (data) {
+            if (data[0].status = "200") {
+                self.returnmsg = "Edit applied";
+            }
+            else
+            {
+                self.returnmsg = "Error applying edit";
+            }
+            self.error = "";
+        })
     }
 
     self.setall = function () {
@@ -95,6 +107,7 @@
 
     self.fullvalidate = function () {
         self.error = "";
+        self.returnmsg = "";
         self.amt = self.validateamt(self.edit.rec.tr.Amount);
         self.ramt = self.validateamt(self.edit.rec.tr.ReconcileAmount);
         self.validatedate();
