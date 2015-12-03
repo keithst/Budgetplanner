@@ -22,6 +22,68 @@
         type: ""
     }
 
+    self.validateamt = function (amt) {
+        var temp = amt;
+        var negative = false;
+        for(x = 0; x < self.types.length; x++)
+        {
+            if(self.edit.rec.type == self.types[x].name)
+            {
+                negative = self.types[x].isWithdrawl;
+            }
+        }
+        if(negative)
+        {
+            if (temp.charAt(0) == '-')
+            {
+                if (temp.charAt(1) == '$')
+                {
+                    temp = temp.substr(2, temp.length)
+                    temp.replace(",", "");
+                    if (isNaN(parseFloat(temp))) {
+                        self.style = { 'background-color': '#cc3333' };
+                        self.error = "Amount not a decimal value";
+                    }
+                    else {
+                        self.style = { 'background-color': '#46b946' };
+                        self.error = "";
+                    }
+                }
+                else {
+                    self.style = { 'background-color': '#cc3333' };
+                    self.error = "Missing $ sign";
+                }
+            }
+            else {
+                self.style = { 'background-color': '#cc3333' };
+                self.error = "Missing - sign";
+            }
+        }
+        else
+        {
+            if(temp.charAt(0) == '$')
+            {
+                temp = temp.substr(1, temp.length)
+                temp.replace(",", "");
+                if(isNaN(parseFloat(temp)))
+                {
+                    self.style = { 'background-color': '#cc3333' };
+                    self.error = "Amount not a decimal value";
+                }
+                else
+                {
+                    self.style = { 'background-color': '#46b946' };
+                    self.error = "";
+                }
+            }
+            else
+            {
+                self.style = { 'background-color': '#cc3333' };
+                self.error = "Missing $ sign";
+            }
+        }
+    }
+
     self.toggleedit = function (item) {
         if (!self.editmode)
         {
