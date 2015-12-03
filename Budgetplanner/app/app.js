@@ -8,7 +8,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
     // Now set up the states
     $stateProvider
       .state('trans', {
-          url: "/trans/{id}/{type}",
+          url: "/trans/{house}/{id}",
           templateUrl: "/app/view/trans.html",
           controller: "transCtrl as tr"
       })

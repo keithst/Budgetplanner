@@ -22,6 +22,7 @@
     self.ramt = "";
     self.returnmsg = "";
     self.inedit = false;
+    self.createmode = false;
 
     self.master = {
         id: "",
@@ -46,12 +47,32 @@
     }
 
     self.selected = {
+        house: "",
+        id: ""
+    }
+
+    self.create = {
         id: "",
-        type: ""
+        user: "",
+        type: "",
+        amount: "",
+        ramount: "",
+        accountid: "",
+        desc: "",
+        year: "",
+        month: "",
+        day: ""
     }
 
     self.deleteparm = {
         id: ""
+    }
+
+    self.createtoggle = function () {
+        self.createmode = true;
+        $q.all([TransSvc.getUsersHouse({ id: self.selected.house })]).then(function (data) {
+            self.user = data[0];
+        });
     }
 
     self.delete = function (item) {

@@ -9,8 +9,15 @@
         id : ""
     }
 
+    self.passparm = {
+        house: "",
+        id: ""
+    }
+
     self.gotoView = function (id) {
-        $state.go('trans', {id: id, type: null})
+        self.passparm.id = id;
+        self.passparm.house = self.selected.id;
+        $state.go('trans', self.passparm)
     }
 
     self.populate = function () {

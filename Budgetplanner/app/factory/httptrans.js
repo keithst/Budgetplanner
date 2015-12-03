@@ -28,6 +28,12 @@
             return $http.post('api/budget/DeleteTrans', updates);
         }
 
+        f.getUsersHouse = function (id) {
+            return $http.post('api/budget/GetUsersInHouse', id).then(function (response) {
+                return (response.data);
+            });
+        }
+
         return f;
 
     }

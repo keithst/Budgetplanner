@@ -9,6 +9,7 @@ namespace Budgetplanner.Models
     public class HouseUser
     {
         public string Id { get; set; }
+        public string UserName { get; set; }
         public string fname { get; set; }
         public string lname { get; set; }
         public int? HouseId { get; set; }

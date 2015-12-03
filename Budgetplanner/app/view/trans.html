@@ -23,6 +23,7 @@
         </tr>
     </tbody>
 </table>
+<button ng-click="tr.createtoggle()">Create</button>
 <div ng-style="tr.style" ng-show="tr.editmode" class="navbar navbar-fixed-bottom setbottom">
     <span>Edit Menu</span><br />
     <span>Amount:</span><input ng-model="tr.edit.rec.tr.Amount" ng-change="tr.fullvalidate()" />
@@ -31,4 +32,8 @@
     <span>Date:</span><input ng-change="tr.fullvalidate()" ng-model="tr.edit.rec.date" />
     <select ng-options="type.name as type.name for type in tr.types" ng-model="tr.edit.rec.type" ng-init="tr.setamt()" ng-change="tr.setall()"></select>
     <button ng-disabled="tr.error" ng-click="tr.updateRec()">Submit</button><button ng-click="tr.closeedit()">Close</button><span>{{tr.error}}</span>{{tr.returnmsg}}
+</div>
+<div ng-show="tr.createmode" class="navbar navbar-fixed-bottom setbottom">
+    <span>Create Menu</span><br />
+    <select ng-options="user.id as user.UserName for user in tr.user" ng-model="tr.create.user" ng-init="" ng-change=""></select>
 </div>
