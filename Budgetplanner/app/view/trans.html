@@ -14,12 +14,12 @@
             <th field-name="rec.type" display-name="Type"></th>
             <th field-name="rec.date" display-name="Date"></th>
             <th field-name="user" display-name="Person"></th>
-            <th display-name="Action"></th>
+            <th display-name="Actions"></th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td><button ng-click="tr.toggleedit(gridItem)">Edit</button></td>
+            <td><button ng-click="tr.toggleedit(gridItem)" ng-disabled="tr.inedit">Edit</button><button ng-click="tr.delete(gridItem)">Delete</button></td>
         </tr>
     </tbody>
 </table>
@@ -29,6 +29,6 @@
     <span>Reconcile:</span><input ng-model="tr.edit.rec.tr.ReconcileAmount" ng-change="tr.fullvalidate()" />
     <span>Description:</span><input ng-model="tr.edit.rec.tr.Description_t" />
     <span>Date:</span><input ng-change="tr.fullvalidate()" ng-model="tr.edit.rec.date" />
-    <select ng-options="type.name as type.name for type in tr.types" ng-model="tr.edit.rec.type" ng-init="tr.setamt()" ng-change="tr.setall();tr.fullvalidate()"></select>
+    <select ng-options="type.name as type.name for type in tr.types" ng-model="tr.edit.rec.type" ng-init="tr.setamt()" ng-change="tr.setall()"></select>
     <button ng-disabled="tr.error" ng-click="tr.updateRec()">Submit</button><button ng-click="tr.closeedit()">Close</button><span>{{tr.error}}</span>{{tr.returnmsg}}
 </div>

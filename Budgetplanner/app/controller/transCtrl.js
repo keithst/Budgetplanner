@@ -21,13 +21,23 @@
     self.amt = "";
     self.ramt = "";
     self.returnmsg = "";
+    self.inedit = false;
+
+    self.master = {
+        id: "",
+        amt: "",
+        ramt: "",
+        desc: "",
+        date: "",
+        type: ""
+    }
 
     self.edits = {
         id: "",
         user: "",
         type: "",
         amount: "",
-        ramount: 0,
+        ramount: "",
         accountid: "",
         desc: "",
         year: "",
@@ -38,6 +48,19 @@
     self.selected = {
         id: "",
         type: ""
+    }
+
+    self.deleteparm = {
+        id: ""
+    }
+
+    self.delete = function (item) {
+        self.deleteparm.id = item.rec.tr.id;
+        $q.all([TransSvc.deleteTrans(self.deleteparm), item]).then(function (data) {
+            if (parseInt(data[0].status) >= 200 && parseInt(data[0].status) <= 299) {
+                self.merges.splice(self.merges.indexOf(data[1]), 1);
+            }
+        })
     }
 
     self.updateRec = function () {
@@ -218,15 +241,14 @@
         {
             self.editmode = true;
         }
+        self.inedit = true;
         self.edit = item;
-        if (self.edit.rec.tr.ReconcileAmount.charAt(0) == "-")
-        {
-            self.rnegative = true;
-        }
-        else
-        {
-            self.rnegative = false;
-        }
+        self.master.id = self.edit.rec.tr.id;
+        self.master.amt = self.edit.rec.tr.Amount;
+        self.master.ramt = self.edit.rec.tr.ReconcileAmount;
+        self.master.desc = self.edit.rec.tr.Description_t;
+        self.master.type = self.edit.rec.type;
+        self.master.date = self.edit.rec.date;
         self.fullvalidate();
     }
 
@@ -295,6 +317,16 @@
 
     self.closeedit = function (){
         self.editmode = false;
+        self.inedit = false;
+        if(self.error.length != 0)
+        {
+            self.edit.rec.tr.Amount = self.master.amt;
+            self.edit.rec.tr.ReconcileAmount = self.master.ramt;
+            self.edit.rec.tr.Description_t = self.master.desc;
+            self.edit.rec.type = self.master.type;
+            self.edit.rec.date = self.master.date;
+            self.error = ""
+        }
     }
 
     self.clearfilter = function () {

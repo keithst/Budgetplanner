@@ -24,6 +24,10 @@
             return $http.post('api/budget/EditTrans', updates);
         }
 
+        f.deleteTrans = function (updates) {
+            return $http.post('api/budget/DeleteTrans', updates);
+        }
+
         return f;
 
     }
