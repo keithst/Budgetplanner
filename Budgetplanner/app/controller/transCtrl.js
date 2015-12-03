@@ -18,10 +18,43 @@
     self.leap = 0;
     self.prev = "";
     self.save = "";
+    self.amt = "";
+    self.ramt = "";
+
+    self.edits = {
+        id: "",
+        user: "",
+        type: "",
+        amount: "",
+        ramount: "",
+        accountid: "",
+        desc: "",
+        year: "",
+        month: "",
+        day: ""
+    }
 
     self.selected = {
         id: "",
         type: ""
+    }
+
+    self.updateRec = function () {
+        self.edits.id = self.edit.rec.tr.id;
+        self.edits.year = self.year;
+        self.edits.month = self.month;
+        self.edits.day = self.day;
+        self.edits.accountid = self.edit.rec.tr.AccountId;
+        self.edits.desc = self.edit.rec.tr.Description_t;
+        self.edits.amount = self.amt;
+        self.edits.ramount = self.ramt;
+        for (x = 0; x < self.types.length; x++) {
+            if (self.edit.rec.type == self.types[x].name) {
+                self.edits.type = self.types[x].id;
+            }
+        }
+        self.edits.user = self.edit.rec.tr.UserId;
+        TransSvc.editTrans(self.edits);
     }
 
     self.setall = function () {
@@ -62,8 +95,8 @@
 
     self.fullvalidate = function () {
         self.error = "";
-        self.validateamt(self.edit.rec.tr.Amount);
-        self.validateamt(self.edit.rec.tr.ReconcileAmount);
+        self.amt = self.validateamt(self.edit.rec.tr.Amount);
+        self.ramt = self.validateamt(self.edit.rec.tr.ReconcileAmount);
         self.validatedate();
     }
 
@@ -81,7 +114,7 @@
                 if (temp.charAt(0) == '-') {
                     if (temp.charAt(1) == '$') {
                         temp = temp.substr(2, temp.length)
-                        temp.replace(",", "");
+                        temp = temp.replace(",", "");
                         if (isNaN(parseFloat(temp))) {
                             self.style = { 'background-color': '#cc3333' };
                             self.error = "Amount not a decimal value";
@@ -104,7 +137,7 @@
             else {
                 if (temp.charAt(0) == '$') {
                     temp = temp.substr(1, temp.length)
-                    temp.replace(",", "");
+                    temp = temp.replace(",", "");
                     if (isNaN(parseFloat(temp))) {
                         self.style = { 'background-color': '#cc3333' };
                         self.error = "Amount not a decimal value";
@@ -120,6 +153,7 @@
                 }
             }
         }
+        return temp;
     }
 
     self.toggleedit = function (item) {
@@ -128,6 +162,7 @@
             self.editmode = true;
         }
         self.edit = item;
+        self.fullvalidate();
     }
 
     self.validatedate = function () {
@@ -167,6 +202,7 @@
                             if (self.day > 0 && self.day <= self.days[self.month]) {
                                 self.style = { 'background-color': '#46b946' };
                                 self.error = "";
+                                self.month++;
                             }
                             else {
                                 self.style = { 'background-color': '#cc3333' };

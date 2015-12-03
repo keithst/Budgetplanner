@@ -30,5 +30,5 @@
     <span>Description:</span><input ng-model="tr.edit.rec.tr.Description_t" />
     <span>Date:</span><input ng-change="tr.fullvalidate()" ng-model="tr.edit.rec.date" />
     <select ng-options="type.name as type.name for type in tr.types" ng-model="tr.edit.rec.type" ng-init="tr.setamt()" ng-change="tr.setall();tr.fullvalidate()"></select>
-    <button ng-disabled="tr.error">Submit</button><button ng-click="tr.closeedit()">Close</button><span>{{tr.error}}</span>
+    <button ng-disabled="tr.error" ng-click="tr.updateRec()">Submit</button><button ng-click="tr.closeedit()">Close</button><span>{{tr.error}}</span>
 </div>

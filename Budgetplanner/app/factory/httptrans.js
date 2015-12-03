@@ -20,6 +20,10 @@
             });
         }
 
+        f.editTrans = function (updates) {
+            return $http.post('api/budget/EditTrans', updates);
+        }
+
         return f;
 
     }
