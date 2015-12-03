@@ -16,10 +16,48 @@
     self.year = "";
     self.days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
     self.leap = 0;
+    self.prev = "";
+    self.save = "";
 
     self.selected = {
         id: "",
         type: ""
+    }
+
+    self.setall = function () {
+        self.edit.rec.tr.Amount = self.setamtchg(self.edit.rec.tr.Amount)
+        self.edit.rec.tr.ReconcileAmount = self.setamtchg(self.edit.rec.tr.ReconcileAmount)
+        self.prev = self.save;
+    }
+
+    self.setamt = function () {
+        for (x = 0; x < self.types.length; x++) {
+            if (self.edit.rec.type == self.types[x].name) {
+                self.prev = self.types[x].isWithdrawl;
+            }
+        }
+    }
+
+    self.setamtchg = function (amt) {
+        var temp = "";
+        var temp2 = amt;
+        for (x = 0; x < self.types.length; x++) {
+            if (self.edit.rec.type == self.types[x].name) {
+                if(self.prev != self.types[x].isWithdrawl)
+                {
+                    if(self.types[x].isWithdrawl)
+                    {
+                        temp = temp.concat("-", temp2);
+                    }
+                    else
+                    {
+                        temp = temp2.substr(1, temp2.length);
+                    }
+                    self.save = self.types[x].isWithdrawl;
+                }
+            }
+        }
+        return temp;
     }
 
     self.fullvalidate = function () {

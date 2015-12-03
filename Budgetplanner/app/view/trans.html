@@ -29,6 +29,6 @@
     <span>Reconcile:</span><input ng-model="tr.edit.rec.tr.ReconcileAmount" ng-change="tr.fullvalidate()" />
     <span>Description:</span><input ng-model="tr.edit.rec.tr.Description_t" />
     <span>Date:</span><input ng-change="tr.fullvalidate()" ng-model="tr.edit.rec.date" />
-    <select ng-options="type.name as type.name for type in tr.types" ng-model="tr.edit.rec.type" ng-change="tr.fullvalidate()"></select>
-    <button ng-click="tr.closeedit()">Close</button><span>{{tr.error}}</span>
+    <select ng-options="type.name as type.name for type in tr.types" ng-model="tr.edit.rec.type" ng-init="tr.setamt()" ng-change="tr.setall();tr.fullvalidate()"></select>
+    <button ng-disabled="tr.error">Submit</button><button ng-click="tr.closeedit()">Close</button><span>{{tr.error}}</span>
 </div>
