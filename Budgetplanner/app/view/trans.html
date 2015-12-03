@@ -25,10 +25,10 @@
 </table>
 <div ng-style="tr.style" ng-show="tr.editmode" class="navbar navbar-fixed-bottom setbottom">
     <span>Edit Menu</span><br />
-    <span>Amount:</span><input ng-model="tr.edit.rec.tr.Amount" ng-change="tr.validateamt(tr.edit.rec.tr.Amount)" />
-    <span>Reconcile:</span><input ng-model="tr.edit.rec.tr.ReconcileAmount" ng-change="tr.validateamt(tr.edit.rec.tr.ReconcileAmount)" />
+    <span>Amount:</span><input ng-model="tr.edit.rec.tr.Amount" ng-change="tr.fullvalidate()" />
+    <span>Reconcile:</span><input ng-model="tr.edit.rec.tr.ReconcileAmount" ng-change="tr.fullvalidate()" />
     <span>Description:</span><input ng-model="tr.edit.rec.tr.Description_t" />
-    <span>Date:</span><input ng-change="tr.validatedate()" ng-model="tr.edit.rec.date" />
-    <select ng-options="type.name as type.name for type in tr.types" ng-model="tr.edit.rec.type" ng-change="tr.validateamt(tr.edit.rec.tr.Amount);tr.validateamt(tr.edit.rec.tr.ReconcileAmount)"></select>
+    <span>Date:</span><input ng-change="tr.fullvalidate()" ng-model="tr.edit.rec.date" />
+    <select ng-options="type.name as type.name for type in tr.types" ng-model="tr.edit.rec.type" ng-change="tr.fullvalidate()"></select>
     <button ng-click="tr.closeedit()">Close</button><span>{{tr.error}}</span>
 </div>

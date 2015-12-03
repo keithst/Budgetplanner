@@ -22,23 +22,50 @@
         type: ""
     }
 
+    self.fullvalidate = function () {
+        self.error = "";
+        self.validateamt(self.edit.rec.tr.Amount);
+        self.validateamt(self.edit.rec.tr.ReconcileAmount);
+        self.validatedate();
+    }
+
     self.validateamt = function (amt) {
-        var temp = amt;
-        var negative = false;
-        for(x = 0; x < self.types.length; x++)
+        if (self.error.length == 0)
         {
-            if(self.edit.rec.type == self.types[x].name)
-            {
-                negative = self.types[x].isWithdrawl;
+            var temp = amt;
+            var negative = false;
+            for (x = 0; x < self.types.length; x++) {
+                if (self.edit.rec.type == self.types[x].name) {
+                    negative = self.types[x].isWithdrawl;
+                }
             }
-        }
-        if(negative)
-        {
-            if (temp.charAt(0) == '-')
-            {
-                if (temp.charAt(1) == '$')
-                {
-                    temp = temp.substr(2, temp.length)
+            if (negative) {
+                if (temp.charAt(0) == '-') {
+                    if (temp.charAt(1) == '$') {
+                        temp = temp.substr(2, temp.length)
+                        temp.replace(",", "");
+                        if (isNaN(parseFloat(temp))) {
+                            self.style = { 'background-color': '#cc3333' };
+                            self.error = "Amount not a decimal value";
+                        }
+                        else {
+                            self.style = { 'background-color': '#46b946' };
+                            self.error = "";
+                        }
+                    }
+                    else {
+                        self.style = { 'background-color': '#cc3333' };
+                        self.error = "Missing $ sign";
+                    }
+                }
+                else {
+                    self.style = { 'background-color': '#cc3333' };
+                    self.error = "Missing - sign";
+                }
+            }
+            else {
+                if (temp.charAt(0) == '$') {
+                    temp = temp.substr(1, temp.length)
                     temp.replace(",", "");
                     if (isNaN(parseFloat(temp))) {
                         self.style = { 'background-color': '#cc3333' };
@@ -54,33 +81,6 @@
                     self.error = "Missing $ sign";
                 }
             }
-            else {
-                self.style = { 'background-color': '#cc3333' };
-                self.error = "Missing - sign";
-            }
-        }
-        else
-        {
-            if(temp.charAt(0) == '$')
-            {
-                temp = temp.substr(1, temp.length)
-                temp.replace(",", "");
-                if(isNaN(parseFloat(temp)))
-                {
-                    self.style = { 'background-color': '#cc3333' };
-                    self.error = "Amount not a decimal value";
-                }
-                else
-                {
-                    self.style = { 'background-color': '#46b946' };
-                    self.error = "";
-                }
-            }
-            else
-            {
-                self.style = { 'background-color': '#cc3333' };
-                self.error = "Missing $ sign";
-            }
         }
     }
 
@@ -93,69 +93,64 @@
     }
 
     self.validatedate = function () {
-        var temp = self.edit.rec.date.split('/');
-        var totaler = 0;
-        if(temp.length == 3)
+        if (self.error.length == 0)
         {
-            for(x = 0; x < temp.length; x++)
-            {
-                if(isNaN(temp[x]))
-                {
-                    self.style = { 'background-color': '#cc3333' };
-                    self.error = "Bad date, non numeric value detected";
-                }
-                else
-                {
-                    switch (x) {
-                        case 0:
-                            self.month = temp[x];
-                            break;
-                        case 1:
-                            self.day = temp[x];
-                            break;
-                        case 2:
-                            self.year = temp[x];
-                            break;
+            var temp = self.edit.rec.date.split('/');
+            var totaler = 0;
+            if (temp.length == 3) {
+                for (x = 0; x < temp.length; x++) {
+                    if (isNaN(temp[x])) {
+                        self.style = { 'background-color': '#cc3333' };
+                        self.error = "Bad date, non numeric value detected";
                     }
-                    totaler++;
-                }
-            }
-            if(totaler == temp.length)
-            {
-                if (parseInt(self.year) >= 1900)
-                {
-                    self.leap = self.year % 4
-                    if (parseInt(self.leap) == 0) {
-                        self.days[1] = 29;
+                    else {
+                        switch (x) {
+                            case 0:
+                                self.month = temp[x];
+                                break;
+                            case 1:
+                                self.day = temp[x];
+                                break;
+                            case 2:
+                                self.year = temp[x];
+                                break;
+                        }
+                        totaler++;
                     }
-                    if (parseInt(self.month) > 0 && parseInt(self.month) < 13) {
-                        self.month--;
-                        if (self.day > 0 && self.day <= self.days[self.month]) {
-                            self.style = { 'background-color': '#46b946' };
-                            self.error = "";
+                }
+                if (totaler == temp.length) {
+                    if (parseInt(self.year) >= 1900) {
+                        self.leap = self.year % 4
+                        if (parseInt(self.leap) == 0) {
+                            self.days[1] = 29;
+                        }
+                        if (parseInt(self.month) > 0 && parseInt(self.month) < 13) {
+                            self.month--;
+                            if (self.day > 0 && self.day <= self.days[self.month]) {
+                                self.style = { 'background-color': '#46b946' };
+                                self.error = "";
+                            }
+                            else {
+                                self.style = { 'background-color': '#cc3333' };
+                                self.error = "Invalid day";
+                            }
                         }
                         else {
                             self.style = { 'background-color': '#cc3333' };
-                            self.error = "Invalid day";
+                            self.error = "Invalid month";
                         }
+
                     }
                     else {
                         self.style = { 'background-color': '#cc3333' };
-                        self.error = "Invalid month";
+                        self.error = "Invalid year";
                     }
-
-                }
-                else
-                {
-                    self.style = { 'background-color': '#cc3333' };
-                    self.error = "Invalid year";
                 }
             }
-        }
-        else
-        {
-            self.style = { 'background-color': '#cc3333' };
-            self.error = "Incorrect Date Formt use MM/DD/YYYY";
+            else {
+                self.style = { 'background-color': '#cc3333' };
+                self.error = "Incorrect Date Formt use MM/DD/YYYY";
+            }
         }
     }
 
