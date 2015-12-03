@@ -11,6 +11,11 @@
     self.edit = {};
     self.error = "";
     self.style = { 'background-color': '#46b946' };
+    self.month = "";
+    self.day = "";
+    self.year = "";
+    self.days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    self.leap = 0;
 
     self.selected = {
         id: "",
@@ -35,23 +40,60 @@
                 if(isNaN(temp[x]))
                 {
                     self.style = { 'background-color': '#cc3333' };
-                    self.error = "Bad date";
+                    self.error = "Bad date, non numeric value detected";
                 }
                 else
                 {
+                    switch (x) {
+                        case 0:
+                            self.month = temp[x];
+                            break;
+                        case 1:
+                            self.day = temp[x];
+                            break;
+                        case 2:
+                            self.year = temp[x];
+                            break;
+                    }
                     totaler++;
                 }
             }
             if(totaler == temp.length)
             {
-                self.style = { 'background-color': '#46b946' };
-                self.error = "";
+                if (parseInt(self.year) >= 1900)
+                {
+                    self.leap = self.year % 4
+                    if (parseInt(self.leap) == 0) {
+                        self.days[1] = 29;
+                    }
+                    if (parseInt(self.month) > 0 && parseInt(self.month) < 13) {
+                        self.month--;
+                        if (self.day > 0 && self.day <= self.days[self.month]) {
+                            self.style = { 'background-color': '#46b946' };
+                            self.error = "";
+                        }
+                        else {
+                            self.style = { 'background-color': '#cc3333' };
+                            self.error = "Invalid day";
+                        }
+                    }
+                    else {
+                        self.style = { 'background-color': '#cc3333' };
+                        self.error = "Invalid month";
+                    }
+
+                }
+                else
+                {
+                    self.style = { 'background-color': '#cc3333' };
+                    self.error = "Invalid year";
+                }
             }
         }
         else
         {
             self.style = { 'background-color': '#cc3333' };
-            self.error = "Bad date";
+            self.error = "Incorrect Date Formt use MM/DD/YYYY";
         }
     }
 
