@@ -74,9 +74,10 @@ namespace Budgetplanner.Controllers
         }
 
         [Route("GetHouse")]
-        public async Task<List<House>> GetHouse (int id)
+        [HttpPost]
+        public async Task<List<House>> GetHouse (idin input)
         {
-            return await db.GetHouse(id);
+            return await db.GetHouse(input.id);
         }
 
         [Route("GetAccount")]

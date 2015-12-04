@@ -21,7 +21,7 @@
     }
 
     self.populate = function () {
-        self.selected.id = 2;
+        self.selected = $stateParams;
         self.getAccountData();
     }
 

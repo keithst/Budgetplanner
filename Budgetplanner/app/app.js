@@ -13,9 +13,14 @@ app.config(function ($stateProvider, $urlRouterProvider) {
           controller: "transCtrl as tr"
       })
       .state('acct', {
-          url: "/acct",
+          url: "/acct/{id}",
           templateUrl: "/app/view/acct.html",
           controller: "acctCtrl as act"
+      })
+      .state('house', {
+          url: "/house",
+          templateUrl: "/app/view/house.html",
+          controller: "houseCtrl as house"
       })
       .state('default', {
           url: "/",
