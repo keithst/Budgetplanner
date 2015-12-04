@@ -254,14 +254,17 @@
   <ItemGroup>
     <Content Include="app\app.js" />
     <Content Include="app\controller\acctCtrl.js" />
+    <Content Include="app\controller\budgetCtrl.js" />
     <Content Include="app\controller\houseCtrl.js" />
     <Content Include="app\controller\menuCtrl.js" />
     <Content Include="app\controller\transCtrl.js" />
     <Content Include="app\factory\httpaccount.js" />
+    <Content Include="app\factory\httpbudget.js" />
     <Content Include="app\factory\httphouse.js" />
     <Content Include="app\factory\httptrans.js" />
     <Content Include="app\service.js" />
     <Content Include="app\view\acct.html" />
+    <Content Include="app\view\budget.html" />
     <Content Include="app\view\house.html" />
     <Content Include="app\view\trans.html" />
     <Content Include="Areas\HelpPage\HelpPage.css" />

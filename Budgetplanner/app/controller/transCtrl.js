@@ -26,6 +26,7 @@
     self.increate = false;
     self.date = "";
     self.prevent = true;
+    self.account = {};
 
     self.master = {
         id: "",
@@ -76,6 +77,12 @@
         id: ""
     }
 
+    self.updateacct = {
+        id: "",
+        desc: "",
+        total: ""
+    }
+
     self.createvalidate = function () {
         if (self.create.type)
         {
@@ -108,6 +115,23 @@
         }
     }
 
+    self.updateaccount = function (amount) {
+        $q.all([TransSvc.getAccount({ id: self.selected.id }), amount]).then(function (data) {
+            self.account = data[0][0];
+            self.account.Total = parseFloat(self.account.Total);
+            self.account.Total += parseFloat(data[1]);
+            alert(self.account.Total)
+            self.updateacct.id = self.selected.id;
+            self.updateacct.total = self.account.Total;
+            alert(self.updateacct.total + ' ' + self.account.Total)
+            $q.all([TransSvc.updateAcct(self.updateacct)]).then(function (data) {
+                if (parseInt(data[0].status) >= 200 && parseInt(data[0].status) <= 299) {
+                    self.returnmsg += ", Account updated successfully";
+                }
+            });
+        });
+    }
+
     self.sendcreate = function () {
         self.create.accountid = self.selected.id;
         self.create.year = self.year;
@@ -118,6 +142,8 @@
         $q.all([TransSvc.addTrans(self.create)]).then(function (data) {
             if (parseInt(data[0].status) >= 200 && parseInt(data[0].status) <= 299) {
                 self.returnmsg = "Transaction created";
+                var temp = parseFloat(self.amt) + parseFloat(self.ramt);
+                self.updateaccount(temp);
                 self.merges = [];
                 self.populate();
             }
@@ -264,6 +290,7 @@
                     self.style = { 'background-color': '#cc3333' };
                     self.error = "Missing - sign";
                 }
+                temp *= -1;
             }
             else {
                 if (wildsign)
@@ -466,10 +493,6 @@
                 {
                     if(self.transactions[x].TypeId == self.types[y].id)
                     {
-                        if (self.types[y].isWithdrawl)
-                        {
-                            self.transactions[x].Amount *= -1;
-                        }
                         self.transactions[x].Amount = $filter('currency')(self.transactions[x].Amount, '$', 2);
                         self.transactions[x].ReconcileAmount = $filter('currency')(self.transactions[x].ReconcileAmount, '$', 2);
                         var date = self.transactions[x].month_t + '/' + self.transactions[x].day_t + '/' + self.transactions[x].year_t;

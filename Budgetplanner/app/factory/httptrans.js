@@ -8,6 +8,12 @@
             });
         }
 
+        f.getAccount = function (selected) {
+            return $http.post('/api/budget/GetSingleAccount', selected).then(function (response) {
+                return response.data;
+            });
+        }
+
         f.getTypes = function () {
             return $http.get('/api/budget/GetTransType').then(function (response) {
                 return response.data;
@@ -36,6 +42,10 @@
 
         f.addTrans = function (addition) {
             return $http.post('api/budget/AddTrans', addition);
+        }
+
+        f.updateAcct = function (updates) {
+            return $http.post('api/budget/UpdateAccountTotal', updates);
         }
 
         return f;

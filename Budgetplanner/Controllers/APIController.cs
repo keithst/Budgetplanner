@@ -87,6 +87,13 @@ namespace Budgetplanner.Controllers
             return await db.GetAccount(input.id);
         }
 
+        [Route("GetSingleAccount")]
+        [HttpPost]
+        public async Task<List<Account>> GetSingleAccount(idin input)
+        {
+            return await db.GetSingleAccount(input.id);
+        }
+
         [Route("GetTrans")]
         public async Task<List<Transaction>> GetTrans (int id)
         {
@@ -121,9 +128,10 @@ namespace Budgetplanner.Controllers
         }
 
         [Route("GetBudgetForHouse")]
-        public async Task<List<Budgeting>> GetBudgetForHouse(int id)
+        [HttpPost]
+        public async Task<List<Budgeting>> GetBudgetForHouse(idin input)
         {
-            return await db.GetBudgetForHouse(id);
+            return await db.GetBudgetForHouse(input.id);
         }
 
         [Route("GetTransFromType")]

@@ -41,6 +41,6 @@
     <input ng-model="tr.date" ng-change="tr.createvalidate()" />
     <select ng-options="user.Id as user.UserName for user in tr.user" ng-model="tr.create.user" ng-change="tr.createvalidate()"></select>
     <select ng-options="type.id as type.name for type in tr.types" ng-model="tr.create.type" ng-change="tr.createvalidate()"></select>
-    <button ng-click="tr.sendcreate()" ng-disbaled="tr.error">Create</button>
+    <button ng-click="tr.sendcreate()" ng-disabled="tr.error">Create</button>
     <button ng-click="tr.exitcreate()">Close</button><span>{{tr.returnmsg}}</span>{{tr.error}}
 </div>

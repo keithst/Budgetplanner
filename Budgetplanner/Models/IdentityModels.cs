@@ -65,6 +65,14 @@ namespace Budgetplanner.Models
             return await this.Database.SqlQuery<Account>("GetAccount @id", idParm).ToListAsync();
         }
 
+        // Get bank account from id
+        public async Task<List<Account>> GetSingleAccount(int id)
+        {
+            var idParm = new SqlParameter("@id", id);
+
+            return await this.Database.SqlQuery<Account>("GetSingleAccount @id", idParm).ToListAsync();
+        }
+
         // Get transaction from bank account id
         public async Task<List<Transaction>> GetTrans(int id)
         {

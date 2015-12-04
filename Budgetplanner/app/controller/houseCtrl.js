@@ -2,6 +2,7 @@
     var self = this;
 
     self.house = {};
+    self.disabled = true;
 
     self.selected = {
         id: ""
@@ -24,6 +25,7 @@
     self.getHouseData = function () {
         $q.all([HouseSvc.getHouse(self.selected)]).then(function (data) {
             self.house = data[0][0];
+            self.disabled = false;
         });
     }
 
