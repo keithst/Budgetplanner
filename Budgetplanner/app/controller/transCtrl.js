@@ -67,6 +67,11 @@
         day: ""
     }
 
+    self.createtemp = {
+        amount: "",
+        ramount: ""
+    }
+
     self.deleteparm = {
         id: ""
     }
@@ -76,9 +81,13 @@
         {
             self.error = "";
             self.returnmsg = "";
-            self.amt = self.validateamt(self.create.amount, true, false, self.create.type);
-            self.ramt = self.validateamt(self.create.ramount, false, true, self.create.type);
+            self.nullcheck(self.createtemp.amount);
+            self.amt = self.validateamt(self.createtemp.amount, true, false, self.create.type);
+            self.nullcheck(self.createtemp.ramount);
+            self.ramt = self.validateamt(self.createtemp.ramount, false, true, self.create.type);
+            self.nullcheck(self.create.desc);
             self.validatedate(self.date);
+            self.nullcheck(self.create.user);
             self.prevent = false;
         }
         else
@@ -90,9 +99,13 @@
     }
 
     self.nullcheck = function (field) {
-        if (!field) {
+        if (self.error.length == 0)
+        {
+            if (!field) {
+                self.style = { 'background-color': '#cc3333' };
                 self.error = "Null value entered"
             }
+        }
     }
 
     self.sendcreate = function () {
@@ -210,8 +223,11 @@
     self.fullvalidate = function () {
         self.error = "";
         self.returnmsg = "";
+        self.nullcheck(self.edit.rec.tr.Amount);
         self.amt = self.validateamt(self.edit.rec.tr.Amount, true, false, self.edit.rec.type);
+        self.nullcheck(self.edit.rec.tr.Amount);
         self.ramt = self.validateamt(self.edit.rec.tr.ReconcileAmount, false, true, self.edit.rec.type);
+        self.nullcheck(self.edit.rec.tr.Description_t);
         self.validatedate(self.edit.rec.date);
     }
 
@@ -423,7 +439,7 @@
         self.merges = [];
         for(x = 0; x < self.temp.length; x++)
         {
-            if(self.temp[x].rec.type.id == self.filter)
+            if(self.temp[x].rec.type == self.filter)
             {
                 self.merges.push(self.temp[x])
             }

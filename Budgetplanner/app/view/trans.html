@@ -1,6 +1,6 @@
 ﻿<h3 class="settop">Transactions</h3>
 <span>Transaction Type:</span>
-<select ng-options="type.id as type.name for type in tr.types" ng-model="tr.filter" ng-change="tr.restore();tr.dofilter()"></select>
+<select ng-options="type.name as type.name for type in tr.types" ng-model="tr.filter" ng-change="tr.restore();tr.dofilter()"></select>
 <button ng-click="tr.clearfilter()">Reset</button>
 <table tr-ng-grid="" items="tr.merges" fields="['rec.tr.Amount', 'rec.tr.ReconcileAmount', 'rec.tr.Description_t', 'rec.type', 'rec.date', 'user']"
        on-data-required="tr.populate()"
@@ -28,15 +28,15 @@
     <span>Edit Menu</span><br />
     <span>Amount:</span><input ng-model="tr.edit.rec.tr.Amount" ng-change="tr.fullvalidate()" />
     <span>Reconcile:</span><input ng-model="tr.edit.rec.tr.ReconcileAmount" ng-change="tr.fullvalidate()" />
-    <span>Description:</span><input ng-model="tr.edit.rec.tr.Description_t" />
+    <span>Description:</span><input ng-model="tr.edit.rec.tr.Description_t" ng-change="tr.fullvalidate()" />
     <span>Date:</span><input ng-change="tr.fullvalidate()" ng-model="tr.edit.rec.date" />
     <select ng-options="type.name as type.name for type in tr.types" ng-model="tr.edit.rec.type" ng-init="tr.setamt()" ng-change="tr.setall()"></select>
     <button ng-disabled="tr.error" ng-click="tr.updateRec()">Submit</button><button ng-click="tr.closeedit()">Close</button><span>{{tr.error}}</span>{{tr.returnmsg}}
 </div>
 <div ng-style="tr.style" ng-show="tr.createmode" class="navbar navbar-fixed-bottom setbottom">
     <span>Create Menu</span><br />
-    <input ng-model="tr.create.amount" ng-change="tr.createvalidate()" ng-disabled="tr.prevent" />
-    <input ng-model="tr.create.ramount" ng-change="tr.createvalidate()" ng-disabled="tr.prevent" />
+    <input ng-model="tr.createtemp.amount" ng-change="tr.createvalidate()" ng-disabled="tr.prevent" />
+    <input ng-model="tr.createtemp.ramount" ng-change="tr.createvalidate()" ng-disabled="tr.prevent" />
     <input ng-model="tr.create.desc" ng-change="tr.createvalidate()" />
     <input ng-model="tr.date" ng-change="tr.createvalidate()" />
     <select ng-options="user.Id as user.UserName for user in tr.user" ng-model="tr.create.user" ng-change="tr.createvalidate()"></select>
