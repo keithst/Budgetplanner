@@ -25,6 +25,7 @@
     self.createmode = false;
     self.increate = false;
     self.date = "";
+    self.prevent = true;
 
     self.master = {
         id: "",
@@ -70,8 +71,44 @@
         id: ""
     }
 
+    self.createvalidate = function () {
+        if (self.create.type)
+        {
+            self.error = "";
+            self.returnmsg = "";
+            self.amt = self.validateamt(self.create.amount, true, false, self.create.type);
+            self.ramt = self.validateamt(self.create.ramount, false, true, self.create.type);
+            self.validatedate(self.date);
+            self.prevent = false;
+        }
+        else
+        {
+            self.returnmsg = "";
+            self.error = "Please select a transaction type"
+            self.prevent = true;
+        }
+    }
+
+    self.nullcheck = function (field) {
+        if (!field) {
+                self.error = "Null value entered"
+            }
+    }
+
     self.sendcreate = function () {
         self.create.accountid = self.selected.id;
+        self.create.year = self.year;
+        self.create.month = self.month;
+        self.create.day = self.day;
+        self.create.amount = self.amt;
+        self.create.ramount = self.ramt;
+        $q.all([TransSvc.addTrans(self.create)]).then(function (data) {
+            if (parseInt(data[0].status) >= 200 && parseInt(data[0].status) <= 299) {
+                self.returnmsg = "Transaction created";
+                self.merges = [];
+                self.populate();
+            }
+        });
     }
 
     self.createtoggle = function () {
@@ -80,6 +117,7 @@
         self.increate = true;
         $q.all([TransSvc.getUsersHouse({ id: self.selected.house })]).then(function (data) {
             self.user = data[0];
+            self.createvalidate();
         });
     }
 
@@ -172,18 +210,18 @@
     self.fullvalidate = function () {
         self.error = "";
         self.returnmsg = "";
-        self.amt = self.validateamt(self.edit.rec.tr.Amount, true, false);
-        self.ramt = self.validateamt(self.edit.rec.tr.ReconcileAmount, false, true);
+        self.amt = self.validateamt(self.edit.rec.tr.Amount, true, false, self.edit.rec.type);
+        self.ramt = self.validateamt(self.edit.rec.tr.ReconcileAmount, false, true, self.edit.rec.type);
         self.validatedate(self.edit.rec.date);
     }
 
-    self.validateamt = function (amt, fixedsign, wildsign) {
+    self.validateamt = function (amt, fixedsign, wildsign, type) {
         if (self.error.length == 0)
         {
             var temp = amt;
             var negative = false;
             for (x = 0; x < self.types.length; x++) {
-                if (self.edit.rec.type == self.types[x].name) {
+                if (type == self.types[x].name || type == self.types[x].id) {
                     negative = self.types[x].isWithdrawl;
                 }
             }
@@ -192,7 +230,7 @@
                     if (temp.charAt(1) == '$') {
                         temp = temp.substr(2, temp.length)
                         temp = temp.replace(",", "");
-                        if (isNaN(temp)) {
+                        if (isNaN(temp) || isNaN(parseFloat(temp))) {
                             self.style = { 'background-color': '#cc3333' };
                             self.error = "Amount not a decimal value";
                         }
@@ -219,7 +257,7 @@
                         if (temp.charAt(1) == '$') {
                             temp = temp.substr(2, temp.length)
                             temp = temp.replace(",", "");
-                            if (isNaN(temp)) {
+                            if (isNaN(temp) || isNaN(parseFloat(temp))) {
                                 self.style = { 'background-color': '#cc3333' };
                                 self.error = "Amount not a decimal value";
                             }
@@ -238,7 +276,7 @@
                         if (temp.charAt(0) == '$') {
                             temp = temp.substr(1, temp.length)
                             temp = temp.replace(",", "");
-                            if (isNaN(temp)) {
+                            if (isNaN(temp) || isNaN(parseFloat(temp))) {
                                 self.style = { 'background-color': '#cc3333' };
                                 self.error = "Amount not a decimal value";
                             }
@@ -258,7 +296,7 @@
                     if (temp.charAt(0) == '$') {
                         temp = temp.substr(1, temp.length)
                         temp = temp.replace(",", "");
-                        if (isNaN(temp)) {
+                        if (isNaN(temp) || isNaN(parseFloat(temp))) {
                             self.style = { 'background-color': '#cc3333' };
                             self.error = "Amount not a decimal value";
                         }
