@@ -19,7 +19,7 @@
     </thead>
     <tbody>
         <tr>
-            <td><button ng-click="tr.toggleedit(gridItem)" ng-disabled="tr.inedit">Edit</button><button ng-click="tr.delete(gridItem)" ng-disabled="tr.inedit">Delete</button></td>
+            <td><button ng-click="tr.toggleedit(gridItem);tr.setamt()" ng-disabled="tr.inedit">Edit</button><button ng-click="tr.delete(gridItem)" ng-disabled="tr.inedit">Delete</button></td>
         </tr>
     </tbody>
 </table>
@@ -30,7 +30,7 @@
     <span>Reconcile:</span><input ng-model="tr.edit.rec.tr.ReconcileAmount" ng-change="tr.fullvalidate()" />
     <span>Description:</span><input ng-model="tr.edit.rec.tr.Description_t" ng-change="tr.fullvalidate()" />
     <span>Date:</span><input ng-change="tr.fullvalidate()" ng-model="tr.edit.rec.date" />
-    <select ng-options="type.name as type.name for type in tr.types" ng-model="tr.edit.rec.type" ng-init="tr.setamt()" ng-change="tr.setall()"></select>
+    <select ng-options="type.name as type.name for type in tr.types" ng-model="tr.edit.rec.type" ng-change="tr.setall()"></select>
     <button ng-disabled="tr.error" ng-click="tr.updateRec()">Submit</button><button ng-click="tr.closeedit()">Close</button><span>{{tr.error}}</span>{{tr.returnmsg}}
 </div>
 <div ng-style="tr.style" ng-show="tr.createmode" class="navbar navbar-fixed-bottom setbottom">
@@ -42,5 +42,5 @@
     <select ng-options="user.Id as user.UserName for user in tr.user" ng-model="tr.create.user" ng-change="tr.createvalidate()"></select>
     <select ng-options="type.id as type.name for type in tr.types" ng-model="tr.create.type" ng-change="tr.createvalidate()"></select>
     <button ng-click="tr.sendcreate()" ng-disabled="tr.error">Create</button>
-    <button ng-click="tr.exitcreate()">Close</button><span>{{tr.returnmsg}}</span>{{tr.error}}
+    <button ng-click="tr.exitcreate()">Close</button><span>{{tr.error}}</span>{{tr.returnmsg}}
 </div>
