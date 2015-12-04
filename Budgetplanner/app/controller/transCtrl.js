@@ -27,6 +27,7 @@
     self.date = "";
     self.prevent = true;
     self.account = {};
+    self.saveamount = 0;
 
     self.master = {
         id: "",
@@ -120,10 +121,8 @@
             self.account = data[0][0];
             self.account.Total = parseFloat(self.account.Total);
             self.account.Total += parseFloat(data[1]);
-            alert(self.account.Total)
             self.updateacct.id = self.selected.id;
             self.updateacct.total = self.account.Total;
-            alert(self.updateacct.total + ' ' + self.account.Total)
             $q.all([TransSvc.updateAcct(self.updateacct)]).then(function (data) {
                 if (parseInt(data[0].status) >= 200 && parseInt(data[0].status) <= 299) {
                     self.returnmsg += ", Account updated successfully";
@@ -195,6 +194,9 @@
         $q.all([TransSvc.editTrans(self.edits)]).then(function (data) {
             if (parseInt(data[0].status) >= 200 && parseInt(data[0].status) <= 299) {
                 self.returnmsg = "Edit applied";
+                var temp = (parseFloat(self.saveamount) - (parseFloat(self.amt) + parseFloat(self.ramt))) * -1;
+                self.updateaccount(temp);
+                self.saveamount = parseFloat(self.amt) + parseFloat(self.ramt);
                 self.master.id = self.edit.rec.tr.id;
                 self.master.amt = self.edit.rec.tr.Amount;
                 self.master.ramt = self.edit.rec.tr.ReconcileAmount;
@@ -370,6 +372,7 @@
         self.master.type = self.edit.rec.type;
         self.master.date = self.edit.rec.date;
         self.fullvalidate();
+        self.saveamount = parseFloat(self.amt) + parseFloat(self.ramt);
     }
 
     self.validatedate = function (date) {
