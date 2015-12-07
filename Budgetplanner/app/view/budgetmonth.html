@@ -1,5 +1,5 @@
-﻿<h3 class="settop">Budget for {{budgetmonth.selected.month}}/{{budgetmonth.selected.year}}</h3>
-<table tr-ng-grid="" items="budgetmonth.budgets"
+﻿<h3 class="settop" ng-init="budgetmonth.getParms()">Budget for {{budgetmonth.selected.month}}/{{budgetmonth.selected.year}}</h3>
+<table tr-ng-grid="" items="budgetmonth.budgets" fields="['rec.Amount', 'type', 'date']"
        on-data-required="budgetmonth.populate()"
        enable-sorting="false"
        enable-filtering="false">
@@ -12,15 +12,24 @@
         </tr>
     </tbody>
 </table>
-
+<span>Transaction Type:</span>
+<select ng-options="type.name as type.name for type in budgetmonth.types" ng-model="budgetmonth.filter" ng-change="budgetmonth.restore();budgetmonth.dofilter()"></select>
+<button ng-click="budgetmonth.clearfilter()">Reset</button>
 <table tr-ng-grid="" items="budgetmonth.trans"
-       on-data-required="budgetmonth.getTransData()"
+       on-data-required="budgetmonth.getTransData()" fields="['rec.Amount', 'rec.ReconcileAmount', 'type', 'date']"
        enable-sorting="false"
        enable-filtering="false">
     <thead>
-        <tr></tr>
+        <tr>
+            <th field-name="rec.Amount" display-name="Amount"></th>
+            <th field-name="rec.ReconcileAmount" display-name="Reconcile"></th>
+            <th field-name="type" display-name="Type"></th>
+            <th field-name="date" display-name="Date"></th>
+        </tr>
     </thead>
     <tbody>
-        <tr></tr>
+        <tr>
+
+        </tr>
     </tbody>
 </table>
