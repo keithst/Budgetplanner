@@ -101,6 +101,7 @@
         else
         {
             self.returnmsg = "";
+            self.style = { 'background-color': '#cc3333' };
             self.error = "Please select a transaction type"
             self.prevent = true;
         }
@@ -167,9 +168,13 @@
 
     self.delete = function (item) {
         self.deleteparm.id = item.rec.tr.id;
-        $q.all([TransSvc.deleteTrans(self.deleteparm), item]).then(function (data) {
+        self.amt = self.validateamt(item.rec.tr.Amount, true, false, item.rec.type);
+        self.ramt = self.validateamt(item.rec.tr.ReconcileAmount, false, true, item.rec.type);
+        var temp = (parseFloat(self.amt) + parseFloat(self.ramt)) * -1;
+        $q.all([TransSvc.deleteTrans(self.deleteparm), item, temp]).then(function (data) {
             if (parseInt(data[0].status) >= 200 && parseInt(data[0].status) <= 299) {
                 self.merges.splice(self.merges.indexOf(data[1]), 1);
+                self.updateaccount(parseFloat(data[2]));
             }
         })
     }

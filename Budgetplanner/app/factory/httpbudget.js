@@ -8,6 +8,12 @@
             });
         }
 
+        f.getMonths = function (selected) {
+            return $http.post('/api/budget/GetBudgetDist', selected).then(function (response) {
+                return response.data;
+            });
+        }
+
         return f;
 
     }
