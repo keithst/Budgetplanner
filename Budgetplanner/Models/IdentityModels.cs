@@ -160,6 +160,14 @@ namespace Budgetplanner.Models
             }
         }
 
+        //Get transaction based on house
+        public async Task<List<Trans>> GetTransFromHouse(int id)
+        {
+            var idParm = new SqlParameter("@id", id);
+
+            return await this.Database.SqlQuery<Trans>("GetTransFromHouse @id", idParm).ToListAsync();
+        }
+
         // Add a household
         public async Task<int> AddHouse(string name, string user)
         {

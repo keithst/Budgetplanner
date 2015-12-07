@@ -154,6 +154,13 @@ namespace Budgetplanner.Controllers
             return await db.GetBudgetDist(input.id);
         }
 
+        [Route("GetTransFromHouse")]
+        [HttpPost]
+        public async Task<List<Trans>> GetTransFromHouse(idinput input)
+        {
+            return await db.GetTransFromHouse(input.id);
+        }
+
         [Route("GetTransFromType")]
         [HttpPost]
         public async Task<List<Trans>> GetTransFromType(idinput input)

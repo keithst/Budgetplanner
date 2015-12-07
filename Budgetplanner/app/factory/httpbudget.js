@@ -14,6 +14,12 @@
             });
         }
 
+        f.getTrans = function (selected) {
+            return $http.post('/api/budget/GetTransFromHouse', selected).then(function (response) {
+                return response.data;
+            });
+        }
+
         return f;
 
     }

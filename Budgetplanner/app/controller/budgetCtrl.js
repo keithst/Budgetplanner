@@ -9,12 +9,14 @@
 
     self.passparm = {
         month: "",
-        year: ""
+        year: "",
+        house: ""
     }
 
     self.gotoBudget = function (month, year) {
         self.passparm.month = month;
         self.passparm.year = year;
+        self.passparm.house = self.selected.id;
         $state.go('budgetmonth', self.passparm)
     }
 
