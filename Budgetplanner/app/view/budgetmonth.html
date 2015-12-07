@@ -5,13 +5,19 @@
        enable-filtering="false">
     <thead>
         <tr>
+            <th field-name="rec.Amount" display-name="Amount"></th>
+            <th field-name="type" display-name="Type"></th>
+            <th field-name="date" display-name="Date"></th>
+            <th display-name="Action"></th>
         </tr>
     </thead>
     <tbody>
         <tr>
+            <td><button>Edit</button><button ng-click="budgetmonth.delete(gridItem)">Delete</button></td>
         </tr>
     </tbody>
 </table>
+<div class="marginbottom"><button>Create Budget</button></div>
 <span>Transaction Type:</span>
 <select ng-options="type.name as type.name for type in budgetmonth.types" ng-model="budgetmonth.filter" ng-change="budgetmonth.restore();budgetmonth.dofilter()"></select>
 <button ng-click="budgetmonth.clearfilter()">Reset</button>

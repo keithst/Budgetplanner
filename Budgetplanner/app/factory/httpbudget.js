@@ -20,6 +20,18 @@
             });
         }
 
+        f.addBudget = function (updated) {
+            return $http.post('/api/budget/AddBudget', updated)
+        }
+
+        f.editBudget = function (updated) {
+            return $http.post('/api/budget/EditBudget', updated)
+        }
+
+        f.deleteBudget = function (updated) {
+            return $http.post('/api/budget/DeleteBudget', updated)
+        }
+
         return f;
 
     }

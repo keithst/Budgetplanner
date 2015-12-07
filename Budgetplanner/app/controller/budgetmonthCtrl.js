@@ -14,6 +14,19 @@
         house: ""
     }
 
+    self.deleteparm = {
+        id: ""
+    }
+
+    self.delete = function (item) {
+        self.deleteparm.id = item.rec.id;
+        $q.all([TransSvc.deleteTrans(self.deleteparm), item]).then(function (data) {
+            if (parseInt(data[0].status) >= 200 && parseInt(data[0].status) <= 299) {
+                self.budgets.splice(self.budgets.indexOf(data[1]), 1);
+            }
+        })
+    }
+
     self.clearfilter = function () {
         self.filter = ""
         if (self.arrayfilter.length != 0) {
