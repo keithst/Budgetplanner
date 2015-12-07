@@ -231,9 +231,9 @@ namespace Budgetplanner.Models
         // Delete budget
         public async Task<int> DeleteBudget(int id)
         {
-            var idParm = new SqlParameter("@id", id);
+            var budgetParm = new SqlParameter("@budget", id);
 
-            return await this.Database.ExecuteSqlCommandAsync("DeleteBudget @id", idParm);
+            return await this.Database.ExecuteSqlCommandAsync("DeleteBudget @budget", budgetParm);
         }
 
         // Delete transaction

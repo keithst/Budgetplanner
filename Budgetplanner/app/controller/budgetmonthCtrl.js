@@ -12,6 +12,7 @@
     self.increate = false;
     self.editmode = false;
     self.prevent = true;
+    self.noedit = true;
     self.style = { 'background-color': '#46b946' };
     self.date = "";
     self.month = "";
@@ -48,6 +49,7 @@
         self.inedit = true;
         self.createmode = true;
         self.increate = true;
+        self.date = self.selected.month + "/" + self.selected.year;
         self.createvalidate();
     }
 
@@ -61,6 +63,7 @@
         if (self.createtemp.type) {
             self.error = "";
             self.returnmsg = "";
+            self.checkdup(self.createtemp.type);
             self.nullcheck(self.createtemp.amount);
             self.amt = self.validateamt(self.createtemp.amount);
             self.validatedate(self.date);
@@ -71,6 +74,17 @@
             self.style = { 'background-color': '#cc3333' };
             self.error = "Please select a budget type"
             self.prevent = true;
+        }
+    }
+
+    self.checkdup = function (type) {
+        for(x = 0; x < self.budgets.length; x++)
+        {
+            if(type == self.budgets[x].rec.TypeId && self.date == self.budgets[x].date)
+            {
+                self.style = { 'background-color': '#cc3333' };
+                self.error = "Budget type already assigned for this month"
+            }
         }
     }
 
@@ -155,7 +169,7 @@
 
     self.delete = function (item) {
         self.deleteparm.id = item.rec.id;
-        $q.all([TransSvc.deleteTrans(self.deleteparm), item]).then(function (data) {
+        $q.all([BudgetSvc.deleteBudget(self.deleteparm), item]).then(function (data) {
             if (parseInt(data[0].status) >= 200 && parseInt(data[0].status) <= 299) {
                 self.budgets.splice(self.budgets.indexOf(data[1]), 1);
             }
