@@ -7,8 +7,15 @@
         id: ""
     }
 
-    self.gotoBudget = function () {
+    self.passparm = {
+        month: "",
+        year: ""
+    }
 
+    self.gotoBudget = function (month, year) {
+        self.passparm.month = month;
+        self.passparm.year = year;
+        $state.go('budgetmonth', self.passparm)
     }
 
     self.populatemonth = function () {

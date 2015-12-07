@@ -101,6 +101,15 @@ namespace Budgetplanner.Models
             return await this.Database.SqlQuery<Budget>("GetBudget @id", idParm).ToListAsync();
         }
 
+        // Get budget from household id
+        public async Task<List<Budgeting>> GetBudgetMonth(int month, int year)
+        {
+            var monthParm = new SqlParameter("@month", month);
+            var yearParm = new SqlParameter("@year", year);
+
+            return await this.Database.SqlQuery<Budgeting>("GetBudgetMonth @month, @year", monthParm, yearParm).ToListAsync();
+        }
+
         // Get budget months from household id
         public async Task<List<BudgetMonth>> GetBudgetDist(int id)
         {

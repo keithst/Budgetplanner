@@ -3,7 +3,7 @@
         var f = {};
 
         f.getBudgets = function (selected) {
-            return $http.post('/api/budget/GetBudgetForHouse', selected).then(function (response) {
+            return $http.post('/api/budget/GetBudgetMonth', selected).then(function (response) {
                 return response.data;
             });
         }

@@ -68,6 +68,12 @@ namespace Budgetplanner.Controllers
             public int id { get; set; }
         }
 
+        public class dates
+        {
+            public int month { get; set; }
+            public int year { get; set; }
+        }
+
         public class userparms
         {
             public string userid { get; set; }
@@ -132,6 +138,13 @@ namespace Budgetplanner.Controllers
         public async Task<List<Budgeting>> GetBudgetForHouse(idin input)
         {
             return await db.GetBudgetForHouse(input.id);
+        }
+
+        [Route("GetBudgetMonth")]
+        [HttpPost]
+        public async Task<List<Budgeting>> GetBudgetMonth(dates input)
+        {
+            return await db.GetBudgetMonth(input.month, input.year);
         }
 
         [Route("GetBudgetDist")]

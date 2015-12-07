@@ -1,7 +1,5 @@
 ﻿<h3 class="settop" ng-init="budget.populatemonth()">Budget</h3>
 Budgets listed by month/year
-<div class="container">
-    <div ng-repeat="item in budget.months" ng-click="budget.gotoBuddget(item.month_b, item.year_b)">
-        {{item.month_b}}/{{item.year_b}}
-    </div>
+<div ng-repeat="item in budget.months">
+    <button ng-click="budget.gotoBudget(item.month_b, item.year_b)">{{item.month_b}}/{{item.year_b}}</button>
 </div>
