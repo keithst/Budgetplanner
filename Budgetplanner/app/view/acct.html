@@ -7,7 +7,7 @@
                 <tr>
                     <th field-name="Description_ba" display-name="Description"></th>
                     <th field-name="Total" display-name="Total"></th>
-                    <th display-name="Transactions"></th>
+                    <th display-name="Actions"></th>
                 </tr>
             </thead>
             <tbody>
@@ -15,7 +15,8 @@
                     <td field-name="Description_ba"></td>
                     <td field-name="Total">
                     </td>
-                    <td><button ng-click="act.gotoView(gridItem.id)">View</button></td>
+                    <td><button ng-click="act.gotoView(gridItem.id)">View Transactions</button><button>Edit</button><button>Delete</button></td>
                 </tr>
             </tbody>
         </table>
+<button>Create</button>

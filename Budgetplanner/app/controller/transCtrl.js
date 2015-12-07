@@ -438,7 +438,7 @@
             }
             else {
                 self.style = { 'background-color': '#cc3333' };
-                self.error = "Incorrect Date Formt use MM/DD/YYYY";
+                self.error = "Incorrect Date Format use MM/DD/YYYY";
             }
         }
     }

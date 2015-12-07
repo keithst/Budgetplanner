@@ -7,6 +7,18 @@
     self.arrayfilter = [];
     self.types = [];
     self.filter = "";
+    self.createmode = false;
+    self.inedit = false;
+    self.increate = false;
+    self.editmode = false;
+    self.prevent = true;
+    self.style = { 'background-color': '#46b946' };
+    self.date = "";
+    self.month = "";
+    self.year = "";
+    self.error = "";
+    self.returnmsg = "";
+    self.amt = "";
 
     self.selected = {
         month: "",
@@ -14,8 +26,131 @@
         house: ""
     }
 
+    self.update = {
+        budget: "",
+        type: "",
+        house: "",
+        amount: "",
+        year: "",
+        month: ""
+    }
+
+    self.createtemp = {
+        amount: "",
+        type: ""
+    }
+
     self.deleteparm = {
         id: ""
+    }
+
+    self.createtoggle = function () {
+        self.inedit = true;
+        self.createmode = true;
+        self.increate = true;
+        self.createvalidate();
+    }
+
+    self.exitcreate = function () {
+        self.inedit = false;
+        self.createmode = false;
+        self.increate = false;
+    }
+
+    self.createvalidate = function () {
+        if (self.createtemp.type) {
+            self.error = "";
+            self.returnmsg = "";
+            self.nullcheck(self.createtemp.amount);
+            self.amt = self.validateamt(self.createtemp.amount);
+            self.validatedate(self.date);
+            self.prevent = false;
+        }
+        else {
+            self.returnmsg = "";
+            self.style = { 'background-color': '#cc3333' };
+            self.error = "Please select a budget type"
+            self.prevent = true;
+        }
+    }
+
+    self.nullcheck = function (field) {
+        if (self.error.length == 0) {
+            if (!field) {
+                self.style = { 'background-color': '#cc3333' };
+                self.error = "Null value entered"
+            }
+        }
+    }
+
+    self.validatedate = function (date) {
+        if (self.error.length == 0) {
+            var temp = date.split('/');
+            var totaler = 0;
+            if (temp.length == 2) {
+                for (x = 0; x < temp.length; x++) {
+                    if (isNaN(temp[x])) {
+                        self.style = { 'background-color': '#cc3333' };
+                        self.error = "Bad date, non numeric value detected";
+                    }
+                    else {
+                        switch (x) {
+                            case 0:
+                                self.month = temp[x];
+                                break;
+                            case 1:
+                                self.year = temp[x];
+                                break;
+                        }
+                        totaler++;
+                    }
+                }
+                if (totaler == temp.length) {
+                    if (parseInt(self.year) >= 1900) {
+                        if (parseInt(self.month) > 0 && parseInt(self.month) < 13) {
+                                self.style = { 'background-color': '#46b946' };
+                                self.error = "";
+                        }
+                        else {
+                            self.style = { 'background-color': '#cc3333' };
+                            self.error = "Invalid month";
+                        }
+
+                    }
+                    else {
+                        self.style = { 'background-color': '#cc3333' };
+                        self.error = "Invalid year";
+                    }
+                }
+            }
+            else {
+                self.style = { 'background-color': '#cc3333' };
+                self.error = "Incorrect Date Format use MM/YYYY";
+            }
+        }
+    }
+
+    self.validateamt = function (amt) {
+        if (self.error.length == 0) {
+            var temp = amt;
+            if (temp.charAt(0) == '$') {
+                temp = temp.substr(1, temp.length)
+                temp = temp.replace(",", "");
+                if (isNaN(temp) || isNaN(parseFloat(temp))) {
+                    self.style = { 'background-color': '#cc3333' };
+                    self.error = "Amount not a decimal value";
+                }
+                else {
+                    self.style = { 'background-color': '#46b946' };
+                    self.error = "";
+                }
+            }
+            else {
+                self.style = { 'background-color': '#cc3333' };
+                self.error = "Missing $ sign";
+            }
+        }
+        return temp;
     }
 
     self.delete = function (item) {
