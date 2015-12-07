@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Page title - directive.js -->
+    <title page-title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <!-- Bootstrap -->
+    <link href="Content/bootstrap.min.css" rel="stylesheet">
+    <!-- Fonts  -->
+    <link href="Content/font-awesome.min.css" rel="stylesheet" />
+    <link href="Content/trNgGrid.min.css" rel="stylesheet" />
+    <link href="Content/budget.css" rel="stylesheet" />
+</head>
+<body>
+    <div ng-app="app">
+        <div class="container" ng-controller="menuCtrl">
+            <nav class="navbar navbar-inverse navbar-fixed-top">
+                <div class="container">
+                    <div class="navbar-header">
+                        Navbar
+                    </div>
+                    <a ui-sref="house">House</a>
+                </div>
+            </nav>
+            <div ui-view></div>
+        </div>
+    </div>
+
+    <script src="Scripts/angular.min.js"></script>
+    <script src="Scripts/angular-ui-router.min.js"></script>
+    <script src="Scripts/angular-ui/ui-bootstrap.min.js"></script>
+    <script src="Scripts/trNgGrid.min.js"></script>
+
+    <script src="app/app.js"></script>
+    <script src="app/service.js"></script>
+    <script src="app/controller/menuCtrl.js"></script>
+    <script src="app/factory/httphouse.js"></script>
+    <script src="app/controller/houseCtrl.js"></script>
+    <script src="app/factory/httpaccount.js"></script>
+    <script src="app/controller/acctCtrl.js"></script>
+    <script src="app/factory/httpbudget.js"></script>
+    <script src="app/controller/budgetCtrl.js"></script>
+    <script src="app/factory/httptrans.js"></script>
+    <script src="app/controller/transCtrl.js"></script>
+    <script src="app/controller/budgetmonthCtrl.js"></script>
+
+    <script src="Scripts/jquery-1.10.2.min.js"></script>
+    <script src="Scripts/bootstrap.min.js"></script>
+</body>
+</html>

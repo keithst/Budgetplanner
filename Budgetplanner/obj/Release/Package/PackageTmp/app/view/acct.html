@@ -1,0 +1,22 @@
+﻿<h3 class="settop">Accounts</h3>
+        <table tr-ng-grid="" items="act.accounts" fields="['Description_ba', 'Total']"
+               on-data-required="act.populate()"
+               enable-sorting="false"
+               enable-filtering="false">
+            <thead>
+                <tr>
+                    <th field-name="Description_ba" display-name="Description"></th>
+                    <th field-name="Total" display-name="Total"></th>
+                    <th display-name="Actions"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td field-name="Description_ba"></td>
+                    <td field-name="Total">
+                    </td>
+                    <td><button ng-click="act.gotoView(gridItem.id)">View Transactions</button><button>Edit</button><button>Delete</button></td>
+                </tr>
+            </tbody>
+        </table>
+<button>Create</button>

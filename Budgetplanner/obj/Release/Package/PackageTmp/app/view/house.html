@@ -1,0 +1,4 @@
+﻿<h3 class="settop">House</h3>
+<span ng-init="house.populate()">{{house.house.name}}</span>
+<button ng-click="house.gotoView('acct', house.house.id)" ng-disabled="house.disabled">Accounts</button>
+<button ng-click="house.gotoView('budget', house.house.id)" ng-disabled="house.disabled">Budgets</button>
