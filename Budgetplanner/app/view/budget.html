@@ -1,19 +1,7 @@
-﻿<h3 class="settop">Budget</h3>
-<table tr-ng-grid="" items="budget.budgets" fields="['Amount']"
-       on-data-required="budget.populate()"
-       enable-sorting="false"
-       enable-filtering="false">
-    <thead>
-        <tr>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-        </tr>
-    </tbody>
-</table>
+﻿<h3 class="settop" ng-init="budget.populatemonth()">Budget</h3>
+Budgets listed by month/year
 <div class="container">
-    <div ng-repeat="item in budget.months">
+    <div ng-repeat="item in budget.months" ng-click="budget.gotoBuddget(item.month_b, item.year_b)">
         {{item.month_b}}/{{item.year_b}}
     </div>
 </div>

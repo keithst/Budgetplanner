@@ -1,24 +1,21 @@
-﻿angular.module('app').controller('budgetCtrl', ['$q', '$state', '$filter', 'BudgetSvc', '$stateParams', function ($q, $state, $filter, BudgetSvc, $stateParams) {
+﻿angular.module('app').controller('budgetCtrl', ['$timeout', '$q', '$state', '$filter', 'BudgetSvc', '$stateParams', function ($timeout, $q, $state, $filter, BudgetSvc, $stateParams) {
     var self = this;
 
-    self.budgets = [];
     self.months = [];
-    self.post = false;
 
     self.selected = {
         id: ""
     }
 
-    self.populate = function () {
-        self.selected = $stateParams;
-        self.getBudgetData();
+    self.gotoBudget = function () {
+
     }
 
     self.populatemonth = function () {
-        $q.all([BudgetSvc.getMonths(self.selected)]).then(function (data) {
+        self.selected = $stateParams;
+        $timeout($q.all([BudgetSvc.getMonths(self.selected)]).then(function (data) {
             self.months = data[0];
-            self.post = true;
-        });
+        }), 100);
     }
 
     self.getBudgetData = function () {
