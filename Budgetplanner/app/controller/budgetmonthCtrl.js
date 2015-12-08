@@ -20,6 +20,7 @@
     self.error = "";
     self.returnmsg = "";
     self.amt = "";
+    self.edit = {};
 
     self.selected = {
         month: "",
@@ -43,6 +44,77 @@
 
     self.deleteparm = {
         id: ""
+    }
+
+    self.master = {
+        id: "",
+        amt: "",
+        date: "",
+        type: ""
+    }
+
+    self.edits = {
+        budget: "",
+        type: "",
+        house: "",
+        amount: "",
+        year: "",
+        month: ""
+    }
+
+    self.toggleedit = function (item) {
+        self.editmode = true;
+        self.inedit = true;
+        self.increate = true;
+        self.edit = item;
+        self.master.id = self.edit.rec.id;
+        self.master.amt = self.edit.rec.Amount;
+        self.master.type = self.edit.type;
+        self.master.date = self.edit.date;
+        self.fullvalidate();
+    }
+
+    self.closeedit = function () {
+        self.edit.rec.Amount = self.master.amt;
+        self.edit.type = self.master.type;
+        self.edit.date = self.master.date;
+        self.error = ""
+        self.editmode = false;
+        self.inedit = false;
+        self.increate = false;
+    }
+
+    self.fullvalidate = function () {
+        self.error = "";
+        self.returnmsg = "";
+        self.nullcheck(self.edit.rec.Amount, "Amount: ");
+        self.amt = self.validateamt(self.edit.rec.Amount, "Amount: ");
+        self.validatedate(self.edit.date, "Date: ");
+    }
+
+    self.updateRec = function () {
+        self.returnmsg = "";
+        self.error = "Processing request"
+        self.edits.budget = self.edit.rec.id;
+        self.edits.year = self.year;
+        self.edits.month = self.month;
+        self.edits.amount = self.amt;
+        self.edits.house = self.selected.house;
+        for (x = 0; x < self.types.length; x++) {
+            if (self.edit.type == self.types[x].name) {
+                self.edits.type = self.types[x].id;
+            }
+        }
+        $q.all([BudgetSvc.editBudget(self.edits)]).then(function (data) {
+            if (parseInt(data[0].status) >= 200 && parseInt(data[0].status) <= 299) {
+                self.returnmsg = "Edit applied";
+                self.master.id = self.edit.rec.id;
+                self.master.amt = self.edit.rec.Amount;
+                self.master.type = self.edit.type;
+                self.master.date = self.edit.date;
+            }
+            self.error = "";
+        })
     }
 
     self.sendcreate = function () {
@@ -79,9 +151,9 @@
             self.error = "";
             self.returnmsg = "";
             self.checkdup(self.createtemp.type);
-            self.nullcheck(self.createtemp.amount);
-            self.amt = self.validateamt(self.createtemp.amount);
-            self.validatedate(self.date);
+            self.nullcheck(self.createtemp.amount, "Amount: ");
+            self.amt = self.validateamt(self.createtemp.amount, "Amount: ");
+            self.validatedate(self.date, "Date: ");
             self.prevent = false;
         }
         else {
@@ -103,16 +175,16 @@
         }
     }
 
-    self.nullcheck = function (field) {
+    self.nullcheck = function (field, fieldname) {
         if (self.error.length == 0) {
             if (!field) {
                 self.style = { 'background-color': '#cc3333' };
-                self.error = "Null value entered"
+                self.error = fieldname + "Null value entered"
             }
         }
     }
 
-    self.validatedate = function (date) {
+    self.validatedate = function (date, fieldname) {
         if (self.error.length == 0) {
             var temp = date.split('/');
             var totaler = 0;
@@ -120,7 +192,7 @@
                 for (x = 0; x < temp.length; x++) {
                     if (isNaN(temp[x])) {
                         self.style = { 'background-color': '#cc3333' };
-                        self.error = "Bad date, non numeric value detected";
+                        self.error = fieldname + "Bad date, non numeric value detected";
                     }
                     else {
                         switch (x) {
@@ -142,24 +214,24 @@
                         }
                         else {
                             self.style = { 'background-color': '#cc3333' };
-                            self.error = "Invalid month";
+                            self.error = fieldname + "Invalid month";
                         }
 
                     }
                     else {
                         self.style = { 'background-color': '#cc3333' };
-                        self.error = "Invalid year";
+                        self.error = fieldname + "Invalid year";
                     }
                 }
             }
             else {
                 self.style = { 'background-color': '#cc3333' };
-                self.error = "Incorrect Date Format use MM/YYYY";
+                self.error = fieldname + "Incorrect Date Format use MM/YYYY";
             }
         }
     }
 
-    self.validateamt = function (amt) {
+    self.validateamt = function (amt, fieldname) {
         if (self.error.length == 0) {
             var temp = amt;
             if (temp.charAt(0) == '$') {
@@ -167,7 +239,7 @@
                 temp = temp.replace(",", "");
                 if (isNaN(temp) || isNaN(parseFloat(temp))) {
                     self.style = { 'background-color': '#cc3333' };
-                    self.error = "Amount not a decimal value";
+                    self.error = fieldname + "Amount not a decimal value";
                 }
                 else {
                     self.style = { 'background-color': '#46b946' };
@@ -176,7 +248,7 @@
             }
             else {
                 self.style = { 'background-color': '#cc3333' };
-                self.error = "Missing $ sign";
+                self.error = fieldname + "Missing $ sign";
             }
         }
         return temp;
@@ -248,7 +320,6 @@
             {
                 if (self.temp[x].month_t == self.selected.month && self.temp[x].year_t == self.selected.year) {
                     self.temp[x].Amount = $filter('currency')(self.temp[x].Amount, '$', 2);
-                    self.temp[x].ReconcileAmount = $filter('currency')(self.temp[x].ReconcileAmount, '$', 2);
                     for (y = 0; y < self.types.length; y++) {
                         if (self.types[y].id == self.temp[x].TypeId) {
                             self.trans.push({ rec: self.temp[x], date: self.temp[x].month_t + "/" + self.temp[x].year_t, type: self.types[y].name });
