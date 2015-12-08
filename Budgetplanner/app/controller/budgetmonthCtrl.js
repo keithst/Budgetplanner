@@ -6,6 +6,7 @@
     self.temp = [];
     self.arrayfilter = [];
     self.types = [];
+    self.budgetcheck = [];
     self.filter = "";
     self.createmode = false;
     self.inedit = false;
@@ -103,6 +104,7 @@
         for (x = 0; x < self.types.length; x++) {
             if (self.edit.type == self.types[x].name) {
                 self.edits.type = self.types[x].id;
+                self.budgetcheck[x].budget = $filter('currency')(self.amt, '$', 2);
             }
         }
         $q.all([BudgetSvc.editBudget(self.edits)]).then(function (data) {
@@ -258,6 +260,14 @@
         self.deleteparm.id = item.rec.id;
         $q.all([BudgetSvc.deleteBudget(self.deleteparm), item]).then(function (data) {
             if (parseInt(data[0].status) >= 200 && parseInt(data[0].status) <= 299) {
+                for (x = 0; x < self.budgetcheck.length; x++)
+                {
+                    if(self.budgetcheck[x].type.name == item.type)
+                    {
+                        self.budgetcheck[x].budget = 0;
+                        self.budgetcheck[x].budget = $filter('currency')(self.budgetcheck[x].budget, '$', 2);
+                    }
+                }
                 self.budgets.splice(self.budgets.indexOf(data[1]), 1);
             }
         })
@@ -290,6 +300,12 @@
         self.selected = $stateParams;
         $timeout($q.all([TransSvc.getTypes()]).then(function (data) {
             self.types = data[0];
+            for(x = 0; x < self.types.length; x++)
+            {
+                self.budgetcheck.push({ type: self.types[x], amount: 0, budget: 0 });
+                self.budgetcheck[x].amount = $filter('currency')(self.budgetcheck[x].amount, '$', 2);
+                self.budgetcheck[x].budget = $filter('currency')(self.budgetcheck[x].budget, '$', 2);
+            }
         }), 100);
     }
 
@@ -305,6 +321,7 @@
                     self.temp[x].Amount = $filter('currency')(self.temp[x].Amount, '$', 2);
                     for (y = 0; y < self.types.length; y++) {
                         if (self.types[y].id == self.temp[x].TypeId) {
+                            self.budgetcheck[y].budget = self.temp[x].Amount;
                             self.budgets.push({ rec: self.temp[x], date: self.temp[x].month_b + "/" + self.temp[x].year_b, type: self.types[y].name });
                         }
                     }
@@ -319,9 +336,12 @@
             for (x = 0; x < self.temp.length; x++)
             {
                 if (self.temp[x].month_t == self.selected.month && self.temp[x].year_t == self.selected.year) {
-                    self.temp[x].Amount = $filter('currency')(self.temp[x].Amount, '$', 2);
                     for (y = 0; y < self.types.length; y++) {
                         if (self.types[y].id == self.temp[x].TypeId) {
+                            self.budgetcheck[y].amount = self.temp[x].Amount + self.temp[x].ReconcileAmount;
+                            self.budgetcheck[y].amount = $filter('currency')(self.budgetcheck[y].amount, '$', 2);
+                            self.temp[x].Amount = $filter('currency')(self.temp[x].Amount, '$', 2);
+                            self.temp[x].ReconcileAmount = $filter('currency')(self.temp[x].ReconcileAmount, '$', 2);
                             self.trans.push({ rec: self.temp[x], date: self.temp[x].month_t + "/" + self.temp[x].year_t, type: self.types[y].name });
                         }
                     }

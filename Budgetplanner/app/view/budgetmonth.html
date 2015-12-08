@@ -1,9 +1,24 @@
 ﻿<h3 class="settop" ng-init="budgetmonth.getParms()">Budget for {{budgetmonth.selected.month}}/{{budgetmonth.selected.year}}</h3>
 <div class="row">
     <div class="col-md-4">
-
+        <table tr-ng-grid="" items="budgetmonth.budgetcheck" fields="['type.name', 'budget', 'amount']"
+               enable-sorting="false"
+               enable-filtering="false">
+            <thead>
+                <tr>
+                    <th field-name="type.name" display-name="Type"></th>
+                    <th field-name="budget" display-name="Budget"></th>
+                    <th field-name="amount" display-name="Amount"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                </tr>
+            </tbody>
+        </table>
     </div>
     <div class="col-md-8">
+        <h4>Budget</h4>
         <table tr-ng-grid="" items="budgetmonth.budgets" fields="['rec.Amount', 'type', 'date']"
                on-data-required="budgetmonth.populate()"
                enable-sorting="false"
@@ -22,6 +37,7 @@
                 </tr>
             </tbody>
         </table>
+        <h4>Transactions</h4>
         <div class="marginbottom"><button ng-click="budgetmonth.createtoggle()" ng-disabled="budgetmonth.increate">Create Budget</button></div>
         <span>Transaction Type:</span>
         <select ng-options="type.name as type.name for type in budgetmonth.types" ng-model="budgetmonth.filter" ng-change="budgetmonth.restore();budgetmonth.dofilter()"></select>
@@ -47,7 +63,7 @@
 <div ng-style="budgetmonth.style" ng-show="budgetmonth.editmode" class="navbar navbar-fixed-bottom setbottom">
     <span>Edit Menu</span><br />
     <span>Amount:</span><input ng-model="budgetmonth.edit.rec.Amount" ng-change="budgetmonth.fullvalidate()" />
-    <span>Date:</span><input ng-change="budgetmonth.fullvalidate()" ng-model="budgetmonth.edit.date" />
+    <span>Date:</span><input ng-change="budgetmonth.fullvalidate()" ng-model="budgetmonth.edit.date" ng-disabled="budgetmonth.noedit" />
     <select ng-options="type.name as type.name for type in budgetmonth.types" ng-model="budgetmonth.edit.type" ng-change="budgetmonth.setall()"></select>
     <button ng-disabled="budgetmonth.error" ng-click="budgetmonth.updateRec()">Submit</button><button ng-click="budgetmonth.closeedit()">Close</button><span>{{budgetmonth.error}}</span><span>{{budgetmonth.returnmsg}}</span>
 </div>
