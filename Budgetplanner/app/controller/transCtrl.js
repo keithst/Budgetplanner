@@ -28,6 +28,7 @@
     self.prevent = true;
     self.account = {};
     self.saveamount = 0;
+    self.promise = {};
 
     self.master = {
         id: "",
@@ -495,7 +496,7 @@
             console.log(data);
             self.transactions = data[0];
             self.types = data[1];
-            for(x = 0; x < self.transactions.length; x++)
+            for (x = 0; x < self.transactions.length; x++)
             {
                 for(y = 0; y < self.types.length; y++)
                 {
@@ -505,15 +506,18 @@
                         self.transactions[x].ReconcileAmount = $filter('currency')(self.transactions[x].ReconcileAmount, '$', 2);
                         var date = self.transactions[x].month_t + '/' + self.transactions[x].day_t + '/' + self.transactions[x].year_t;
                         var record = { tr: self.transactions[x], type: self.types[y].name, date: date };
-                        $q.all([TransSvc.getUser({ userid: self.transactions[x].UserId }), record]).then(function (data) {
-                            console.log(data);
-                            self.user = data[0];
-                            var name = self.user[0].fname + ' ' + self.user[0].lname;
-                            self.settable(data[1], name);
-                        });
+                        self.merges.push({ rec: record, user: "" })
                     }
                 }
             }
+                for(x = 0; x < self.merges.length; x++)
+                {
+                    $q.all([TransSvc.getUser({ userid: self.merges[x].rec.tr.UserId }), self.merges[x]]).then(function (data) {
+                        self.user = data[0][0];
+                        var temp = data[1];
+                        temp.user = self.user.fname + ' ' + self.user.lname;
+                    })
+                }
         });
     }
 
