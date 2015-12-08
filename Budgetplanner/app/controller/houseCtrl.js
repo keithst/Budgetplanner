@@ -57,6 +57,8 @@
             if (parseInt(data[0].status) >= 200 && parseInt(data[0].status) <= 299) {
                 self.msg = "User has been kicked"
                 self.getUsers();
+                self.getAllUsers();
+                self.nokick = true;
             }
         })
     }
@@ -68,11 +70,13 @@
             if (parseInt(data[0].status) >= 200 && parseInt(data[0].status) <= 299) {
                 self.msg = "User has been invited"
                 self.getUsers();
+                self.getAllUsers();
             }
         })
     }
 
     self.getUsers = function () {
+        self.users = [];
         $q.all([HouseSvc.getUsers(self.selected)]).then(function (data) {
             for (x = 0; x < data[0].length; x++)
             {
