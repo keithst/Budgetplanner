@@ -31,6 +31,17 @@ namespace Budgetplanner.Migrations
                 },
                         "sturze");
             }
+            if (!context.Users.Any(u => u.Email == "test@test.com"))
+            {
+                userManager.Create(new ApplicationUser
+                {
+                    UserName = "TestUser",
+                    Email = "test@test.com",
+                    fname = "test",
+                    lname = "user"
+                },
+                        "Password-1");
+            }
             if (!context.TransType.Any(r => r.name == "Income"))
             {
                 context.TransType.Add(new TransactionType { name = "Income", isWithdrawl = false });

@@ -123,7 +123,14 @@ namespace Budgetplanner.Controllers
         [HttpPost]
         public async Task<List<HouseUser>> GetUser(userparms input)
         {
-            return await db.GetUser(input.userid);
+            if(input == null)
+            {
+                return await db.GetUser(null);
+            }
+            else
+            {
+                return await db.GetUser(input.userid);
+            }
         }
 
         [Route("GetUsersInHouse")]

@@ -2,3 +2,21 @@
 <span ng-init="house.populate()">{{house.house.name}}</span>
 <button ng-click="house.gotoView('acct', house.house.id)" ng-disabled="house.disabled">Accounts</button>
 <button ng-click="house.gotoView('budget', house.house.id)" ng-disabled="house.disabled">Budgets</button>
+<span>Users:</span><select ng-options="user.Id as user.UserName for user in house.users" ng-model="house.user" ng-change="house.checkuser()"></select>
+<button ng-disabled="house.nokick">Kick User</button><span>{{house.msg}}</span>
+<table tr-ng-grid="" items="house.allusers" fields="['UserName']"
+       enable-sorting="false"
+       enable-filtering="false">
+    <thead>
+        <tr>
+            <th display-name="Name"></th>
+            <th display-name="Action"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><span>{{gridItem.fname}} {{gridItem.lname}}</span></td>
+            <td><button>Invite User</button></td>
+        </tr>
+    </tbody>
+</table>

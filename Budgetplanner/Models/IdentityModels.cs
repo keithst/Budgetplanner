@@ -121,10 +121,16 @@ namespace Budgetplanner.Models
         // Get user
         public async Task<List<HouseUser>> GetUser(string userid)
         {
+            if(string.IsNullOrWhiteSpace(userid))
+            {
+                return await this.Database.SqlQuery<HouseUser>("GetUser").ToListAsync();
+            }
+            else
+            {
+                var userParm = new SqlParameter("@user", userid);
 
-            var userParm = new SqlParameter("@user", userid);
-
-            return await this.Database.SqlQuery<HouseUser>("GetUser @user", userParm).ToListAsync();
+                return await this.Database.SqlQuery<HouseUser>("GetUser @user", userParm).ToListAsync();
+            }
         }
 
         // Get user from house ids

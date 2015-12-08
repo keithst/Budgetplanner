@@ -71,7 +71,7 @@
     <span>Edit Menu</span><br />
     <span>Amount:</span><input ng-model="budgetmonth.edit.rec.Amount" ng-change="budgetmonth.fullvalidate()" />
     <span>Date:</span><input ng-change="budgetmonth.fullvalidate()" ng-model="budgetmonth.edit.date" ng-disabled="budgetmonth.noedit" />
-    <select ng-options="type.name as type.name for type in budgetmonth.types" ng-model="budgetmonth.edit.type" ng-change="budgetmonth.setall()"></select>
+    <span>Type:</span><select ng-options="type.name as type.name for type in budgetmonth.types" ng-model="budgetmonth.edit.type" ng-change="budgetmonth.setall()"></select>
     <button ng-disabled="budgetmonth.error" ng-click="budgetmonth.updateRec()">Submit</button><button ng-click="budgetmonth.closeedit()">Close</button><span>{{budgetmonth.error}}</span><span>{{budgetmonth.returnmsg}}</span>
 </div>
 <div ng-style="budgetmonth.style" ng-show="budgetmonth.createmode" class="navbar navbar-fixed-bottom setbottom">
