@@ -10,6 +10,7 @@
     self.error = "";
     self.returnmsg = "";
     self.amt = "";
+    self.edit = {};
 
     self.selectacct = {};
 
@@ -35,6 +36,44 @@
     self.deleteparm = {
         id: ""
     }
+
+    self.toggleedit = function (item) {
+        self.editmode = true;
+        self.inedit = true;
+        self.increate = true;
+        self.edit = item;
+        self.master = self.edit.Description_ba;
+        self.fullvalidate();
+    }
+
+    self.closeedit = function () {
+        self.edit.Description_ba = self.master;
+        self.error = ""
+        self.editmode = false;
+        self.inedit = false;
+        self.increate = false;
+    }
+
+    self.fullvalidate = function () {
+        self.error = "";
+        self.returnmsg = "";
+        self.nullcheck(self.edit.Description_ba, "Description: ");
+    }
+
+    self.updateRec = function () {
+        self.returnmsg = "";
+        self.error = "Processing request"
+        self.update.desc = self.edit.Description_ba;
+        self.update.id = self.edit.id;
+        $q.all([AccountSvc.editAccount(self.update)]).then(function (data) {
+            if (parseInt(data[0].status) >= 200 && parseInt(data[0].status) <= 299) {
+                self.returnmsg = "Edit applied";
+                self.master = self.edit.Description_ba;
+            }
+            self.error = "";
+        })
+    }
+
 
     self.delete = function (item) {
         self.deleteparm.id = item.id;
@@ -63,6 +102,11 @@
             if (!field) {
                 self.style = { 'background-color': '#cc3333' };
                 self.error = fieldname + "Null value entered"
+            }
+            else
+            {
+                self.style = { 'background-color': '#46b946' };
+                self.error = "";
             }
         }
     }

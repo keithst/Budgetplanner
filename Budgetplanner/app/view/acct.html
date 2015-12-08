@@ -19,6 +19,11 @@
             </tbody>
         </table>
 <button ng-click="act.createtoggle()" ng-disabled="act.increate">Create</button>
+<div ng-style="act.style" ng-show="act.editmode" class="navbar navbar-fixed-bottom setbottom">
+    <span>Edit Menu</span><br />
+    <span>Description:</span><input ng-model="act.edit.Description_ba" ng-change="act.fullvalidate()" />
+    <button ng-disabled="act.error" ng-click="act.updateRec()">Submit</button><button ng-click="act.closeedit()">Close</button><span>{{act.error}}</span><span>{{act.returnmsg}}</span>
+</div>
 <div ng-style="act.style" ng-show="act.createmode" class="navbar navbar-fixed-bottom setbottom">
     <span>Create Menu</span><br />
     <span>Description:</span><input ng-model="act.create.desc" ng-change="act.createvalidate()" />

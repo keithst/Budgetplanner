@@ -115,6 +115,10 @@
                 self.style = { 'background-color': '#cc3333' };
                 self.error = fieldname + "Null value entered"
             }
+            else {
+                self.style = { 'background-color': '#46b946' };
+                self.error = "";
+            }
         }
     }
 

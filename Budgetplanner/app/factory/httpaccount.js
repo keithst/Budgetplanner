@@ -16,6 +16,10 @@
             return $http.post('/api/budget/DeleteAccount', updated)
         }
 
+        f.editAccount = function (updated) {
+            return $http.post('/api/budget/UpdateAccount', updated)
+        }
+
         return f;
 
     }
