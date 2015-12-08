@@ -1,6 +1,7 @@
 ﻿<h3 class="settop" ng-init="budgetmonth.getParms()">Budget for {{budgetmonth.selected.month}}/{{budgetmonth.selected.year}}</h3>
 <div class="row">
     <div class="col-md-4">
+        <h4>Budget</h4>
         <table tr-ng-grid="" items="budgetmonth.budgetcheck" fields="['type.name', 'budget', 'amount']"
                enable-sorting="false"
                enable-filtering="false">
@@ -12,13 +13,15 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                </tr>
+                <tr></tr>
             </tbody>
         </table>
+        <div ng-repeat="msg in budgetmonth.messages">
+            {{msg}}<br />
+        </div>
     </div>
     <div class="col-md-8">
-        <h4>Budget</h4>
+        <h4>Budget Items</h4>
         <table tr-ng-grid="" items="budgetmonth.budgets" fields="['rec.Amount', 'type', 'date']"
                on-data-required="budgetmonth.populate()"
                enable-sorting="false"
@@ -37,8 +40,8 @@
                 </tr>
             </tbody>
         </table>
-        <h4>Transactions</h4>
         <div class="marginbottom"><button ng-click="budgetmonth.createtoggle()" ng-disabled="budgetmonth.increate">Create Budget</button></div>
+        <h4>Transactions</h4>
         <span>Transaction Type:</span>
         <select ng-options="type.name as type.name for type in budgetmonth.types" ng-model="budgetmonth.filter" ng-change="budgetmonth.restore();budgetmonth.dofilter()"></select>
         <button ng-click="budgetmonth.clearfilter()">Reset</button>

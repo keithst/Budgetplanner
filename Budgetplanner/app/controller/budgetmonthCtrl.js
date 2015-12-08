@@ -22,6 +22,7 @@
     self.returnmsg = "";
     self.amt = "";
     self.edit = {};
+    self.messages = [];
 
     self.selected = {
         month: "",
@@ -61,6 +62,26 @@
         amount: "",
         year: "",
         month: ""
+    }
+
+    self.buildmessages = function () {
+        self.messages = [];
+        alert(self.messages.length)
+        for(x = 0; x < self.budgetcheck.length; x++)
+        {
+            if(parseFloat(self.parsecurrency(self.budgetcheck[x].budget)) < parseFloat(self.parsecurrency(self.budgetcheck[x].amount)))
+            {
+                if(self.budgetcheck[x].type.isWithdrawl)
+                {
+                    self.messages.push("Budget for " + self.budgetcheck[x].type.name + " has been exceeded.")
+                }
+                else
+                {
+                    self.messages.push(self.budgetcheck[x].type.name + " is greater than the budget amount, you made more money!")
+                }
+            }
+        }
+        alert(self.messages.length)
     }
 
     self.toggleedit = function (item) {
@@ -114,6 +135,7 @@
                 self.master.amt = self.edit.rec.Amount;
                 self.master.type = self.edit.type;
                 self.master.date = self.edit.date;
+                self.buildmessages();
             }
             self.error = "";
         })
@@ -130,6 +152,7 @@
                 self.returnmsg = "Budget entry successfully created";
                 self.budgets = [];
                 self.populate();
+                self.buildmessages();
             }
         })
     }
@@ -233,6 +256,20 @@
         }
     }
 
+    self.parsecurrency = function (amt) {
+        var temp = amt;
+        if (temp.charAt(0) == '$') {
+            temp = temp.substr(1, temp.length)
+            temp = temp.replace(",", "");
+        }
+        if (temp.charAt(0) == '-') {
+            temp = temp.substr(2, temp.length)
+            temp = temp.replace(",", "");
+        }
+        return temp;
+    }
+
+
     self.validateamt = function (amt, fieldname) {
         if (self.error.length == 0) {
             var temp = amt;
@@ -268,6 +305,7 @@
                         self.budgetcheck[x].budget = $filter('currency')(self.budgetcheck[x].budget, '$', 2);
                     }
                 }
+                self.buildmessages();
                 self.budgets.splice(self.budgets.indexOf(data[1]), 1);
             }
         })
@@ -347,6 +385,7 @@
                     }
                 }
             }
+            self.buildmessages();
         });
     }
 
