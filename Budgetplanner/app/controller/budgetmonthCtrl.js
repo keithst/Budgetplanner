@@ -66,7 +66,6 @@
 
     self.buildmessages = function () {
         self.messages = [];
-        alert(self.messages.length)
         for(x = 0; x < self.budgetcheck.length; x++)
         {
             if(parseFloat(self.parsecurrency(self.budgetcheck[x].budget)) < parseFloat(self.parsecurrency(self.budgetcheck[x].amount)))
@@ -81,7 +80,6 @@
                 }
             }
         }
-        alert(self.messages.length)
     }
 
     self.toggleedit = function (item) {

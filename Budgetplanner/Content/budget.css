@@ -9,3 +9,8 @@
 .marginbottom {
     margin-bottom: 30px;
 }
+
+.scrollbox {
+    height: 120px;
+    overflow: auto;
+}
