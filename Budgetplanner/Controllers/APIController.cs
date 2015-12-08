@@ -119,6 +119,13 @@ namespace Budgetplanner.Controllers
             return await db.GetTransType(id);
         }
 
+        [Route("GetNonInvite")]
+        [HttpPost]
+        public async Task<List<HouseUser>> GetNonInvite()
+        {
+            return await db.GetNonInvite();
+        }
+
         [Route("GetUser")]
         [HttpPost]
         public async Task<List<HouseUser>> GetUser(userparms input)

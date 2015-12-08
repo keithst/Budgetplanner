@@ -15,13 +15,17 @@
         }
 
         f.getAllUsers = function () {
-            return $http.post('/api/budget/GetUser').then(function (response) {
+            return $http.post('/api/budget/GetNonInvite').then(function (response) {
                 return response.data;
             })
         }
 
         f.kickUser = function (updated) {
             return $http.post('/api/budget/KickUser', updated)
+        }
+
+        f.inviteUser = function (updated) {
+            return $http.post('/api/budget/InviteUser', updated)
         }
 
         return f;

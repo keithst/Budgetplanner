@@ -49,6 +49,12 @@ namespace Budgetplanner.Models
         public DbSet<Transaction> Trans { get; set; }
         public DbSet<TransactionType> TransType { get; set; }
 
+        // Get non invited users
+        public async Task<List<HouseUser>> GetNonInvite()
+        {
+            return await this.Database.SqlQuery<HouseUser>("GetNonInvite").ToListAsync();
+        }
+
         // Get household by id
         public async Task<List<House>> GetHouse(int id)
         {

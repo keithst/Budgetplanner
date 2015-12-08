@@ -61,6 +61,17 @@
         })
     }
 
+    self.inviteuser = function (id) {
+        self.update.user = id;
+        self.update.id = self.selected.id;
+        $q.all([HouseSvc.inviteUser(self.update)]).then(function (data) {
+            if (parseInt(data[0].status) >= 200 && parseInt(data[0].status) <= 299) {
+                self.msg = "User has been invited"
+                self.getUsers();
+            }
+        })
+    }
+
     self.getUsers = function () {
         $q.all([HouseSvc.getUsers(self.selected)]).then(function (data) {
             for (x = 0; x < data[0].length; x++)
