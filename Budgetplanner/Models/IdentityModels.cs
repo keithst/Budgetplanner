@@ -244,6 +244,14 @@ namespace Budgetplanner.Models
             return await this.Database.ExecuteSqlCommandAsync("DeleteTrans @id", idParm);
         }
 
+        // Delete account
+        public async Task<int> DeleteAccount(int id)
+        {
+            var idParm = new SqlParameter("@id", id);
+
+            return await this.Database.ExecuteSqlCommandAsync("DeleteAccount @id", idParm);
+        }
+
         // soft delete an account
         public async Task<int> SDeleteAccount(int id, bool isDeleted)
         {

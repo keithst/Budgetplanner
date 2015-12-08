@@ -274,9 +274,9 @@
             if (temp.charAt(0) == '$') {
                 temp = temp.substr(1, temp.length)
                 temp = temp.replace(",", "");
-                if (isNaN(temp) || isNaN(parseFloat(temp))) {
+                if (isNaN(temp) || isNaN(parseFloat(temp)) || parseFloat(temp) < 0) {
                     self.style = { 'background-color': '#cc3333' };
-                    self.error = fieldname + "Amount not a decimal value";
+                    self.error = fieldname + "Amount not a decimal value or negative";
                 }
                 else {
                     self.style = { 'background-color': '#46b946' };

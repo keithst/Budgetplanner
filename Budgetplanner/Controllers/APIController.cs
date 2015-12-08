@@ -223,6 +223,13 @@ namespace Budgetplanner.Controllers
             return await db.DeleteTrans(input.id);
         }
 
+        [Route("DeleteAccount")]
+        [HttpPost]
+        public async Task<int> DeleteAccount(idin input)
+        {
+            return await db.DeleteAccount(input.id);
+        }
+
         [Route("SDeleteAccount")]
         [HttpPost]
         public async Task<int> SDeleteAccount (sdelete input)

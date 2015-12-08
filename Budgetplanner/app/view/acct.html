@@ -13,10 +13,16 @@
             <tbody>
                 <tr>
                     <td field-name="Description_ba"></td>
-                    <td field-name="Total">
-                    </td>
-                    <td><button ng-click="act.gotoView(gridItem.id)">View Transactions</button><button>Edit</button><button>Delete</button></td>
+                    <td field-name="Total"></td>
+                    <td><button ng-click="act.gotoView(gridItem.id)">View Transactions</button><button ng-click="act.toggleedit(gridItem)" ng-disabled="act.inedit">Edit</button><button ng-click="act.delete(gridItem)" ng-disabled="act.inedit">Delete</button></td>
                 </tr>
             </tbody>
         </table>
-<button>Create</button>
+<button ng-click="act.createtoggle()" ng-disabled="act.increate">Create</button>
+<div ng-style="act.style" ng-show="act.createmode" class="navbar navbar-fixed-bottom setbottom">
+    <span>Create Menu</span><br />
+    <span>Description:</span><input ng-model="act.create.desc" ng-change="act.createvalidate()" />
+    <span>Amount:</span><input ng-model="act.create.amt" ng-change="act.createvalidate()" />
+    <button ng-click="act.sendcreate()" ng-disabled="acct.error">Create</button>
+    <button ng-click="act.exitcreate()">Close</button><span>{{act.error}}</span><span>{{act.returnmsg}}</span>
+</div>

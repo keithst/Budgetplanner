@@ -2,22 +2,26 @@
 <div class="row">
     <div class="col-md-4">
         <h4>Budget</h4>
-        <table tr-ng-grid="" items="budgetmonth.budgetcheck" fields="['type.name', 'budget', 'amount']"
-               enable-sorting="false"
-               enable-filtering="false">
-            <thead>
-                <tr>
-                    <th field-name="type.name" display-name="Type"></th>
-                    <th field-name="budget" display-name="Budget"></th>
-                    <th field-name="amount" display-name="Amount"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr></tr>
-            </tbody>
-        </table>
-        <div class="scrollbox">
-            <p ng-repeat="msg in budgetmonth.messages">{{msg}}</p>
+        <div>
+        </div>
+        <div>
+            <table tr-ng-grid="" items="budgetmonth.budgetcheck" fields="['type.name', 'budget', 'amount']"
+                   enable-sorting="false"
+                   enable-filtering="false">
+                <thead>
+                    <tr>
+                        <th field-name="type.name" display-name="Type"></th>
+                        <th field-name="budget" display-name="Budget"></th>
+                        <th field-name="amount" display-name="Amount"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr></tr>
+                </tbody>
+            </table>
+            <div class="scrollbox">
+                <p ng-repeat="msg in budgetmonth.messages">{{msg}}</p>
+            </div>
         </div>
     </div>
     <div class="col-md-8">
@@ -72,9 +76,9 @@
 </div>
 <div ng-style="budgetmonth.style" ng-show="budgetmonth.createmode" class="navbar navbar-fixed-bottom setbottom">
     <span>Create Menu</span><br />
-    <input ng-model="budgetmonth.createtemp.amount" ng-change="budgetmonth.createvalidate()" ng-disabled="budgetmonth.prevent" />
-    <input ng-model="budgetmonth.date" ng-change="budgetmonth.createvalidate()" ng-disabled="budgetmonth.noedit" />
-    <select ng-options="type.id as type.name for type in budgetmonth.types" ng-model="budgetmonth.createtemp.type" ng-change="budgetmonth.createvalidate()"></select>
+    <span>Amount:</span><input ng-model="budgetmonth.createtemp.amount" ng-change="budgetmonth.createvalidate()" ng-disabled="budgetmonth.prevent" />
+    <span>Date:</span><input ng-model="budgetmonth.date" ng-change="budgetmonth.createvalidate()" ng-disabled="budgetmonth.noedit" />
+    <span>Type:</span><select ng-options="type.id as type.name for type in budgetmonth.types" ng-model="budgetmonth.createtemp.type" ng-change="budgetmonth.createvalidate()"></select>
     <button ng-click="budgetmonth.sendcreate()" ng-disabled="budgetmonth.error">Create</button>
     <button ng-click="budgetmonth.exitcreate()">Close</button><span>{{budgetmonth.error}}</span><span>{{budgetmonth.returnmsg}}</span>
 </div>
