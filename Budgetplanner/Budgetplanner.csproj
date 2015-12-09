@@ -260,6 +260,7 @@
     <Content Include="app\controller\houseCtrl.js" />
     <Content Include="app\controller\menuCtrl.js" />
     <Content Include="app\controller\transCtrl.js" />
+    <Content Include="app\controller\userhouseCtrl.js" />
     <Content Include="app\factory\httpaccount.js" />
     <Content Include="app\factory\httpbudget.js" />
     <Content Include="app\factory\httphouse.js" />
@@ -270,6 +271,7 @@
     <Content Include="app\view\budgetmonth.html" />
     <Content Include="app\view\house.html" />
     <Content Include="app\view\trans.html" />
+    <Content Include="app\view\userhouse.html" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />

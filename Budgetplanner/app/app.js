@@ -32,6 +32,11 @@ app.config(function ($stateProvider, $urlRouterProvider) {
           templateUrl: "/app/view/house.html",
           controller: "houseCtrl as house"
       })
+      .state('userhouse', {
+          url: "/userhouse",
+          templateUrl: "/app/view/userhouse.html",
+          controller: "userhouseCtrl as userhouse"
+      })
       .state('default', {
           url: "/",
           templateUrl: "",
