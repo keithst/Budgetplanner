@@ -2,9 +2,13 @@
 <div class="row">
     <div class="col-md-4">
         <h4>Budget</h4>
-        <button ng-click="budgetmonth.showtable()">Table</button><button ng-click="budgetmonth.graphswitch()">Chart</button>
-        <div ng-if="budgetmonth.hide">
+        <button ng-click="budgetmonth.showtable()">Table</button><button ng-click="budgetmonth.graphswitch()">Chart</button><button ng-click="budgetmonth.graphswitchi()">Income/Expense</button>
+        <div class="margintop" ng-if="budgetmonth.hidden">
+            <nvd3 options="budgetmonth.optionsi" data="budgetmonth.chartDatai" style="width:100% !important"></nvd3>
+        </div>
+        <div class="margintop" ng-if="budgetmonth.hide">
             <nvd3 options="budgetmonth.options" data="budgetmonth.chartData" style="width:100% !important"></nvd3>
+            <nvd3 options="budgetmonth.optionst" data="budgetmonth.chartDatat" style="width:100% !important"></nvd3>
         </div>
         <div ng-show="budgetmonth.nohide">
             <table tr-ng-grid="" items="budgetmonth.budgetcheck" fields="['type.name', 'budget', 'amount']"

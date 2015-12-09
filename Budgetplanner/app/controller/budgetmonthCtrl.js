@@ -24,8 +24,11 @@
     self.edit = {};
     self.messages = [];
     self.chartData = [];
+    self.chartDatat = [];
+    self.chartDatai = [];
     self.nohide = true;
     self.hide = false;
+    self.hidden = false;
 
     self.options = {
         chart: {
@@ -35,6 +38,40 @@
             y: function (d) { return d.value },
             transitionDuration: 200,
             showLabels: true
+        },
+        title: {
+            enable: true,
+            text: "Budget"
+        }
+    }
+
+    self.optionst = {
+        chart: {
+            type: 'pieChart',
+            height: 200,
+            x: function (d) { return d.label },
+            y: function (d) { return d.value },
+            transitionDuration: 200,
+            showLabels: true
+        },
+        title: {
+            enable: true,
+            text: "Actual Amounts"
+        }
+    }
+
+    self.optionsi = {
+        chart: {
+            type: 'pieChart',
+            height: 200,
+            x: function (d) { return d.label },
+            y: function (d) { return d.value },
+            transitionDuration: 200,
+            showLabels: true
+        },
+        title: {
+            enable: true,
+            text: "Income vs. Expenses"
         }
     }
 
@@ -88,19 +125,45 @@
             self.nohide = true;
         }
         self.hide = false;
+        self.hidden = false;
     }
 
     self.buildchart = function () {
+        self.chartData = [];
+        self.chartDatat = [];
         for (x = 0; x < self.budgetcheck.length; x++) {
             var temp = parseFloat(self.parsecurrency(self.budgetcheck[x].budget));
+            var temp2 = parseFloat(self.parsecurrency(self.budgetcheck[x].amount));
             if (temp > 0) {
                 self.chartData.push({ label: self.budgetcheck[x].type.name, value: temp })
+            }
+            if (temp2 > 0) {
+                self.chartDatat.push({ label: self.budgetcheck[x].type.name, value: temp2 })
             }
         }
     }
 
+    self.buildcharti = function () {
+        self.chartDatai = [];
+        var income = 0;
+        var expense = 0;
+        for (x = 0; x < self.budgetcheck.length; x++) {
+            var temp = parseFloat(self.parsecurrency(self.budgetcheck[x].amount));
+            if (temp > 0) {
+                if(self.budgetcheck[x].type.isWithdrawl)
+                {
+                    expense += temp;
+                }
+                else
+                {
+                    income += temp;
+                }
+            }
+        }
+        self.chartDatai.push({ label: "Total Income", value: income}, { label: "Total Expenses", value: expense})
+    }
+
     self.graphswitch = function () {
-        self.chartData = [];
         self.buildchart();
         if(self.hide)
         {
@@ -111,6 +174,19 @@
             self.hide = true;
         }
         self.nohide = false;
+        self.hidden = false;
+    }
+
+    self.graphswitchi = function () {
+        self.buildcharti();
+        if (self.hidden) {
+            self.hidden = false;
+        }
+        else {
+            self.hidden = true;
+        }
+        self.nohide = false;
+        self.hide = false;
     }
 
     self.buildmessages = function () {
@@ -159,6 +235,20 @@
         self.nullcheck(self.edit.rec.Amount, "Amount: ");
         self.amt = self.validateamt(self.edit.rec.Amount, "Amount: ");
         self.validatedate(self.edit.date, "Date: ");
+        if(self.error.length == 0)
+        {
+            self.buildbudgetcheck();
+            self.buildchart();
+        }
+    }
+
+    self.buildbudgetcheck = function () {
+        for (x = 0; x < self.types.length; x++) {
+            if (self.edit.type == self.types[x].name) {
+                self.edits.type = self.types[x].id;
+                self.budgetcheck[x].budget = $filter('currency')(self.amt, '$', 2);
+            }
+        }
     }
 
     self.updateRec = function () {
@@ -169,12 +259,7 @@
         self.edits.month = self.month;
         self.edits.amount = self.amt;
         self.edits.house = self.selected.house;
-        for (x = 0; x < self.types.length; x++) {
-            if (self.edit.type == self.types[x].name) {
-                self.edits.type = self.types[x].id;
-                self.budgetcheck[x].budget = $filter('currency')(self.amt, '$', 2);
-            }
-        }
+        self.buildbudgetcheck();
         $q.all([BudgetSvc.editBudget(self.edits)]).then(function (data) {
             if (parseInt(data[0].status) >= 200 && parseInt(data[0].status) <= 299) {
                 self.returnmsg = "Edit applied";
@@ -182,6 +267,7 @@
                 self.master.amt = self.edit.rec.Amount;
                 self.master.type = self.edit.type;
                 self.master.date = self.edit.date;
+                self.buildchart();
                 self.buildmessages();
             }
             self.error = "";
@@ -199,6 +285,7 @@
                 self.returnmsg = "Budget entry successfully created";
                 self.budgets = [];
                 self.populate();
+                self.buildchart();
                 self.buildmessages();
             }
         })
@@ -356,6 +443,7 @@
                         self.budgetcheck[x].budget = $filter('currency')(self.budgetcheck[x].budget, '$', 2);
                     }
                 }
+                self.buildchart();
                 self.buildmessages();
                 self.budgets.splice(self.budgets.indexOf(data[1]), 1);
             }
