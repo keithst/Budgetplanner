@@ -328,7 +328,7 @@ namespace Budgetplanner.Controllers
                 return BadRequest(ModelState);
             }
 
-            var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+            var user = new ApplicationUser() { UserName = model.Email, Email = model.Email, fname = model.FirstName, lname = model.LastName };
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 
