@@ -23,6 +23,20 @@
     self.amt = "";
     self.edit = {};
     self.messages = [];
+    self.chartData = [];
+    self.nohide = true;
+    self.hide = false;
+
+    self.options = {
+        chart: {
+            type: 'pieChart',
+            height: 200,
+            x: function (d) { return d.label },
+            y: function (d) { return d.value },
+            transitionDuration: 200,
+            showLabels: true
+        }
+    }
 
     self.selected = {
         month: "",
@@ -62,6 +76,41 @@
         amount: "",
         year: "",
         month: ""
+    }
+
+    self.showtable = function () {
+        if(self.nohide)
+        {
+            self.nohide = false;
+        }
+        else
+        {
+            self.nohide = true;
+        }
+        self.hide = false;
+    }
+
+    self.buildchart = function () {
+        for (x = 0; x < self.budgetcheck.length; x++) {
+            var temp = parseFloat(self.parsecurrency(self.budgetcheck[x].budget));
+            if (temp > 0) {
+                self.chartData.push({ label: self.budgetcheck[x].type.name, value: temp })
+            }
+        }
+    }
+
+    self.graphswitch = function () {
+        self.chartData = [];
+        self.buildchart();
+        if(self.hide)
+        {
+            self.hide = false;
+        }
+        else
+        {
+            self.hide = true;
+        }
+        self.nohide = false;
     }
 
     self.buildmessages = function () {

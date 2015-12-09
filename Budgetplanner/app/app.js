@@ -1,4 +1,4 @@
-﻿var app = angular.module('app', ['ui.router', 'trNgGrid']);
+﻿var app = angular.module('app', ['ui.router', 'trNgGrid', 'nvd3']);
 
 app.config(function ($stateProvider, $urlRouterProvider) {
     //

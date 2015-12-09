@@ -2,9 +2,11 @@
 <div class="row">
     <div class="col-md-4">
         <h4>Budget</h4>
-        <div>
+        <button ng-click="budgetmonth.showtable()">Table</button><button ng-click="budgetmonth.graphswitch()">Chart</button>
+        <div ng-if="budgetmonth.hide">
+            <nvd3 options="budgetmonth.options" data="budgetmonth.chartData" style="width:100% !important"></nvd3>
         </div>
-        <div>
+        <div ng-show="budgetmonth.nohide">
             <table tr-ng-grid="" items="budgetmonth.budgetcheck" fields="['type.name', 'budget', 'amount']"
                    enable-sorting="false"
                    enable-filtering="false">
@@ -19,9 +21,9 @@
                     <tr></tr>
                 </tbody>
             </table>
-            <div class="scrollbox">
-                <p ng-repeat="msg in budgetmonth.messages">{{msg}}</p>
-            </div>
+        </div>
+        <div class="scrollbox">
+            <p ng-repeat="msg in budgetmonth.messages">{{msg}}</p>
         </div>
     </div>
     <div class="col-md-8">
