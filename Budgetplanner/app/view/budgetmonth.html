@@ -59,7 +59,7 @@
         <select ng-options="type.name as type.name for type in budgetmonth.types" ng-model="budgetmonth.filter" ng-change="budgetmonth.restore();budgetmonth.dofilter()"></select>
         <button ng-click="budgetmonth.clearfilter()">Reset</button>
         <table tr-ng-grid="" items="budgetmonth.trans"
-               on-data-required="budgetmonth.getTransData()" fields="['rec.Amount', 'rec.ReconcileAmount', 'type', 'date']"
+               fields="['rec.Amount', 'rec.ReconcileAmount', 'type', 'date']"
                enable-sorting="false"
                enable-filtering="false">
             <thead>

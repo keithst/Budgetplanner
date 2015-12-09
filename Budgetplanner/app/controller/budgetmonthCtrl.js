@@ -31,6 +31,7 @@
     self.hidden = false;
     self.nodelete = true;
     self.indelete = false;
+    self.isloaded = false;
 
     self.options = {
         chart: {
@@ -214,16 +215,12 @@
 
     self.buildmessages = function () {
         self.messages = [];
-        for(x = 0; x < self.budgetcheck.length; x++)
-        {
-            if(parseFloat(self.parsecurrency(self.budgetcheck[x].budget)) < parseFloat(self.parsecurrency(self.budgetcheck[x].amount)))
-            {
-                if(self.budgetcheck[x].type.isWithdrawl)
-                {
+        for (x = 0; x < self.budgetcheck.length; x++) {
+            if (parseFloat(self.parsecurrency(self.budgetcheck[x].budget)) < parseFloat(self.parsecurrency(self.budgetcheck[x].amount))) {
+                if (self.budgetcheck[x].type.isWithdrawl) {
                     self.messages.push("Budget for " + self.budgetcheck[x].type.name + " has been exceeded.")
                 }
-                else
-                {
+                else {
                     self.messages.push(self.budgetcheck[x].type.name + " is greater than the budget amount, you made more money!")
                 }
             }
@@ -262,6 +259,7 @@
         {
             self.buildbudgetcheck();
             self.buildchart();
+            self.buildmessages();
         }
     }
 
@@ -498,14 +496,14 @@
 
     self.getParms = function () {
         self.selected = $stateParams;
-        $timeout($q.all([TransSvc.getTypes()]).then(function (data) {
+        $q.all([TransSvc.getTypes()]).then(function (data) {
             self.types = data[0];
             for(x = 0; x < self.types.length; x++)
             {
                 self.budgetcheck.push({ type: self.types[x], amount: 0, budget: 0 });
                 self.budgetcheck[x].budget = $filter('currency')(self.budgetcheck[x].budget, '$', 2);
             }
-        }), 100);
+        });
     }
 
     self.populate = function () {
@@ -513,7 +511,7 @@
     }
 
     self.getBudgetData = function () {
-        $q.all([BudgetSvc.getBudgets(self.selected)]).then(function (data) {
+        $q.all([BudgetSvc.getBudgets(self.selected), BudgetSvc.getTrans({ id: self.selected.house })]).then(function (data) {
             self.temp = data[0];
             for (x = 0; x < self.temp.length; x++) {
                 if (self.temp[x].month_b == self.selected.month && self.temp[x].year_b == self.selected.year) {
@@ -526,14 +524,8 @@
                     }
                 }
             }
-        });
-    }
-
-    self.getTransData = function () {
-        $q.all([BudgetSvc.getTrans({ id: self.selected.house })]).then(function (data) {
-            self.temp = data[0];
-            for (x = 0; x < self.temp.length; x++)
-            {
+            self.temp = data[1];
+            for (x = 0; x < self.temp.length; x++) {
                 if (self.temp[x].month_t == self.selected.month && self.temp[x].year_t == self.selected.year) {
                     for (y = 0; y < self.types.length; y++) {
                         if (self.types[y].id == self.temp[x].TypeId) {
@@ -545,8 +537,7 @@
                     }
                 }
             }
-            for (y = 0; y < self.budgetcheck.length; y++)
-            {
+            for (y = 0; y < self.budgetcheck.length; y++) {
                 self.budgetcheck[y].amount = $filter('currency')(self.budgetcheck[y].amount, '$', 2);
             }
             self.buildmessages();

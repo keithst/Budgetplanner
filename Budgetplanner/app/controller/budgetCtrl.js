@@ -22,9 +22,9 @@
 
     self.populatemonth = function () {
         self.selected = $stateParams;
-        $timeout($q.all([BudgetSvc.getMonths(self.selected)]).then(function (data) {
+        $q.all([BudgetSvc.getMonths(self.selected)]).then(function (data) {
             self.months = data[0];
-        }), 100);
+        });
     }
 
     self.getBudgetData = function () {
