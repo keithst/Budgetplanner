@@ -505,6 +505,7 @@
     self.getBudgetData = function () {
         $q.all([BudgetSvc.getBudgets(self.selected), BudgetSvc.getTrans({ id: self.selected.house }), TransSvc.getTypes()]).then(function (data) {
             self.types = data[2];
+            self.budgetcheck = [];
             for (x = 0; x < self.types.length; x++) {
                 self.budgetcheck.push({ type: self.types[x], amount: 0, budget: 0 });
                 self.budgetcheck[x].budget = $filter('currency')(self.budgetcheck[x].budget, '$', 2);
