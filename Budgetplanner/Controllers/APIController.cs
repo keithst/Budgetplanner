@@ -140,6 +140,13 @@ namespace Budgetplanner.Controllers
             }
         }
 
+        [Route("GetUserByName")]
+        [HttpPost]
+        public async Task<List<HouseUser>> GetUserByName(userparms input)
+        {
+            return await db.GetUserByName(input.userid);
+        }
+
         [Route("GetUsersInHouse")]
         [HttpPost]
         public async Task<List<HouseUser>> GetUsersInHouse(idin input)

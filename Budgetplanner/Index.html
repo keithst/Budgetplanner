@@ -32,6 +32,7 @@
                             <i class="fa fa-sign-out"></i>
                         </span>Log Out
                     </a>
+                    {{authentication.userName}}
                 </div>
             </nav>
             <div ui-view></div>
@@ -49,6 +50,7 @@
     <script src="app/app.js"></script>
     <script src="app/factory/authSvc.js"></script>
     <script src="app/factory/authIntercepterSvc.js"></script>
+    <script src="app/factory/httpuser.js"></script>
     <script src="app/controller/loginCtrl.js"></script>
     <script src="app/controller/registerCtrl.js"></script>
     <script src="app/controller/menuCtrl.js"></script>

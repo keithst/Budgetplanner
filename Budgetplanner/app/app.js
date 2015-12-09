@@ -28,12 +28,12 @@ app.config(function ($stateProvider, $urlRouterProvider) {
           controller: "budgetmonthCtrl as budgetmonth"
       })
       .state('house', {
-          url: "/house",
+          url: "/house/{id}",
           templateUrl: "/app/view/house.html",
           controller: "houseCtrl as house"
       })
       .state('userhouse', {
-          url: "/userhouse",
+          url: "/userhouse/{id}",
           templateUrl: "/app/view/userhouse.html",
           controller: "userhouseCtrl as userhouse"
       })

@@ -1,9 +1,13 @@
 ﻿'use strict';
-angular.module('app').controller('loginCtrl', ['authSvc', '$scope', '$timeout', '$state', function (authSvc, $scope, $timeout, $state) {
+angular.module('app').controller('loginCtrl', ['userSvc', 'authSvc', '$q', '$scope', '$timeout', '$state', function (userSvc, authSvc, $q, $scope, $timeout, $state) {
 
     this.model = {
         Username: '',
         Password: ''
+    }
+
+    this.house = {
+        id: ""
     }
 
     this.message = "Login to your account";
@@ -14,7 +18,23 @@ angular.module('app').controller('loginCtrl', ['authSvc', '$scope', '$timeout', 
         var scope = this;
 
         authSvc.login(this.model).then(function (response) {
-            $state.go('house');
+            $q.all([userSvc.getUser({ userid: scope.model.Username })]).then(function (data) {
+                if (data[0][0].HouseId != null)
+                {
+                    scope.house.id = data[0][0].HouseId;
+                    if (data[0][0].isHoH)
+                    {
+                        $state.go('house', scope.house);
+                    }
+                    else {
+                        $state.go('userhouse', scope.house);
+                    }
+                }
+                else
+                {
+                    $state.go('userhouse');
+                }
+            })
         },
             function (err) {
                 scope.message = err.error_description;

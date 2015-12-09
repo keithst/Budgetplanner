@@ -269,6 +269,7 @@
     <Content Include="app\factory\httpbudget.js" />
     <Content Include="app\factory\httphouse.js" />
     <Content Include="app\factory\httptrans.js" />
+    <Content Include="app\factory\httpuser.js" />
     <Content Include="app\service.js" />
     <Content Include="app\view\acct.html" />
     <Content Include="app\view\budget.html" />

@@ -55,6 +55,14 @@ namespace Budgetplanner.Models
             return await this.Database.SqlQuery<HouseUser>("GetNonInvite").ToListAsync();
         }
 
+        // Get non invited users
+        public async Task<List<HouseUser>> GetUserByName(string name)
+        {
+            var nameParm = new SqlParameter("@name", name);
+
+            return await this.Database.SqlQuery<HouseUser>("GetUserByName @name", nameParm).ToListAsync();
+        }
+
         // Get household by id
         public async Task<List<House>> GetHouse(int id)
         {

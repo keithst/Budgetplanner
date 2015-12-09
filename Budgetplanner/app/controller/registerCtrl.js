@@ -6,7 +6,6 @@ angular.module('app').controller('registerCtrl', ['authSvc', '$timeout', '$state
     this.isError = false;
 
     this.model = {
-        Username: "",
         FirstName: "",
         LastName: "",
         Email: "",
