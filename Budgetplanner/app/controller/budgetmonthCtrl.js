@@ -496,14 +496,6 @@
 
     self.getParms = function () {
         self.selected = $stateParams;
-        $q.all([TransSvc.getTypes()]).then(function (data) {
-            self.types = data[0];
-            for(x = 0; x < self.types.length; x++)
-            {
-                self.budgetcheck.push({ type: self.types[x], amount: 0, budget: 0 });
-                self.budgetcheck[x].budget = $filter('currency')(self.budgetcheck[x].budget, '$', 2);
-            }
-        });
     }
 
     self.populate = function () {
@@ -511,7 +503,12 @@
     }
 
     self.getBudgetData = function () {
-        $q.all([BudgetSvc.getBudgets(self.selected), BudgetSvc.getTrans({ id: self.selected.house })]).then(function (data) {
+        $q.all([BudgetSvc.getBudgets(self.selected), BudgetSvc.getTrans({ id: self.selected.house }), TransSvc.getTypes()]).then(function (data) {
+            self.types = data[2];
+            for (x = 0; x < self.types.length; x++) {
+                self.budgetcheck.push({ type: self.types[x], amount: 0, budget: 0 });
+                self.budgetcheck[x].budget = $filter('currency')(self.budgetcheck[x].budget, '$', 2);
+            }
             self.temp = data[0];
             for (x = 0; x < self.temp.length; x++) {
                 if (self.temp[x].month_b == self.selected.month && self.temp[x].year_b == self.selected.year) {
