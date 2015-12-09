@@ -11,6 +11,8 @@
     self.returnmsg = "";
     self.amt = "";
     self.edit = {};
+    self.nodelete = true;
+    self.indelete = false;
 
     self.selectacct = {};
 
@@ -35,6 +37,23 @@
 
     self.deleteparm = {
         id: ""
+    }
+
+    self.toggledelete = function () {
+        if (self.nodelete) {
+            self.nodelete = false;
+            self.indelete = true;
+        }
+        else {
+            self.nodelete = true;
+            self.indelete = false;
+        }
+        if (self.increate) {
+            self.increate = false;
+        }
+        else {
+            self.increate = true;
+        }
     }
 
     self.toggleedit = function (item) {

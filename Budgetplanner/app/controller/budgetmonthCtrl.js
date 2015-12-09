@@ -29,6 +29,8 @@
     self.nohide = true;
     self.hide = false;
     self.hidden = false;
+    self.nodelete = true;
+    self.indelete = false;
 
     self.options = {
         chart: {
@@ -113,6 +115,27 @@
         amount: "",
         year: "",
         month: ""
+    }
+
+    self.toggledelete = function () {
+        if(self.nodelete)
+        {
+            self.nodelete = false;
+            self.indelete = true;
+        }
+        else
+        {
+            self.nodelete = true;
+            self.indelete = false;
+        }
+        if (self.increate)
+        {
+            self.increate = false;
+        }
+        else
+        {
+            self.increate = true;
+        }
     }
 
     self.showtable = function () {

@@ -14,7 +14,10 @@
                 <tr>
                     <td field-name="Description_ba"></td>
                     <td field-name="Total"></td>
-                    <td><button ng-click="act.gotoView(gridItem.id)">View Transactions</button><button ng-click="act.toggleedit(gridItem)" ng-disabled="act.inedit">Edit</button><button ng-click="act.delete(gridItem)" ng-disabled="act.inedit">Delete</button></td>
+                    <td><button ng-click="act.gotoView(gridItem.id)">View Transactions</button><button ng-show="act.nodelete" ng-click="act.toggleedit(gridItem)" ng-disabled="act.inedit">Edit</button>
+                    <button ng-show="act.nodelete" ng-click="act.toggledelete()" ng-disabled="act.inedit">Delete</button>
+                    <button ng-show="act.indelete" ng-click="act.toggledelete()">Cancel</button>
+                    <button ng-show="act.indelete" ng-click="act.delete(gridItem)" ng-disabled="act.inedit">Confirm Delete</button></td>
                 </tr>
             </tbody>
         </table>

@@ -46,7 +46,10 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><button ng-click="budgetmonth.toggleedit(gridItem)" ng-disabled="budgetmonth.inedit">Edit</button><button ng-click="budgetmonth.delete(gridItem)" ng-disabled="budgetmonth.inedit">Delete</button></td>
+                    <td><button ng-show="budgetmonth.nodelete" ng-click="budgetmonth.toggleedit(gridItem)" ng-disabled="budgetmonth.inedit">Edit</button>
+                    <button ng-show="budgetmonth.nodelete" ng-click="budgetmonth.toggledelete()" ng-disabled="budgetmonth.inedit">Delete</button>
+                    <button ng-show="budgetmonth.indelete" ng-click="budgetmonth.toggledelete()">Cancel</button>
+                    <button ng-show="budgetmonth.indelete" ng-click="budgetmonth.delete(gridItem)" ng-disabled="budgetmonth.inedit">Confirm Delete</button></td>
                 </tr>
             </tbody>
         </table>

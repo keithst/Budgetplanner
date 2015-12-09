@@ -29,6 +29,8 @@
     self.account = {};
     self.saveamount = 0;
     self.promise = {};
+    self.nodelete = true;
+    self.indelete = false;
 
     self.master = {
         id: "",
@@ -83,6 +85,23 @@
         id: "",
         desc: "",
         total: ""
+    }
+
+    self.toggledelete = function () {
+        if (self.nodelete) {
+            self.nodelete = false;
+            self.indelete = true;
+        }
+        else {
+            self.nodelete = true;
+            self.indelete = false;
+        }
+        if (self.increate) {
+            self.increate = false;
+        }
+        else {
+            self.increate = true;
+        }
     }
 
     self.createvalidate = function () {
@@ -517,9 +536,9 @@
                 for(x = 0; x < self.merges.length; x++)
                 {
                     $q.all([TransSvc.getUser({ userid: self.merges[x].rec.tr.UserId }), self.merges[x]]).then(function (data) {
-                        self.user = data[0][0];
+                        var tempuser = data[0][0];
                         var temp = data[1];
-                        temp.user = self.user.fname + ' ' + self.user.lname;
+                        temp.user = tempuser.fname + ' ' + tempuser.lname;
                     })
                 }
         });

@@ -19,7 +19,12 @@
     </thead>
     <tbody>
         <tr>
-            <td><button ng-click="tr.toggleedit(gridItem);tr.setamt()" ng-disabled="tr.inedit">Edit</button><button ng-click="tr.delete(gridItem)" ng-disabled="tr.inedit">Delete</button></td>
+            <td>
+                <button ng-show="tr.nodelete" ng-click="tr.toggleedit(gridItem);tr.setamt()" ng-disabled="tr.inedit">Edit</button>
+                <button ng-show="tr.nodelete" ng-click="tr.toggledelete()" ng-disabled="tr.inedit">Delete</button>
+                <button ng-show="tr.indelete" ng-click="tr.toggledelete()">Cancel</button>
+                <button ng-show="tr.indelete" ng-click="tr.delete(gridItem)" ng-disabled="tr.inedit">Confirm Delete</button>
+            </td>
         </tr>
     </tbody>
 </table>
