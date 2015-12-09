@@ -1,4 +1,4 @@
-﻿var app = angular.module('app', ['ui.router', 'trNgGrid', 'nvd3']);
+﻿var app = angular.module('app', ['ui.router', 'trNgGrid', 'nvd3', 'LocalStorageModule']);
 
 app.config(function ($stateProvider, $urlRouterProvider) {
     //
@@ -37,8 +37,31 @@ app.config(function ($stateProvider, $urlRouterProvider) {
           templateUrl: "/app/view/userhouse.html",
           controller: "userhouseCtrl as userhouse"
       })
+      .state('login', {
+                url: "/login",
+                templateUrl: "/app/view/login.html",
+                controller: "loginCtrl as login"
+      })
+      .state('register', {
+            url: "/register",
+            templateUrl: "/app/view/register.html",
+            controller: "registerCtrl as register"
+      })
       .state('default', {
           url: "/",
           templateUrl: "",
       });
 });
+var serviceBase = 'http://localhost:49531/';
+
+app.constant('ngAuthSettings', {
+    apiServiceBaseUri: serviceBase
+});
+
+app.config(function ($httpProvider) {
+    $httpProvider.interceptors.push('authInterceptorSvc');
+});
+
+app.run(['authSvc', function (authService) {
+    authService.fillAuthData();
+}]);

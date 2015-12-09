@@ -258,9 +258,12 @@
     <Content Include="app\controller\budgetCtrl.js" />
     <Content Include="app\controller\budgetmonthCtrl.js" />
     <Content Include="app\controller\houseCtrl.js" />
+    <Content Include="app\controller\loginCtrl.js" />
     <Content Include="app\controller\menuCtrl.js" />
     <Content Include="app\controller\transCtrl.js" />
     <Content Include="app\controller\userhouseCtrl.js" />
+    <Content Include="app\factory\authIntercepterSvc.js" />
+    <Content Include="app\factory\authSvc.js" />
     <Content Include="app\factory\httpaccount.js" />
     <Content Include="app\factory\httpbudget.js" />
     <Content Include="app\factory\httphouse.js" />
@@ -270,6 +273,7 @@
     <Content Include="app\view\budget.html" />
     <Content Include="app\view\budgetmonth.html" />
     <Content Include="app\view\house.html" />
+    <Content Include="app\view\login.html" />
     <Content Include="app\view\trans.html" />
     <Content Include="app\view\userhouse.html" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
@@ -298,6 +302,7 @@
     <Content Include="Scripts\angular-csp.css" />
     <Content Include="Scripts\angular-loader.js" />
     <Content Include="Scripts\angular-loader.min.js" />
+    <Content Include="Scripts\angular-local-storage.min.js" />
     <Content Include="Scripts\angular-message-format.js" />
     <Content Include="Scripts\angular-message-format.min.js" />
     <Content Include="Scripts\angular-messages.js" />

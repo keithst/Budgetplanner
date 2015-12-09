@@ -25,6 +25,13 @@
                     </div>
                     <a ui-sref="house">House</a>
                     <a ui-sref="userhouse">House2</a>
+                    <a ui-sref="login">Login</a>
+                    <a ui-sref="register">Register</a>
+                    <a ui-sref="login" ng-click="logout()">
+                        <span class="icon">
+                            <i class="fa fa-sign-out"></i>
+                        </span>Log Out
+                    </a>
                 </div>
             </nav>
             <div ui-view></div>
@@ -35,11 +42,15 @@
     <script src="Scripts/angular.min.js"></script>
     <script src="Scripts/angular-ui-router.min.js"></script>
     <script src="Scripts/angular-ui/ui-bootstrap.min.js"></script>
+    <script src="Scripts/angular-local-storage.min.js"></script>
     <script src="Scripts/angular-nvd3.min.js"></script>
     <script src="Scripts/trNgGrid.min.js"></script>
 
     <script src="app/app.js"></script>
-    <script src="app/service.js"></script>
+    <script src="app/factory/authSvc.js"></script>
+    <script src="app/factory/authIntercepterSvc.js"></script>
+    <script src="app/controller/loginCtrl.js"></script>
+    <script src="app/controller/registerCtrl.js"></script>
     <script src="app/controller/menuCtrl.js"></script>
     <script src="app/factory/httphouse.js"></script>
     <script src="app/controller/houseCtrl.js"></script>
