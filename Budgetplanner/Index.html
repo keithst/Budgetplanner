@@ -10,7 +10,7 @@
     <!-- Bootstrap -->
     <link href="Content/bootstrap.min.css" rel="stylesheet">
     <!-- Fonts  -->
-    <link href="Content/font-awesome.min.css" rel="stylesheet" />
+    <link href="css/font-awesome.min.css" rel="stylesheet" />
     <link href="Content/nv.d3.min.css" rel="stylesheet" />
     <link href="Content/trNgGrid.min.css" rel="stylesheet" />
     <link href="Content/budget.css" rel="stylesheet" />
@@ -23,12 +23,10 @@
                     <div class="navbar-header">
                         Navbar
                     </div>
-                    <a ui-sref="house">House</a>
-                    <a ui-sref="userhouse">House2</a>
                     <a ui-sref="login">Login</a>
                     <a ui-sref="register">Register</a>
-                    <a ui-sref="login" ng-click="logout()">Log Out</a>
-                    {{authentication.userName}}
+                    <a ng-if="authentication.isAuth" ui-sref="login" ng-click="logout()">Log Out</a>
+                    <span class="whitetext">{{authentication.userName}}</span>
                 </div>
             </nav>
             <div ui-view></div>

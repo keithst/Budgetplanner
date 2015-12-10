@@ -32,8 +32,6 @@ angular.module('app')
             _authentication.isAuth = true;
             _authentication.userName = response.userName;
             _authentication.token = response.access_token;
-            _authentication.firstName = response.firstName;
-            _authentication.lastName = response.lastName;
             _authentication.roles = response.roles;
             _authentication.refreshToken = response.refresh_token
 
@@ -56,8 +54,6 @@ angular.module('app')
 
         _authentication.isAuth = false;
         _authentication.userName = "";
-        _authentication.fname = "";
-        _authentication.lname = "";
         _authentication.token = "";
         _authentication.roles = [];
         _authentication.refreshToken = "";
@@ -70,8 +66,6 @@ angular.module('app')
         if (authData) {
             _authentication.isAuth = true;
             _authentication.userName = authData.userName;
-            _authentication.fname = authData.firstName;
-            _authentication.lname = authData.lastName;
             _authentication.token = authData.token;
             _authentication.roles = authData.roles;
             _authentication.refreshToken = authData.refreshToken;
@@ -94,7 +88,7 @@ angular.module('app')
 
                 localStorageService.set('authorizationData', {
                     token: response.access_token, userName: response.userName, refreshToken: response.refresh_token,
-                    fname: response.fname, lname: response.lname, roles: response.roles
+                    roles: response.roles
                 });
 
 

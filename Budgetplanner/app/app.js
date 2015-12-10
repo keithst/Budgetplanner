@@ -47,10 +47,14 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             templateUrl: "/app/view/register.html",
             controller: "registerCtrl as register"
       })
-      .state('default', {
+      .state('splash', {
           url: "/",
-          templateUrl: "",
-      });
+          templateUrl: "/app/view/splash.html"
+      })
+//      .state('default', {
+//          url: "/",
+//          templateUrl: "",
+//      });
 });
 var serviceBase = 'http://localhost:49531/';
 

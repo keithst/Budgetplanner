@@ -277,12 +277,14 @@
     <Content Include="app\view\house.html" />
     <Content Include="app\view\login.html" />
     <Content Include="app\view\register.html" />
+    <Content Include="app\view\splash.html" />
     <Content Include="app\view\trans.html" />
     <Content Include="app\view\userhouse.html" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\budget.css" />
+    <Content Include="Content\img\landing_main.jpg" />
     <Content Include="Content\nv.d3.css" />
     <Content Include="Content\nv.d3.min.css" />
     <Content Include="Content\trNgGrid.min.css" />
