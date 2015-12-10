@@ -1,4 +1,4 @@
-﻿angular.module('app').controller('userhouseCtrl', ['$q', '$state', 'HouseSvc', '$stateParams', function ($q, $state, HouseSvc, $stateParams) {
+﻿angular.module('app').controller('userhouseCtrl', ['userSvc', 'localStorageService', '$scope', '$q', '$state', 'HouseSvc', '$stateParams', function (userSvc, localStorageService, $scope, $q, $state, HouseSvc, $stateParams) {
     var self = this;
 
     self.house = {};
@@ -18,6 +18,16 @@
         id: ""
     }
 
+    self.cookie = {
+        id: "",
+        HoH: "",
+        Invited: ""
+    }
+
+    self.get = function () {
+        self.cookie = localStorageService.get('home')
+    }
+
     self.gotoView = function (view, id) {
         self.passparm.id = id;
         $state.go(view, self.passparm)
@@ -25,8 +35,11 @@
 
     self.populate = function () {
         self.selected = $stateParams;
+        self.get();
         self.getHouseData();
-        self.getUsers();
+        if (!self.cookie.Invited) {
+            self.getUsers();
+        }
     }
 
     self.getUsers = function () {
@@ -35,6 +48,16 @@
             for (x = 0; x < data[0].length; x++) {
                 self.users.push(data[0][x]);
             }
+        })
+    }
+
+    self.setuser = function () {
+        $q.all([userSvc.getUser({ userid: $scope.authentication.userName })]).then(function (data) {
+            $q.all([HouseSvc.joinUser({ user: data[0][0].Id, id: null })]).then(function () {
+                self.cookie.Invited = false;
+                localStorageService.set('home', self.cookie);
+                self.populate();
+            })
         })
     }
 

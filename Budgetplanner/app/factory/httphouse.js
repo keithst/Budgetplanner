@@ -28,6 +28,10 @@
             return $http.post('/api/budget/InviteUser', updated)
         }
 
+        f.joinUser = function (updated) {
+            return $http.post('/api/budget/JoinUser', updated)
+        }
+
         return f;
 
     }
