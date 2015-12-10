@@ -1,4 +1,4 @@
-﻿angular.module('app').controller('houseCtrl', ['$q', '$state', 'HouseSvc', '$stateParams', function ($q, $state, HouseSvc, $stateParams) {
+﻿angular.module('app').controller('houseCtrl', ['localStorageService', '$scope', '$q', '$state', 'HouseSvc', 'userSvc', '$stateParams', function (localStorageService, $scope, $q, $state, HouseSvc, userSvc, $stateParams) {
     var self = this;
 
     self.house = {};
@@ -19,6 +19,12 @@
 
     self.passparm = {
         id: ""
+    }
+
+    self.cookie = {
+        id: "",
+        HoH: "",
+        Invited: ""
     }
 
     self.gotoView = function (view, id) {
@@ -86,6 +92,19 @@
                 }
             }
         })
+    }
+
+    self.delete = function () {
+            $q.all([userSvc.getUser({ userid: $scope.authentication.userName })]).then(function (data) {
+                $q.all([HouseSvc.deleteHouse({ user: data[0][0].Id, id: self.selected.id })]).then(function () {
+                    self.cookie = localStorageService.get('home')
+                    self.cookie.house = null;
+                    self.cookie.Invited = false;
+                    self.cookie.HoH = false;
+                    localStorageService.set('home', self.cookie)
+                    $state.go('userhouse');
+                })
+            })
     }
 
     self.getAllUsers = function () {

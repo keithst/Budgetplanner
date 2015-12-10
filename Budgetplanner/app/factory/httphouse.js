@@ -8,6 +8,10 @@
             });
         }
 
+        f.deleteHouse = function (updated) {
+            return $http.post('/api/budget/DeleteHouse', updated)
+        }
+
         f.getUsers = function (selected) {
             return $http.post('/api/budget/GetUsersInHouse', selected).then(function (response) {
                 return response.data;
@@ -30,6 +34,10 @@
 
         f.joinUser = function (updated) {
             return $http.post('/api/budget/JoinUser', updated)
+        }
+
+        f.createHouse = function (updated) {
+            return $http.post('/api/budget/AddHouse', updated)
         }
 
         return f;

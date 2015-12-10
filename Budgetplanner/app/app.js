@@ -33,7 +33,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
           controller: "houseCtrl as house"
       })
       .state('userhouse', {
-          url: "/userhouse/{id}",
+          url: "/userhouse",
           templateUrl: "/app/view/userhouse.html",
           controller: "userhouseCtrl as userhouse"
       })

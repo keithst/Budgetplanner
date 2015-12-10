@@ -28,12 +28,13 @@ angular.module('app').controller('loginCtrl', ['localStorageService', 'userSvc',
                         $state.go('house', scope.house);
                     }
                     else {
-                        $state.go('userhouse', scope.house);
+                        $state.go('userhouse');
                     }
                 }
                 else
                 {
-                    $state.go('nohouse');
+                    localStorageService.set('home', { id: data[0][0].HouseId, HoH: data[0][0].isHoH, Invited: data[0][0].isInvited });
+                    $state.go('userhouse');
                 }
             })
         },

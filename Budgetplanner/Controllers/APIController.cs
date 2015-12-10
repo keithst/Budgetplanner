@@ -79,6 +79,12 @@ namespace Budgetplanner.Controllers
             public string userid { get; set; }
         }
 
+        public class createhouse
+        {
+            public string userid { get; set; }
+            public string name { get; set; }
+        }
+
         [Route("GetHouse")]
         [HttpPost]
         public async Task<List<House>> GetHouse (idin input)
@@ -197,9 +203,10 @@ namespace Budgetplanner.Controllers
         }
 
         [Route("AddHouse")]
-        public async Task<int> AddHouse (string name, string user)
+        [HttpPost]
+        public async Task<int> AddHouse (createhouse input)
         {
-            return await db.AddHouse(name, user);
+            return await db.AddHouse(input.name, input.userid);
         }
 
         [Route("AddAccount")]
