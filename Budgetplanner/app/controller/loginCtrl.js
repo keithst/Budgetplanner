@@ -1,5 +1,5 @@
 ﻿'use strict';
-angular.module('app').controller('loginCtrl', ['userSvc', 'authSvc', '$q', '$scope', '$timeout', '$state', function (userSvc, authSvc, $q, $scope, $timeout, $state) {
+angular.module('app').controller('loginCtrl', ['localStorageService', 'userSvc', 'authSvc', '$q', '$scope', '$timeout', '$state', function (localStorageService, userSvc, authSvc, $q, $scope, $timeout, $state) {
 
     this.model = {
         Username: '',
@@ -21,6 +21,7 @@ angular.module('app').controller('loginCtrl', ['userSvc', 'authSvc', '$q', '$sco
             $q.all([userSvc.getUser({ userid: scope.model.Username })]).then(function (data) {
                 if (data[0][0].HouseId != null)
                 {
+                    localStorageService.set('home', data[0][0].HouseId);
                     scope.house.id = data[0][0].HouseId;
                     if (data[0][0].isHoH)
                     {
