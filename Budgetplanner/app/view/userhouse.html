@@ -1,5 +1,5 @@
-﻿<h3 class="settop">House</h3>
-<span ng-init="userhouse.populate()">{{userhouse.house.name}}</span>
+﻿<h3 ng-init="userhouse.populate()" class="settop">House</h3>
+<span>{{userhouse.house.name}}</span>
 <button ng-click="userhouse.gotoView('acct', userhouse.house.id)" ng-disabled="userhouse.disabled">Accounts</button>
 <button ng-click="userhouse.gotoView('budget', userhouse.house.id)" ng-disabled="userhouse.disabled">Budgets</button>
 <table tr-ng-grid="" items="userhouse.users" fields="['UserName']"

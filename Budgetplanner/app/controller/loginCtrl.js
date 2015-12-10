@@ -21,7 +21,7 @@ angular.module('app').controller('loginCtrl', ['localStorageService', 'userSvc',
             $q.all([userSvc.getUser({ userid: scope.model.Username })]).then(function (data) {
                 if (data[0][0].HouseId != null)
                 {
-                    localStorageService.set('home', data[0][0].HouseId);
+                    localStorageService.set('home', { id: data[0][0].HouseId, HoH: data[0][0].isHoH, Invited: data[0][0].isInvited });
                     scope.house.id = data[0][0].HouseId;
                     if (data[0][0].isHoH)
                     {
@@ -33,7 +33,7 @@ angular.module('app').controller('loginCtrl', ['localStorageService', 'userSvc',
                 }
                 else
                 {
-                    $state.go('userhouse');
+                    $state.go('nohouse');
                 }
             })
         },

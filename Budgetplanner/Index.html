@@ -20,12 +20,12 @@
         <div class="container" ng-controller="menuCtrl as menu">
             <nav class="navbar navbar-inverse navbar-fixed-top">
                 <div class="container">
-                    <div class="navbar-header">
-                        Navbar
-                    </div>
-                    <button ng-if="authentication.isAuth" ng-click="menu.gotoHome()">Home</button>{{menu.selected}}
-                    <a ui-sref="login">Login</a>
-                    <a ui-sref="register">Register</a>
+                    <span class="whitetext">
+                        Budget Planner
+                    </span>
+                    <button ng-if="authentication.isAuth" ng-click="menu.gotoHome()">Home</button>
+                    <a ng-if="!authentication.isAuth" ui-sref="login">Login</a>
+                    <a ng-if="!authentication.isAuth" ui-sref="register">Register</a>
                     <a ng-if="authentication.isAuth" ui-sref="login" ng-click="logout()">Log Out</a>
                     <span class="whitetext">{{authentication.userName}}</span>
                 </div>

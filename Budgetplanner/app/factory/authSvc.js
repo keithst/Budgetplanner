@@ -51,6 +51,7 @@ angular.module('app')
     var _logout = function () {
 
         localStorageService.remove('authorizationData');
+        localStorageService.remove('home')
 
         _authentication.isAuth = false;
         _authentication.userName = "";

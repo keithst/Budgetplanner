@@ -6,11 +6,30 @@
         var self = this;
 
         self.selected = {
+            id: "",
+            HoH: "",
+            Invited: ""
+        }
+
+        self.go = {
             id: ""
         }
 
         self.gotoHome = function () {
-            self.selected.id = localStorageService.get('home');
-            $state.go('house', self.selected);
+            self.selected = localStorageService.get('home');
+            self.go.id = self.selected.id;
+            if (self.selected.id != null)
+            {
+                if (self.selected.HoH) {
+                    $state.go('house', self.go);
+                }
+                else {
+                    $state.go('userhouse', self.go);
+                }
+            }
+            else
+            {
+                $state.go('nohouse')
+            }
         }
     }])
