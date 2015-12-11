@@ -155,6 +155,14 @@ namespace Budgetplanner.Models
             return await this.Database.SqlQuery<HouseUser>("GetUsersInHouse @id", idParm).ToListAsync();
         }
 
+        // Get user from house ids
+        public async Task<List<HouseUser>> GetInvites(int id)
+        {
+            var idParm = new SqlParameter("@id", id);
+
+            return await this.Database.SqlQuery<HouseUser>("GetInvites @id", idParm).ToListAsync();
+        }
+
         //Get budget for household
         public async Task<List<Budgeting>> GetBudgetForHouse(int id)
         {

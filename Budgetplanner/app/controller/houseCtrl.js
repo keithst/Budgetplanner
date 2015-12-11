@@ -2,11 +2,14 @@
     var self = this;
 
     self.house = {};
+    self.invites = [];
     self.disabled = true;
     self.nokick = true;
+    self.reject = true;
     self.users = [];
     self.allusers = [];
     self.user = "";
+    self.invite = "";
 
     self.update = {
         user: "",
@@ -56,15 +59,34 @@
         }
     }
 
-    self.kickUser = function () {
-        self.update.user = self.user;
+    self.set = function () {
+        if(self.invite)
+        {
+            self.reject = false;
+        }
+        else
+        {
+            self.reject = true;
+        }
+    }
+
+    self.kickUser = function (user, source) {
+        self.update.user = user;
         self.update.id = self.selected.id;
         $q.all([HouseSvc.kickUser(self.update)]).then(function (data) {
             if (parseInt(data[0].status) >= 200 && parseInt(data[0].status) <= 299) {
-                self.msg = "User has been kicked"
                 self.getUsers();
                 self.getAllUsers();
-                self.nokick = true;
+                if (source)
+                {
+                    self.nokick = true;
+                    self.msg = "User has been kicked";
+                }
+                else
+                {
+                    self.reject = true;
+                    self.msg = "User invite has been rejected";
+                }
             }
         })
     }
@@ -83,7 +105,7 @@
 
     self.getUsers = function () {
         self.users = [];
-        $q.all([HouseSvc.getUsers(self.selected)]).then(function (data) {
+        $q.all([HouseSvc.getUsers(self.selected), HouseSvc.getInvites(self.selected)]).then(function (data) {
             for (x = 0; x < data[0].length; x++)
             {
                 if(!data[0][x].isHoH)
@@ -91,20 +113,24 @@
                     self.users.push(data[0][x]);
                 }
             }
+            self.invites = data[1];
         })
     }
 
     self.delete = function () {
+        if (self.users.length == 0 && self.invites.length == 0)
+        {
             $q.all([userSvc.getUser({ userid: $scope.authentication.userName })]).then(function (data) {
                 $q.all([HouseSvc.deleteHouse({ user: data[0][0].Id, id: self.selected.id })]).then(function () {
                     self.cookie = localStorageService.get('home')
-                    self.cookie.house = null;
+                    self.cookie.id = null;
                     self.cookie.Invited = false;
                     self.cookie.HoH = false;
                     localStorageService.set('home', self.cookie)
                     $state.go('userhouse');
                 })
             })
+        }
     }
 
     self.getAllUsers = function () {

@@ -18,6 +18,12 @@
             })
         }
 
+        f.getInvites = function (selected) {
+            return $http.post('/api/budget/GetInvites', selected).then(function (response) {
+                return response.data;
+            })
+        }
+
         f.getAllUsers = function () {
             return $http.post('/api/budget/GetNonInvite').then(function (response) {
                 return response.data;

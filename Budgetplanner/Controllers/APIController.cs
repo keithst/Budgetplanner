@@ -160,6 +160,13 @@ namespace Budgetplanner.Controllers
            return await db.GetUsersInHouse(input.id);
         }
 
+        [Route("GetInvites")]
+        [HttpPost]
+        public async Task<List<HouseUser>> GetInvites(idin input)
+        {
+            return await db.GetInvites(input.id);
+        }
+
         [Route("GetBudgetForHouse")]
         [HttpPost]
         public async Task<List<Budgeting>> GetBudgetForHouse(idin input)

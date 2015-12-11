@@ -78,7 +78,7 @@
         $q.all([userSvc.getUser({ userid: $scope.authentication.userName })]).then(function (data) {
             $q.all([HouseSvc.kickUser({ user: data[0][0].Id, id: self.cookie.id })]).then(function () {
                 self.cookie.Invited = false;
-                self.cookie.house = null;
+                self.cookie.id = null;
                 localStorageService.set('home', self.cookie);
                 $state.go('userhouse');
             })
@@ -90,14 +90,14 @@
             var id = data[0][0].Id
             $q.all([HouseSvc.kickUser({ user: data[0][0].Id, id: self.cookie.id })]).then(function () {
                 self.cookie.Invited = false;
-                self.cookie.house = null;
+                self.cookie.id = null;
                 localStorageService.set('home', self.cookie);
                 $q.all([HouseSvc.createHouse({ userid: id, name: self.create })]).then(function () {
                     $q.all([userSvc.getUser({ userid: $scope.authentication.userName })]).then(function (data) {
                         self.cookie.HoH = true;
-                        self.cookie.house = data[0][0].HouseId;
+                        self.cookie.id = data[0][0].HouseId;
                         localStorageService.set('home', self.cookie);
-                        self.passparm.id - self.cookie.house;
+                        self.passparm.id = self.cookie.id;
                         $state.go('house', self.passparm)
                     })
                    
