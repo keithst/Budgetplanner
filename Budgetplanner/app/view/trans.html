@@ -30,22 +30,22 @@
 </table>
 <button ng-click="tr.createtoggle()" ng-disabled="tr.increate">Create</button>
 <div ng-style="tr.style" ng-show="tr.editmode" class="navbar navbar-fixed-bottom setbottom">
-    <span>Edit Menu</span><br />
-    <span>Amount:</span><input ng-model="tr.edit.rec.tr.Amount" ng-change="tr.fullvalidate()" />
-    <span>Reconcile:</span><input ng-model="tr.edit.rec.tr.ReconcileAmount" ng-change="tr.fullvalidate()" />
-    <span>Description:</span><input ng-model="tr.edit.rec.tr.Description_t" ng-change="tr.fullvalidate()" />
-    <span>Date:</span><input ng-change="tr.fullvalidate()" ng-model="tr.edit.rec.date" />
-    <span>Type:</span><select ng-options="type.name as type.name for type in tr.types" ng-model="tr.edit.rec.type" ng-change="tr.setall()"></select>
-    <button ng-disabled="tr.error" ng-click="tr.updateRec()">Submit</button><button ng-click="tr.closeedit()">Close</button><span>{{tr.error}}</span><span>{{tr.returnmsg}}</span>
+    <span class="whitetext">Edit Menu</span><br />
+    <span class="whitetext">Amount:</span><input ng-model="tr.edit.rec.tr.Amount" ng-change="tr.fullvalidate()" />
+    <span class="whitetext">Reconcile:</span><input ng-model="tr.edit.rec.tr.ReconcileAmount" ng-change="tr.fullvalidate()" />
+    <span class="whitetext">Description:</span><input ng-model="tr.edit.rec.tr.Description_t" ng-change="tr.fullvalidate()" />
+    <span class="whitetext">Date:</span><input ng-change="tr.fullvalidate()" ng-model="tr.edit.rec.date" />
+    <span class="whitetext">Type:</span><select ng-options="type.name as type.name for type in tr.types" ng-model="tr.edit.rec.type" ng-change="tr.setall()"></select>
+    <button ng-disabled="tr.error" ng-click="tr.updateRec()">Submit</button><button ng-click="tr.closeedit()">Close</button><span class="whitetext">{{tr.error}}</span><span class="whitetext">{{tr.returnmsg}}</span>
 </div>
 <div ng-style="tr.style" ng-show="tr.createmode" class="navbar navbar-fixed-bottom setbottom">
-    <span>Create Menu</span><br />
-    <span>Amount:</span><input ng-model="tr.createtemp.amount" ng-change="tr.createvalidate()" ng-disabled="tr.prevent" />
-    <span>Reconcile:</span><input ng-model="tr.createtemp.ramount" ng-change="tr.createvalidate()" ng-disabled="tr.prevent" />
-    <span>Description:</span><input ng-model="tr.create.desc" ng-change="tr.createvalidate()" />
-    <span>Date:</span><input ng-model="tr.date" ng-change="tr.createvalidate()" />
-    <span>User:</span><select ng-options="user.Id as user.UserName for user in tr.user" ng-model="tr.create.user" ng-change="tr.createvalidate()"></select>
-    <span>Type:</span><select ng-options="type.id as type.name for type in tr.types" ng-model="tr.create.type" ng-change="tr.createvalidate()"></select>
+    <span class="whitetext">Create Menu</span><br />
+    <span class="whitetext">Amount:</span><input ng-model="tr.createtemp.amount" ng-change="tr.createvalidate()" ng-disabled="tr.prevent" />
+    <span class="whitetext">Reconcile:</span><input ng-model="tr.createtemp.ramount" ng-change="tr.createvalidate()" ng-disabled="tr.prevent" />
+    <span class="whitetext">Description:</span><input ng-model="tr.create.desc" ng-change="tr.createvalidate()" />
+    <span class="whitetext">Date:</span><input ng-model="tr.date" ng-change="tr.createvalidate()" />
+    <span class="whitetext">User:</span><select ng-options="user.Id as user.UserName for user in tr.user" ng-model="tr.create.user" ng-change="tr.createvalidate()"></select>
+    <span class="whitetext">Type:</span><select ng-options="type.id as type.name for type in tr.types" ng-model="tr.create.type" ng-change="tr.createvalidate()"></select>
     <button ng-click="tr.sendcreate()" ng-disabled="tr.error">Create</button>
-    <button ng-click="tr.exitcreate()">Close</button><span>{{tr.error}}</span><span>{{tr.returnmsg}}</span>
+    <button ng-click="tr.exitcreate()">Close</button><span class="whitetext">{{tr.error}}</span><span class="whitetext">{{tr.returnmsg}}</span>
 </div>

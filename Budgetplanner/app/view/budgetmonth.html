@@ -77,17 +77,17 @@
     </div>
 </div>
 <div ng-style="budgetmonth.style" ng-show="budgetmonth.editmode" class="navbar navbar-fixed-bottom setbottom">
-    <span>Edit Menu</span><br />
-    <span>Amount:</span><input ng-model="budgetmonth.edit.rec.Amount" ng-change="budgetmonth.fullvalidate()" />
-    <span>Date:</span><input ng-change="budgetmonth.fullvalidate()" ng-model="budgetmonth.edit.date" ng-disabled="budgetmonth.noedit" />
-    <span>Type:</span><select ng-options="type.name as type.name for type in budgetmonth.types" ng-model="budgetmonth.edit.type" ng-change="budgetmonth.setall()"></select>
-    <button ng-disabled="budgetmonth.error" ng-click="budgetmonth.updateRec()">Submit</button><button ng-click="budgetmonth.closeedit()">Close</button><span>{{budgetmonth.error}}</span><span>{{budgetmonth.returnmsg}}</span>
+    <span class="whitetext">Edit Menu</span><br />
+    <span class="whitetext">Amount:</span><input ng-model="budgetmonth.edit.rec.Amount" ng-change="budgetmonth.fullvalidate()" />
+    <span class="whitetext">Date:</span><input ng-change="budgetmonth.fullvalidate()" ng-model="budgetmonth.edit.date" ng-disabled="budgetmonth.noedit" />
+    <span class="whitetext">Type:</span><select ng-options="type.name as type.name for type in budgetmonth.types" ng-model="budgetmonth.edit.type" ng-change="budgetmonth.setall()"></select>
+    <button ng-disabled="budgetmonth.error" ng-click="budgetmonth.updateRec()">Submit</button><button ng-click="budgetmonth.closeedit()">Close</button><span class="whitetext">{{budgetmonth.error}}</span><span class="whitetext">{{budgetmonth.returnmsg}}</span>
 </div>
 <div ng-style="budgetmonth.style" ng-show="budgetmonth.createmode" class="navbar navbar-fixed-bottom setbottom">
-    <span>Create Menu</span><br />
-    <span>Amount:</span><input ng-model="budgetmonth.createtemp.amount" ng-change="budgetmonth.createvalidate()" ng-disabled="budgetmonth.prevent" />
-    <span>Date:</span><input ng-model="budgetmonth.date" ng-change="budgetmonth.createvalidate()" ng-disabled="budgetmonth.noedit" />
-    <span>Type:</span><select ng-options="type.id as type.name for type in budgetmonth.types" ng-model="budgetmonth.createtemp.type" ng-change="budgetmonth.createvalidate()"></select>
+    <span class="whitetext">Create Menu</span><br />
+    <span class="whitetext">Amount:</span><input ng-model="budgetmonth.createtemp.amount" ng-change="budgetmonth.createvalidate()" ng-disabled="budgetmonth.prevent" />
+    <span class="whitetext">Date:</span><input ng-model="budgetmonth.date" ng-change="budgetmonth.createvalidate()" ng-disabled="budgetmonth.noedit" />
+    <span class="whitetext">Type:</span><select ng-options="type.id as type.name for type in budgetmonth.types" ng-model="budgetmonth.createtemp.type" ng-change="budgetmonth.createvalidate()"></select>
     <button ng-click="budgetmonth.sendcreate()" ng-disabled="budgetmonth.error">Create</button>
-    <button ng-click="budgetmonth.exitcreate()">Close</button><span>{{budgetmonth.error}}</span><span>{{budgetmonth.returnmsg}}</span>
+    <button ng-click="budgetmonth.exitcreate()">Close</button><span class="whitetext">{{budgetmonth.error}}</span><span class="whitetext">{{budgetmonth.returnmsg}}</span>
 </div>
