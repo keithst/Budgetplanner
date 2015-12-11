@@ -1,49 +1,93 @@
 ﻿<h3 class="settop" ng-init="budgetmonth.getParms()">Budget for {{budgetmonth.selected.month}}/{{budgetmonth.selected.year}}</h3>
-<table tr-ng-grid="" items="budgetmonth.budgets" fields="['rec.Amount', 'type', 'date']"
-       on-data-required="budgetmonth.populate()"
-       enable-sorting="false"
-       enable-filtering="false">
-    <thead>
-        <tr>
-            <th field-name="rec.Amount" display-name="Amount"></th>
-            <th field-name="type" display-name="Type"></th>
-            <th field-name="date" display-name="Date"></th>
-            <th display-name="Action"></th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td><button ng-disabled="budgetmonth.inedit">Edit</button><button ng-click="budgetmonth.delete(gridItem)" ng-disabled="budgetmonth.inedit">Delete</button></td>
-        </tr>
-    </tbody>
-</table>
-<div class="marginbottom"><button ng-click="budgetmonth.createtoggle()" ng-disabled="budgetmonth.increate">Create Budget</button></div>
-<span>Transaction Type:</span>
-<select ng-options="type.name as type.name for type in budgetmonth.types" ng-model="budgetmonth.filter" ng-change="budgetmonth.restore();budgetmonth.dofilter()"></select>
-<button ng-click="budgetmonth.clearfilter()">Reset</button>
-<table tr-ng-grid="" items="budgetmonth.trans"
-       on-data-required="budgetmonth.getTransData()" fields="['rec.Amount', 'rec.ReconcileAmount', 'type', 'date']"
-       enable-sorting="false"
-       enable-filtering="false">
-    <thead>
-        <tr>
-            <th field-name="rec.Amount" display-name="Amount"></th>
-            <th field-name="rec.ReconcileAmount" display-name="Reconcile"></th>
-            <th field-name="type" display-name="Type"></th>
-            <th field-name="date" display-name="Date"></th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-
-        </tr>
-    </tbody>
-</table>
+<div class="row">
+    <div class="col-md-4">
+        <h4>Budget</h4>
+        <button ng-click="budgetmonth.showtable()">Table</button><button ng-click="budgetmonth.graphswitch()">Chart</button><button ng-click="budgetmonth.graphswitchi()">Income/Expense</button>
+        <div class="margintop" ng-if="budgetmonth.hidden">
+            <nvd3 options="budgetmonth.optionsi" data="budgetmonth.chartDatai" style="width:100% !important"></nvd3>
+        </div>
+        <div class="margintop" ng-if="budgetmonth.hide">
+            <nvd3 options="budgetmonth.options" data="budgetmonth.chartData" style="width:100% !important"></nvd3>
+            <nvd3 options="budgetmonth.optionst" data="budgetmonth.chartDatat" style="width:100% !important"></nvd3>
+        </div>
+        <div ng-show="budgetmonth.nohide">
+            <table class="margintop" tr-ng-grid="" items="budgetmonth.budgetcheck" fields="['type.name', 'budget', 'amount']"
+                   enable-sorting="false"
+                   enable-filtering="false">
+                <thead>
+                    <tr>
+                        <th field-name="type.name" display-name="Type"></th>
+                        <th field-name="budget" display-name="Budget"></th>
+                        <th field-name="amount" display-name="Amount"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="scrollbox">
+            <p ng-repeat="msg in budgetmonth.messages">{{msg}}</p>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <h4>Budget Items</h4>
+        <table tr-ng-grid="" items="budgetmonth.budgets" fields="['rec.Amount', 'type', 'date']"
+               on-data-required="budgetmonth.populate()"
+               enable-sorting="false"
+               enable-filtering="false">
+            <thead>
+                <tr>
+                    <th field-name="rec.Amount" display-name="Amount"></th>
+                    <th field-name="type" display-name="Type"></th>
+                    <th field-name="date" display-name="Date"></th>
+                    <th display-name="Action"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><button ng-show="budgetmonth.nodelete" ng-click="budgetmonth.toggleedit(gridItem)" ng-disabled="budgetmonth.inedit">Edit</button>
+                    <button ng-show="budgetmonth.nodelete" ng-click="budgetmonth.toggledelete()" ng-disabled="budgetmonth.inedit">Delete</button>
+                    <button ng-show="budgetmonth.indelete" ng-click="budgetmonth.toggledelete()">Cancel</button>
+                    <button ng-show="budgetmonth.indelete" ng-click="budgetmonth.delete(gridItem)" ng-disabled="budgetmonth.inedit">Confirm Delete</button></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="marginbottom"><button ng-click="budgetmonth.createtoggle()" ng-disabled="budgetmonth.increate">Create Budget</button></div>
+        <h4>Transactions</h4>
+        <span>Transaction Type:</span>
+        <select ng-options="type.name as type.name for type in budgetmonth.types" ng-model="budgetmonth.filter" ng-change="budgetmonth.restore();budgetmonth.dofilter()"></select>
+        <button ng-click="budgetmonth.clearfilter()">Reset</button>
+        <table tr-ng-grid="" items="budgetmonth.trans"
+               fields="['rec.Amount', 'rec.ReconcileAmount', 'type', 'date']"
+               enable-sorting="false"
+               enable-filtering="false">
+            <thead>
+                <tr>
+                    <th field-name="rec.Amount" display-name="Amount"></th>
+                    <th field-name="rec.ReconcileAmount" display-name="Reconcile"></th>
+                    <th field-name="type" display-name="Type"></th>
+                    <th field-name="date" display-name="Date"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div ng-style="budgetmonth.style" ng-show="budgetmonth.editmode" class="navbar navbar-fixed-bottom setbottom">
+    <span>Edit Menu</span><br />
+    <span>Amount:</span><input ng-model="budgetmonth.edit.rec.Amount" ng-change="budgetmonth.fullvalidate()" />
+    <span>Date:</span><input ng-change="budgetmonth.fullvalidate()" ng-model="budgetmonth.edit.date" ng-disabled="budgetmonth.noedit" />
+    <span>Type:</span><select ng-options="type.name as type.name for type in budgetmonth.types" ng-model="budgetmonth.edit.type" ng-change="budgetmonth.setall()"></select>
+    <button ng-disabled="budgetmonth.error" ng-click="budgetmonth.updateRec()">Submit</button><button ng-click="budgetmonth.closeedit()">Close</button><span>{{budgetmonth.error}}</span><span>{{budgetmonth.returnmsg}}</span>
+</div>
 <div ng-style="budgetmonth.style" ng-show="budgetmonth.createmode" class="navbar navbar-fixed-bottom setbottom">
     <span>Create Menu</span><br />
-    <input ng-model="budgetmonth.createtemp.amount" ng-change="budgetmonth.createvalidate()" ng-disabled="budgetmonth.prevent" />
-    <input ng-model="budgetmonth.date" ng-change="budgetmonth.createvalidate()" ng-disabled="budgetmonth.noedit" />
-    <select ng-options="type.id as type.name for type in budgetmonth.types" ng-model="budgetmonth.createtemp.type" ng-change="budgetmonth.createvalidate()"></select>
+    <span>Amount:</span><input ng-model="budgetmonth.createtemp.amount" ng-change="budgetmonth.createvalidate()" ng-disabled="budgetmonth.prevent" />
+    <span>Date:</span><input ng-model="budgetmonth.date" ng-change="budgetmonth.createvalidate()" ng-disabled="budgetmonth.noedit" />
+    <span>Type:</span><select ng-options="type.id as type.name for type in budgetmonth.types" ng-model="budgetmonth.createtemp.type" ng-change="budgetmonth.createvalidate()"></select>
     <button ng-click="budgetmonth.sendcreate()" ng-disabled="budgetmonth.error">Create</button>
-    <button ng-click="budgetmonth.exitcreate()">Close</button><span>{{budgetmonth.error}}</span>{{budgetmonth.returnmsg}}
+    <button ng-click="budgetmonth.exitcreate()">Close</button><span>{{budgetmonth.error}}</span><span>{{budgetmonth.returnmsg}}</span>
 </div>

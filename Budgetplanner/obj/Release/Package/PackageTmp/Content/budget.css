@@ -9,3 +9,46 @@
 .marginbottom {
     margin-bottom: 30px;
 }
+
+.scrollbox {
+    height: 120px;
+    overflow: auto;
+}
+
+.margintop {
+    margin-top: 10px;
+}
+
+.whitetext {
+    color: #f8f8f8;
+}
+
+.intro-header {
+    text-align: center;
+    color: #f8f8f8;
+    background: url('img/landing_main.jpg') no-repeat center center;
+    background-size: cover;
+}
+
+.intro-message {
+    position: relative;
+    padding-top: 20%;
+    padding-bottom: 20%;
+}
+
+.intro-message > h1 {
+    margin: 0;
+    text-shadow: 4px 4px 6px rgba(0,0,0,2);
+    font-size: 5em;
+}
+
+.intro-divider {
+    width: 400px;
+    border-top: 1px solid #f8f8f8;
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+}
+
+.intro-message > h3 {
+    text-shadow: 4px 4px 6px rgba(0,0,0,2);
+    font-size: 2em;
+}

@@ -28,6 +28,9 @@
     self.prevent = true;
     self.account = {};
     self.saveamount = 0;
+    self.promise = {};
+    self.nodelete = true;
+    self.indelete = false;
 
     self.master = {
         id: "",
@@ -84,18 +87,35 @@
         total: ""
     }
 
+    self.toggledelete = function () {
+        if (self.nodelete) {
+            self.nodelete = false;
+            self.indelete = true;
+        }
+        else {
+            self.nodelete = true;
+            self.indelete = false;
+        }
+        if (self.increate) {
+            self.increate = false;
+        }
+        else {
+            self.increate = true;
+        }
+    }
+
     self.createvalidate = function () {
         if (self.create.type)
         {
             self.error = "";
             self.returnmsg = "";
-            self.nullcheck(self.createtemp.amount);
-            self.amt = self.validateamt(self.createtemp.amount, true, false, self.create.type);
-            self.nullcheck(self.createtemp.ramount);
-            self.ramt = self.validateamt(self.createtemp.ramount, false, true, self.create.type);
-            self.nullcheck(self.create.desc);
-            self.validatedate(self.date);
-            self.nullcheck(self.create.user);
+            self.nullcheck(self.createtemp.amount, "Amount: ");
+            self.amt = self.validateamt(self.createtemp.amount, true, false, self.create.type, "Amount: ");
+            self.nullcheck(self.createtemp.ramount, "Reconcile:");
+            self.ramt = self.validateamt(self.createtemp.ramount, false, true, self.create.type, "Reconcile");
+            self.nullcheck(self.create.desc, "Description: ");
+            self.validatedate(self.date, "Date: ");
+            self.nullcheck(self.create.user, "User: ");
             self.prevent = false;
         }
         else
@@ -107,12 +127,16 @@
         }
     }
 
-    self.nullcheck = function (field) {
+    self.nullcheck = function (field, fieldname) {
         if (self.error.length == 0)
         {
             if (!field) {
                 self.style = { 'background-color': '#cc3333' };
-                self.error = "Null value entered"
+                self.error = fieldname + "Null value entered"
+            }
+            else {
+                self.style = { 'background-color': '#46b946' };
+                self.error = "";
             }
         }
     }
@@ -256,15 +280,15 @@
     self.fullvalidate = function () {
         self.error = "";
         self.returnmsg = "";
-        self.nullcheck(self.edit.rec.tr.Amount);
-        self.amt = self.validateamt(self.edit.rec.tr.Amount, true, false, self.edit.rec.type);
-        self.nullcheck(self.edit.rec.tr.Amount);
-        self.ramt = self.validateamt(self.edit.rec.tr.ReconcileAmount, false, true, self.edit.rec.type);
-        self.nullcheck(self.edit.rec.tr.Description_t);
-        self.validatedate(self.edit.rec.date);
+        self.nullcheck(self.edit.rec.tr.Amount, "Amount: ");
+        self.amt = self.validateamt(self.edit.rec.tr.Amount, true, false, self.edit.rec.type, "Amount: ");
+        self.nullcheck(self.edit.rec.tr.ReconcileAmount, "Reconcile: ");
+        self.ramt = self.validateamt(self.edit.rec.tr.ReconcileAmount, false, true, self.edit.rec.type, "Reconcile: ");
+        self.nullcheck(self.edit.rec.tr.Description_t, "Description: ");
+        self.validatedate(self.edit.rec.date, "Date: ");
     }
 
-    self.validateamt = function (amt, fixedsign, wildsign, type) {
+    self.validateamt = function (amt, fixedsign, wildsign, type, fieldname) {
         if (self.error.length == 0)
         {
             var temp = amt;
@@ -281,7 +305,7 @@
                         temp = temp.replace(",", "");
                         if (isNaN(temp) || isNaN(parseFloat(temp))) {
                             self.style = { 'background-color': '#cc3333' };
-                            self.error = "Amount not a decimal value";
+                            self.error = fieldname + "Amount not a decimal value";
                         }
                         else {
                             self.style = { 'background-color': '#46b946' };
@@ -290,12 +314,12 @@
                     }
                     else {
                         self.style = { 'background-color': '#cc3333' };
-                        self.error = "Missing $ sign";
+                        self.error = fieldname + "Missing $ sign";
                     }
                 }
                 else {
                     self.style = { 'background-color': '#cc3333' };
-                    self.error = "Missing - sign";
+                    self.error = fieldname + "Missing - sign";
                 }
                 temp *= -1;
             }
@@ -309,7 +333,7 @@
                             temp = temp.replace(",", "");
                             if (isNaN(temp) || isNaN(parseFloat(temp))) {
                                 self.style = { 'background-color': '#cc3333' };
-                                self.error = "Amount not a decimal value";
+                                self.error = fieldname + "Amount not a decimal value";
                             }
                             else {
                                 self.style = { 'background-color': '#46b946' };
@@ -318,7 +342,7 @@
                         }
                         else {
                             self.style = { 'background-color': '#cc3333' };
-                            self.error = "Missing $ sign";
+                            self.error = fieldname + "Missing $ sign";
                         }
                         temp *= -1
                     }
@@ -328,7 +352,7 @@
                             temp = temp.replace(",", "");
                             if (isNaN(temp) || isNaN(parseFloat(temp))) {
                                 self.style = { 'background-color': '#cc3333' };
-                                self.error = "Amount not a decimal value";
+                                self.error = fieldname + "Amount not a decimal value";
                             }
                             else {
                                 self.style = { 'background-color': '#46b946' };
@@ -337,7 +361,7 @@
                         }
                         else {
                             self.style = { 'background-color': '#cc3333' };
-                            self.error = "Invalid sign detected";
+                            self.error = fieldname + "Invalid sign detected";
                         }
                     }
                 }
@@ -348,7 +372,7 @@
                         temp = temp.replace(",", "");
                         if (isNaN(temp) || isNaN(parseFloat(temp))) {
                             self.style = { 'background-color': '#cc3333' };
-                            self.error = "Amount not a decimal value";
+                            self.error = fieldname + "Amount not a decimal value";
                         }
                         else {
                             self.style = { 'background-color': '#46b946' };
@@ -357,7 +381,7 @@
                     }
                     else {
                         self.style = { 'background-color': '#cc3333' };
-                        self.error = "Missing $ sign";
+                        self.error = fieldname + "Missing $ sign";
                     }
                 }
             }
@@ -380,7 +404,7 @@
         self.saveamount = parseFloat(self.amt) + parseFloat(self.ramt);
     }
 
-    self.validatedate = function (date) {
+    self.validatedate = function (date, fieldname) {
         if (self.error.length == 0)
         {
             var temp = date.split('/');
@@ -389,7 +413,7 @@
                 for (x = 0; x < temp.length; x++) {
                     if (isNaN(temp[x])) {
                         self.style = { 'background-color': '#cc3333' };
-                        self.error = "Bad date, non numeric value detected";
+                        self.error = fieldname + "Bad date, non numeric value detected";
                     }
                     else {
                         switch (x) {
@@ -421,24 +445,24 @@
                             }
                             else {
                                 self.style = { 'background-color': '#cc3333' };
-                                self.error = "Invalid day";
+                                self.error = fieldname + "Invalid day";
                             }
                         }
                         else {
                             self.style = { 'background-color': '#cc3333' };
-                            self.error = "Invalid month";
+                            self.error = fieldname + "Invalid month";
                         }
 
                     }
                     else {
                         self.style = { 'background-color': '#cc3333' };
-                        self.error = "Invalid year";
+                        self.error = fieldname + "Invalid year";
                     }
                 }
             }
             else {
                 self.style = { 'background-color': '#cc3333' };
-                self.error = "Incorrect Date Format use MM/DD/YYYY";
+                self.error = fieldname + "Incorrect Date Format use MM/DD/YYYY";
             }
         }
     }
@@ -495,7 +519,7 @@
             console.log(data);
             self.transactions = data[0];
             self.types = data[1];
-            for(x = 0; x < self.transactions.length; x++)
+            for (x = 0; x < self.transactions.length; x++)
             {
                 for(y = 0; y < self.types.length; y++)
                 {
@@ -505,15 +529,18 @@
                         self.transactions[x].ReconcileAmount = $filter('currency')(self.transactions[x].ReconcileAmount, '$', 2);
                         var date = self.transactions[x].month_t + '/' + self.transactions[x].day_t + '/' + self.transactions[x].year_t;
                         var record = { tr: self.transactions[x], type: self.types[y].name, date: date };
-                        $q.all([TransSvc.getUser({ userid: self.transactions[x].UserId }), record]).then(function (data) {
-                            console.log(data);
-                            self.user = data[0];
-                            var name = self.user[0].fname + ' ' + self.user[0].lname;
-                            self.settable(data[1], name);
-                        });
+                        self.merges.push({ rec: record, user: "" })
                     }
                 }
             }
+                for(x = 0; x < self.merges.length; x++)
+                {
+                    $q.all([TransSvc.getUser({ userid: self.merges[x].rec.tr.UserId }), self.merges[x]]).then(function (data) {
+                        var tempuser = data[0][0];
+                        var temp = data[1];
+                        temp.user = tempuser.fname + ' ' + tempuser.lname;
+                    })
+                }
         });
     }
 

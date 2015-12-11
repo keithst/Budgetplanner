@@ -10,35 +10,48 @@
     <!-- Bootstrap -->
     <link href="Content/bootstrap.min.css" rel="stylesheet">
     <!-- Fonts  -->
-    <link href="Content/font-awesome.min.css" rel="stylesheet" />
+    <link href="css/font-awesome.min.css" rel="stylesheet" />
+    <link href="Content/nv.d3.min.css" rel="stylesheet" />
     <link href="Content/trNgGrid.min.css" rel="stylesheet" />
     <link href="Content/budget.css" rel="stylesheet" />
 </head>
 <body>
     <div ng-app="app">
-        <div class="container" ng-controller="menuCtrl">
+        <div class="container" ng-controller="menuCtrl as menu">
             <nav class="navbar navbar-inverse navbar-fixed-top">
                 <div class="container">
-                    <div class="navbar-header">
-                        Navbar
-                    </div>
-                    <a ui-sref="house">House</a>
+                    <span class="whitetext">
+                        Budget Planner
+                    </span>
+                    <button ng-if="authentication.isAuth" ng-click="menu.gotoHome()">Home</button>
+                    <a ng-if="!authentication.isAuth" ui-sref="login">Login</a>
+                    <a ng-if="!authentication.isAuth" ui-sref="register">Register</a>
+                    <a ng-if="authentication.isAuth" ui-sref="login" ng-click="logout()">Log Out</a>
+                    <span class="whitetext">{{authentication.userName}}</span>
                 </div>
             </nav>
             <div ui-view></div>
         </div>
     </div>
-
+    <script src="Scripts/d3/d3.js"></script>
+    <script src="Scripts/nv.d3.js"></script>
     <script src="Scripts/angular.min.js"></script>
     <script src="Scripts/angular-ui-router.min.js"></script>
     <script src="Scripts/angular-ui/ui-bootstrap.min.js"></script>
+    <script src="Scripts/angular-local-storage.min.js"></script>
+    <script src="Scripts/angular-nvd3.min.js"></script>
     <script src="Scripts/trNgGrid.min.js"></script>
 
     <script src="app/app.js"></script>
-    <script src="app/service.js"></script>
+    <script src="app/factory/authSvc.js"></script>
+    <script src="app/factory/authIntercepterSvc.js"></script>
+    <script src="app/factory/httpuser.js"></script>
+    <script src="app/controller/loginCtrl.js"></script>
+    <script src="app/controller/registerCtrl.js"></script>
     <script src="app/controller/menuCtrl.js"></script>
     <script src="app/factory/httphouse.js"></script>
     <script src="app/controller/houseCtrl.js"></script>
+    <script src="app/controller/userhouseCtrl.js"></script>
     <script src="app/factory/httpaccount.js"></script>
     <script src="app/controller/acctCtrl.js"></script>
     <script src="app/factory/httpbudget.js"></script>

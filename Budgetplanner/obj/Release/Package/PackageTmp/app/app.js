@@ -1,4 +1,4 @@
-﻿var app = angular.module('app', ['ui.router', 'trNgGrid']);
+﻿var app = angular.module('app', ['ui.router', 'trNgGrid', 'nvd3', 'LocalStorageModule']);
 
 app.config(function ($stateProvider, $urlRouterProvider) {
     //
@@ -28,12 +28,44 @@ app.config(function ($stateProvider, $urlRouterProvider) {
           controller: "budgetmonthCtrl as budgetmonth"
       })
       .state('house', {
-          url: "/house",
+          url: "/house/{id}",
           templateUrl: "/app/view/house.html",
           controller: "houseCtrl as house"
       })
-      .state('default', {
+      .state('userhouse', {
+          url: "/userhouse",
+          templateUrl: "/app/view/userhouse.html",
+          controller: "userhouseCtrl as userhouse"
+      })
+      .state('login', {
+                url: "/login",
+                templateUrl: "/app/view/login.html",
+                controller: "loginCtrl as login"
+      })
+      .state('register', {
+            url: "/register",
+            templateUrl: "/app/view/register.html",
+            controller: "registerCtrl as register"
+      })
+      .state('splash', {
           url: "/",
-          templateUrl: "",
-      });
+          templateUrl: "/app/view/splash.html"
+      })
+//      .state('default', {
+//          url: "/",
+//          templateUrl: "",
+//      });
 });
+var serviceBase = 'http://localhost:49531/';
+
+app.constant('ngAuthSettings', {
+    apiServiceBaseUri: serviceBase
+});
+
+app.config(function ($httpProvider) {
+    $httpProvider.interceptors.push('authInterceptorSvc');
+});
+
+app.run(['authSvc', function (authService) {
+    authService.fillAuthData();
+}]);

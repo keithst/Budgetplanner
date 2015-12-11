@@ -1,0 +1,41 @@
+﻿<h3 ng-init="userhouse.populate()" class="settop">House</h3>
+<div ng-if="userhouse.cookie.id">
+    <div ng-if="!userhouse.cookie.Invited">
+        <span>{{userhouse.house.name}}</span>{{userhouse.cookie}}
+        <button ng-click="userhouse.gotoView('acct', userhouse.cookie.id)" ng-disabled="userhouse.disabled">Accounts</button>
+        <button ng-click="userhouse.gotoView('budget', userhouse.cookie.id)" ng-disabled="userhouse.disabled">Budgets</button>
+        <table tr-ng-grid="" items="userhouse.users" fields="['UserName']"
+               enable-sorting="false"
+               enable-filtering="false">
+            <thead>
+                <tr>
+                    <th display-name="Name"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span>{{gridItem.fname}} {{gridItem.lname}}</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div ng-if="userhouse.cookie.Invited">
+        <div class="row">
+            <div class="col-md-6">
+                <span>You have been invited to House: {{userhouse.house.name}}</span>
+                <button ng-click="userhouse.setuser()">Accept Invite</button><button ng-click="userhouse.reject()">Reject</button>
+            </div>
+            <div class="col-md-6">
+                <span>Or you can create a House of your own:</span><input ng-model="userhouse.create" ng-change="userhouse.nullcheck()" /><button ng-click="userhouse.createhouse()" ng-disabled="userhouse.prevent">Create</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div ng-if="!userhouse.cookie.id">
+    <div class="col-md-6">
+        <span>Create a house: </span><input ng-model="userhouse.create" ng-change="userhouse.nullcheck()" /><button ng-click="userhouse.createhouse()" ng-disabled="userhouse.prevent">Create</button>
+    </div>
+    <div class="col-md-6">
+        <span>You do not have a pending invite</span>
+    </div>
+</div>

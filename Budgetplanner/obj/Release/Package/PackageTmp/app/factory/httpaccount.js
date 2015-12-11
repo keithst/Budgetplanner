@@ -8,6 +8,18 @@
             });
         }
 
+        f.addAccount = function (updated) {
+            return $http.post('/api/budget/AddAccount', updated)
+        }
+        
+        f.deleteAccount = function (updated) {
+            return $http.post('/api/budget/DeleteAccount', updated)
+        }
+
+        f.editAccount = function (updated) {
+            return $http.post('/api/budget/UpdateAccount', updated)
+        }
+
         return f;
 
     }
