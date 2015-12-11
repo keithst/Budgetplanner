@@ -131,6 +131,10 @@
                 })
             })
         }
+        else
+        {
+            self.error = "In order to leave all users must be removed including invites";
+        }
     }
 
     self.getAllUsers = function () {
