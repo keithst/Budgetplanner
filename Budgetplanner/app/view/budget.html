@@ -1,9 +1,9 @@
 ﻿<h3 class="settop" ng-init="budget.populate()">Budget</h3>
 Budgets listed by month/year
 <div>
-    <button ng-repeat="item in budget.months" ng-click="budget.gotoBudget(item.month_b, item.year_b)">{{item.month_b}}/{{item.year_b}}</button>
+    <button class="marginleft marginright" ng-repeat="item in budget.months" ng-click="budget.gotoBudget(item.month_b, item.year_b)">{{item.month_b}}/{{item.year_b}}</button>
 </div>
-<div class="marginbottom"><button ng-click="budget.createtoggle()" ng-disabled="budget.increate">Create Budget</button></div>
+<div class="marginbottom margintop"><button ng-click="budget.createtoggle()" ng-disabled="budget.increate">Create Budget Month</button></div>
 <div ng-style="budget.style" ng-show="budget.createmode" class="navbar navbar-fixed-bottom setbottom">
     <span class="whitetext">Create Menu</span><br />
     <span class="whitetext">Amount:</span><input ng-model="budget.createtemp.amount" ng-change="budget.createvalidate()" ng-disabled="budget.prevent" />

@@ -199,6 +199,7 @@
             if (parseInt(data[0].status) >= 200 && parseInt(data[0].status) <= 299) {
                 self.merges.splice(self.merges.indexOf(data[1]), 1);
                 self.updateaccount(parseFloat(data[2]));
+                self.toggledelete();
             }
         })
     }

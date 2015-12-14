@@ -99,6 +99,7 @@
         $q.all([AccountSvc.deleteAccount(self.deleteparm), item]).then(function (data) {
             if (parseInt(data[0].status) >= 200 && parseInt(data[0].status) <= 299) {
                 self.accounts.splice(self.accounts.indexOf(data[1]), 1);
+                self.toggledelete();
             }
         })
     }

@@ -9,25 +9,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <!-- Bootstrap -->
     <link href="Content/bootstrap.min.css" rel="stylesheet">
+    <link href="Content/budget.css" rel="stylesheet" />
     <!-- Fonts  -->
     <link href="css/font-awesome.min.css" rel="stylesheet" />
     <link href="Content/nv.d3.min.css" rel="stylesheet" />
     <link href="Content/trNgGrid.min.css" rel="stylesheet" />
-    <link href="Content/budget.css" rel="stylesheet" />
 </head>
 <body>
     <div ng-app="app">
         <div class="container" ng-controller="menuCtrl as menu">
             <nav class="navbar navbar-inverse navbar-fixed-top">
                 <div class="container">
-                    <span class="whitetext">
+                    <a class="btn btn-primary" ui-sref="splash">
                         Budget Planner
-                    </span>
-                    <button ng-if="authentication.isAuth" ng-click="menu.gotoHome()">Home</button>
-                    <a class="whitetextlink" ng-if="!authentication.isAuth" ui-sref="login">Login</a>
-                    <a class="whitetextlink" ng-if="!authentication.isAuth" ui-sref="register">Register</a>
-                    <a class="whitetextlink" ng-if="authentication.isAuth" ui-sref="login" ng-click="logout()">Log Out</a>
+                    </a>
+                    <button class="btn btn-primary" ng-if="authentication.isAuth" ng-click="menu.gotoHome()">Home</button>
+                    <a class="btn btn-primary" ng-if="!authentication.isAuth" ui-sref="login">Login</a>
+                    <a class="btn btn-primary" ng-if="!authentication.isAuth" ui-sref="register">Register</a>
+                    <a class="btn btn-primary" ng-if="authentication.isAuth" ui-sref="login" ng-click="logout()">Log Out</a>
                     <span class="whitetext" ng-if="authentication.isAuth">{{authentication.userName}}</span>
+                    <a class="btn btn-primary navbar-right" target="_blank" href="https://github.com/keithst/Budgetplanner">Github</a>
                 </div>
             </nav>
             <div ui-view></div>

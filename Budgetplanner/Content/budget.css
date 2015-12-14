@@ -2,6 +2,14 @@
     margin-top: 60px;
 }
 
+.marginleft {
+    margin-left : 2px;
+}
+
+.marginright {
+    margin-right : 2px;
+}
+
 .setbottom {
     padding-bottom: 15px;
 }

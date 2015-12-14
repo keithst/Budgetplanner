@@ -15,6 +15,7 @@
     self.prevent = true;
     self.hide = false;
     self.found = false;
+    self.redirect = false;
 
     self.selected = {
         id: ""
@@ -57,9 +58,20 @@
         $q.all([BudgetSvc.addBudget(self.update)]).then(function (data) {
             if (parseInt(data[0].status) >= 200 && parseInt(data[0].status) <= 299) {
                 self.returnmsg = "Budget entry successfully created";
-                self.budgets = [];
-                self.months = [];
-                self.populate();
+                for (x = 0; x < self.budgets.length; x++) {
+                    if (self.year == self.budgets[x].year_b && self.month == self.budgets[x].month_b) {
+                        self.redirect = true;
+                    }
+                }
+                if (self.redirect)
+                {
+                    self.redirect = false;
+                    self.gotoBudget(self.month, self.year);
+                }
+                else
+                {
+                    self.populate();
+                }
             }
         })
     }

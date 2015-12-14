@@ -467,6 +467,7 @@
                 self.buildchart();
                 self.buildmessages();
                 self.budgets.splice(self.budgets.indexOf(data[1]), 1);
+                self.toggledelete();
             }
         })
     }
