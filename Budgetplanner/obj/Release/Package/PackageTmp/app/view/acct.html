@@ -21,7 +21,7 @@
                 </tr>
             </tbody>
         </table>
-<button ng-click="act.createtoggle()" ng-disabled="act.increate">Create</button>
+<div class="setbottomnav"><button ng-click="act.createtoggle()" ng-disabled="act.increate">Create</button></div>
 <div ng-style="act.style" ng-show="act.editmode" class="navbar navbar-fixed-bottom setbottom">
     <span>Edit Menu</span><br />
     <span>Description:</span><input ng-model="act.edit.Description_ba" ng-change="act.fullvalidate()" />
@@ -31,6 +31,6 @@
     <span class="whitetext">Create Menu</span><br />
     <span class="whitetext">Description:</span><input ng-model="act.create.desc" ng-change="act.createvalidate()" />
     <span class="whitetext">Amount:</span><input ng-model="act.create.amt" ng-change="act.createvalidate()" />
-    <button ng-click="act.sendcreate()" ng-disabled="acct.error">Create</button>
+    <button ng-click="act.sendcreate()" ng-disabled="act.error">Create</button>
     <button ng-click="act.exitcreate()">Close</button><span class="whitetext">{{act.error}}</span><span class="whitetext">{{act.returnmsg}}</span>
 </div>

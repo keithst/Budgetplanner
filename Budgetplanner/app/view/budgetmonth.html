@@ -1,6 +1,6 @@
 ﻿<h3 class="settop" ng-init="budgetmonth.getParms()">Budget for {{budgetmonth.selected.month}}/{{budgetmonth.selected.year}}</h3>
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-4 setbottomnav">
         <h4>Budget</h4>
         <button ng-click="budgetmonth.showtable()">Table</button><button ng-click="budgetmonth.graphswitch()">Chart</button><button ng-click="budgetmonth.graphswitchi()">Income/Expense</button>
         <div class="margintop" ng-if="budgetmonth.hidden">
@@ -30,7 +30,7 @@
             <p ng-repeat="msg in budgetmonth.messages">{{msg}}</p>
         </div>
     </div>
-    <div class="col-md-8">
+    <div class="col-md-8 setbottomnav">
         <h4>Budget Items</h4>
         <table tr-ng-grid="" items="budgetmonth.budgets" fields="['rec.Amount', 'type', 'date']"
                on-data-required="budgetmonth.populate()"

@@ -28,7 +28,7 @@
         </tr>
     </tbody>
 </table>
-<button ng-click="tr.createtoggle()" ng-disabled="tr.increate">Create</button>
+<div class="setbottomnav"><button ng-click="tr.createtoggle()" ng-disabled="tr.increate">Create</button></div>
 <div ng-style="tr.style" ng-show="tr.editmode" class="navbar navbar-fixed-bottom setbottom">
     <span class="whitetext">Edit Menu</span><br />
     <span class="whitetext">Amount:</span><input ng-model="tr.edit.rec.tr.Amount" ng-change="tr.fullvalidate()" />
