@@ -40,7 +40,7 @@
             x: function (d) { return d.label },
             y: function (d) { return d.value },
             transitionDuration: 200,
-            showLabels: true
+            showLabels: false
         },
         title: {
             enable: true,
@@ -55,7 +55,7 @@
             x: function (d) { return d.label },
             y: function (d) { return d.value },
             transitionDuration: 200,
-            showLabels: true
+            showLabels: false
         },
         title: {
             enable: true,
@@ -70,7 +70,7 @@
             x: function (d) { return d.label },
             y: function (d) { return d.value },
             transitionDuration: 200,
-            showLabels: true
+            showLabels: false
         },
         title: {
             enable: true,

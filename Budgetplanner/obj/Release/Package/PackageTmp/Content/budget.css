@@ -2,6 +2,10 @@
     margin-top: 60px;
 }
 
+.displayblock {
+    vertical-align: middle;
+}
+
 .marginleft {
     margin-left : 2px;
 }
