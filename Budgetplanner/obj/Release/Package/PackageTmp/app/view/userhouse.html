@@ -1,7 +1,7 @@
 ﻿<h3 ng-init="userhouse.populate()" class="settop">House</h3>
 <div ng-if="userhouse.cookie.id">
     <div ng-if="!userhouse.cookie.Invited">
-        <span>{{userhouse.house.name}}</span>{{userhouse.cookie}}
+        <span>{{userhouse.house.name}}</span>
         <button ng-click="userhouse.gotoView('acct', userhouse.cookie.id)" ng-disabled="userhouse.disabled">Accounts</button>
         <button ng-click="userhouse.gotoView('budget', userhouse.cookie.id)" ng-disabled="userhouse.disabled">Budgets</button>
         <table tr-ng-grid="" items="userhouse.users" fields="['UserName']"

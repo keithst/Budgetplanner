@@ -23,6 +23,19 @@
     color: #f8f8f8;
 }
 
+a.whitetextlink:link {
+    color: #f8f8f8;
+}
+a.whitetextlink:visited {
+    color: #f8f8f8;
+}
+a.whitetextlink:hover {
+    color: #f8f8f8;
+}
+a.whitetextlink:active {
+    color: #f8f8f8;
+}
+
 .intro-header {
     text-align: center;
     color: #f8f8f8;

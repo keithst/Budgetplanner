@@ -24,12 +24,12 @@
                     $state.go('house', self.go);
                 }
                 else {
-                    $state.go('userhouse', self.go);
+                    $state.go('userhouse');
                 }
             }
             else
             {
-                $state.go('nohouse')
+                $state.go('userhouse');
             }
         }
     }])

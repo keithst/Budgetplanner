@@ -28,9 +28,9 @@
     <button ng-disabled="act.error" ng-click="act.updateRec()">Submit</button><button ng-click="act.closeedit()">Close</button><span>{{act.error}}</span><span>{{act.returnmsg}}</span>
 </div>
 <div ng-style="act.style" ng-show="act.createmode" class="navbar navbar-fixed-bottom setbottom">
-    <span>Create Menu</span><br />
-    <span>Description:</span><input ng-model="act.create.desc" ng-change="act.createvalidate()" />
-    <span>Amount:</span><input ng-model="act.create.amt" ng-change="act.createvalidate()" />
+    <span class="whitetext">Create Menu</span><br />
+    <span class="whitetext">Description:</span><input ng-model="act.create.desc" ng-change="act.createvalidate()" />
+    <span class="whitetext">Amount:</span><input ng-model="act.create.amt" ng-change="act.createvalidate()" />
     <button ng-click="act.sendcreate()" ng-disabled="acct.error">Create</button>
-    <button ng-click="act.exitcreate()">Close</button><span>{{act.error}}</span><span>{{act.returnmsg}}</span>
+    <button ng-click="act.exitcreate()">Close</button><span class="whitetext">{{act.error}}</span><span class="whitetext">{{act.returnmsg}}</span>
 </div>

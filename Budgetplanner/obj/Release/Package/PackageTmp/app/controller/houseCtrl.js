@@ -32,7 +32,7 @@
 
     self.gotoView = function (view, id) {
         self.passparm.id = id;
-        $state.go(view, self.passparm)
+        $state.go(view, self.passparm);
     }
 
     self.populate = function () {
@@ -122,7 +122,7 @@
         {
             $q.all([userSvc.getUser({ userid: $scope.authentication.userName })]).then(function (data) {
                 $q.all([HouseSvc.deleteHouse({ user: data[0][0].Id, id: self.selected.id })]).then(function () {
-                    self.cookie = localStorageService.get('home')
+                    self.cookie = localStorageService.get('home');
                     self.cookie.id = null;
                     self.cookie.Invited = false;
                     self.cookie.HoH = false;
@@ -130,6 +130,10 @@
                     $state.go('userhouse');
                 })
             })
+        }
+        else
+        {
+            self.error = "In order to leave all other users must be removed including invites";
         }
     }
 

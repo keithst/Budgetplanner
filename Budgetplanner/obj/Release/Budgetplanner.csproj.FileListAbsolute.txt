@@ -73,3 +73,4 @@ C:\Users\Keith\Documents\Visual Studio 2013\Projects\Budgetplanner\Budgetplanner
 C:\Users\Keith\Documents\Visual Studio 2013\Projects\Budgetplanner\Budgetplanner\bin\System.Web.Http.Owin.xml
 C:\Users\Keith\Documents\Visual Studio 2013\Projects\Budgetplanner\Budgetplanner\obj\Release\Budgetplanner.dll
 C:\Users\Keith\Documents\Visual Studio 2013\Projects\Budgetplanner\Budgetplanner\obj\Release\Budgetplanner.pdb
+C:\Users\Keith\Documents\Visual Studio 2013\Projects\Budgetplanner\Budgetplanner\obj\Release\Budgetplanner.csprojResolveAssemblyReference.cache
