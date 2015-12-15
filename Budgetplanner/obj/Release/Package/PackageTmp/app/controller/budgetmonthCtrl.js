@@ -243,6 +243,13 @@
         self.edit.rec.Amount = self.master.amt;
         self.edit.type = self.master.type;
         self.edit.date = self.master.date;
+        for (x = 0; x < self.types.length; x++)
+        {
+            if(self.master.type == self.types[x].name)
+            {
+                self.budgetcheck[x].budget = $filter('currency')(self.master.amt, '$', 2);
+            }
+        }
         self.error = ""
         self.editmode = false;
         self.inedit = false;

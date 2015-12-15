@@ -32,6 +32,7 @@
     self.nodelete = true;
     self.indelete = false;
     self.isloaded = false;
+    self.index = "";
 
     self.options = {
         chart: {
@@ -243,6 +244,9 @@
         self.edit.rec.Amount = self.master.amt;
         self.edit.type = self.master.type;
         self.edit.date = self.master.date;
+        self.budgetcheck[self.index].budget = self.master.amt;
+        self.buildchart();
+        self.buildmessages();
         self.error = ""
         self.editmode = false;
         self.inedit = false;
@@ -266,6 +270,7 @@
     self.buildbudgetcheck = function () {
         for (x = 0; x < self.types.length; x++) {
             if (self.edit.type == self.types[x].name) {
+                self.index = x;
                 self.edits.type = self.types[x].id;
                 self.budgetcheck[x].budget = $filter('currency')(self.amt, '$', 2);
             }

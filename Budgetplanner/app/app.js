@@ -56,8 +56,8 @@ app.config(function ($stateProvider, $urlRouterProvider) {
 //          templateUrl: "",
 //      });
 });
-//var serviceBase = 'http://localhost:49531/';
-var serviceBase = 'http://ksturzenbecker-budget.azurewebsites.net/';
+var serviceBase = 'http://localhost:49531/';
+//var serviceBase = 'http://ksturzenbecker-budget.azurewebsites.net/';
 
 app.constant('ngAuthSettings', {
     apiServiceBaseUri: serviceBase
