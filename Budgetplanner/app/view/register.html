@@ -31,6 +31,8 @@
                             <input type="password" ng-model="register.model.ConfirmPassword" class="form-control" id="inputPassword2" placeholder="Retype your password" required>
                             <span style="color:red;" ng-if="register.model.Password != register.model.ConfirmPassword">The passwords do not match!</span>
                         </div>
+                        <span class="redtext">{{register.message}}</span>
+                        <span>{{register.success}}</span>
                         <button class="btn btn-lg btn-primary btn-block" type="submit" ng-disabled="register.model.Password != register.model.ConfirmPassword">Sign up</button>
                     </form>
                 </div>

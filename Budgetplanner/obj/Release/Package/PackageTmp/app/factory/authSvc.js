@@ -14,9 +14,15 @@ angular.module('app')
 
         _logout();
 
-        return $http.post(serviceBase + 'api/account/register', registration).then(function (response) {
-            return response;
+        var deferred = $q.defer();
+
+        $http.post(serviceBase + 'api/account/register', registration).then(function (response) {
+            deferred.resolve(response);
+        }, function (response) {
+            deferred.reject(response);
         });
+
+        return deferred.promise;
 
     };
 

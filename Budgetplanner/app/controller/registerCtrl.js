@@ -2,7 +2,8 @@
 angular.module('app').controller('registerCtrl', ['authSvc', '$timeout', '$state', function (authSvc, $timeout, $state) {
 
     this.savedSuccessfully = false;
-    this.message = "Register a new account";
+    this.message = "";
+    this.success = "";
     this.isError = false;
 
     this.model = {
@@ -16,11 +17,12 @@ angular.module('app').controller('registerCtrl', ['authSvc', '$timeout', '$state
     this.register = function () {
 
         var scope = this;
+        scope.message = "";
+        scope.success = "";
 
         authSvc.register(this.model).then(function (response) {
-
             self.savedSuccessfully = true;
-            scope.message = "User has been registered successfully, you will be redicted to login page in 2 seconds.";
+            scope.success = "User has been registered successfully, you will be redicted to login page in 2 seconds.";
             messageDelay(2, redirectCallback);
         },
             function (response) {
@@ -30,9 +32,8 @@ angular.module('app').controller('registerCtrl', ['authSvc', '$timeout', '$state
                         errors.push(response.data.ModelState[key][i]);
                     }
                 }
-                scope.message = "Failed to register user due to:" + errors.join(' ');
+                scope.message = "Failed to register user due to: " + errors.join(' ');
                 scope.isError = true;
-                messageDelay(2, registerErrorCallback, scope);
             });
     };
 
