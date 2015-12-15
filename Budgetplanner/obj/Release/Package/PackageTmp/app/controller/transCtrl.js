@@ -31,6 +31,7 @@
     self.promise = {};
     self.nodelete = true;
     self.indelete = false;
+    self.account = {};
 
     self.master = {
         id: "",
@@ -151,6 +152,10 @@
             $q.all([TransSvc.updateAcct(self.updateacct)]).then(function (data) {
                 if (parseInt(data[0].status) >= 200 && parseInt(data[0].status) <= 299) {
                     self.returnmsg += ", Account updated successfully";
+                    $q.all([TransSvc.getAccount({ id: self.selected.id })]).then(function (data) {
+                        self.account = data[0][0];
+                        self.account.Total = $filter('currency')(self.account.Total, '$', 2);
+                    })
                 }
             });
         });
@@ -710,6 +715,10 @@
                         temp.user = tempuser.fname + ' ' + tempuser.lname;
                     })
                 }
+                $q.all([TransSvc.getAccount({ id: self.selected.id })]).then(function (data) {
+                    self.account = data[0][0];
+                    self.account.Total = $filter('currency')(self.account.Total, '$', 2);
+                })
         });
     }
 

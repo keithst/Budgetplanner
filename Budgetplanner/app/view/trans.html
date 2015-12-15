@@ -1,4 +1,5 @@
-﻿<h3 class="settop">Transactions</h3>
+﻿<h3 class="settop">Transactions for Account: {{tr.account.Description_ba}}</h3>
+<span>Account Balance: {{tr.account.Total}}</span><br />
 <span>Transaction Type:</span>
 <select ng-options="type.name as type.name for type in tr.types" ng-model="tr.filter" ng-change="tr.restore();tr.dofilter()"></select>
 <button ng-click="tr.clearfilter()">Reset</button>
