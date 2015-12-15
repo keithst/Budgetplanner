@@ -30,10 +30,10 @@ angular.module('app')
         $http.post(serviceBase + 'token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).then(function (response) {
 
             _authentication.isAuth = true;
-            _authentication.userName = response.userName;
-            _authentication.token = response.access_token;
-            _authentication.roles = response.roles;
-            _authentication.refreshToken = response.refresh_token
+            _authentication.userName = response.data.userName;
+            _authentication.token = response.data.access_token;
+            _authentication.roles = response.data.roles;
+            _authentication.refreshToken = response.data.refresh_token
 
             localStorageService.set('authorizationData', _authentication);
 

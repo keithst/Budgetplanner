@@ -123,7 +123,7 @@
         {
             self.returnmsg = "";
             self.style = { 'background-color': '#cc3333' };
-            self.error = "Please select a transaction type"
+            self.error = "Type: Please select a transaction type"
             self.prevent = true;
         }
     }

@@ -344,7 +344,7 @@
         else {
             self.returnmsg = "";
             self.style = { 'background-color': '#cc3333' };
-            self.error = "Please select a budget type"
+            self.error = "Type: Please select a budget type"
             self.prevent = true;
         }
     }
@@ -355,7 +355,7 @@
             if(type == self.budgets[x].rec.TypeId && self.date == self.budgets[x].date)
             {
                 self.style = { 'background-color': '#cc3333' };
-                self.error = "Budget type already assigned for this month"
+                self.error = "Type: Budget type already assigned for this month"
             }
         }
     }
