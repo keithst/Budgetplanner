@@ -10,12 +10,13 @@ angular.module('app').controller('loginCtrl', ['localStorageService', 'userSvc',
         id: ""
     }
 
-    this.message = "Login to your account";
+    this.message = "";
     this.isError = false;
     this.alter = '';
 
     this.login = function () {
         var scope = this;
+        scope.message = "";
 
         authSvc.login(this.model).then(function (response) {
             $q.all([userSvc.getUser({ userid: scope.model.Username })]).then(function (data) {
@@ -40,11 +41,6 @@ angular.module('app').controller('loginCtrl', ['localStorageService', 'userSvc',
         },
             function (err) {
                 scope.message = err.error_description;
-                var timer = $timeout(function () {
-                    $timeout.cancel(timer);
-                    //Anything I need to do
-                    scope.message = "Login to your account"
-                }, 1000 * 2);
             });
     };
 

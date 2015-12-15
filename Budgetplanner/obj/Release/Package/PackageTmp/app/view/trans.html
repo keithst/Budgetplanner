@@ -45,7 +45,7 @@
     <span class="whitetext">Description:</span><input ng-model="tr.create.desc" ng-change="tr.createvalidate()" />
     <span class="whitetext">Date:</span><input ng-model="tr.date" ng-change="tr.createvalidate()" />
     <span class="whitetext">User:</span><select ng-options="user.Id as user.UserName for user in tr.user" ng-model="tr.create.user" ng-change="tr.createvalidate()"></select>
-    <span class="whitetext">Type:</span><select ng-options="type.id as type.name for type in tr.types" ng-model="tr.create.type" ng-change="tr.createvalidate()"></select>
+    <span class="whitetext">Type:</span><select ng-options="type.id as type.name for type in tr.types" ng-model="tr.create.type" ng-change="tr.createvalidate()"></select><br />
     <button ng-click="tr.sendcreate()" ng-disabled="tr.error">Create</button>
     <button ng-click="tr.exitcreate()">Close</button><span class="whitetext">{{tr.error}}</span><span class="whitetext">{{tr.returnmsg}}</span>
 </div>

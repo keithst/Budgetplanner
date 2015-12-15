@@ -66,5 +66,9 @@
 
 .intro-message > h3 {
     text-shadow: 4px 4px 6px rgba(0,0,0,2);
-    font-size: 2em;
+    font-size: 2.5em;
+}
+
+.redtext {
+    color: red;
 }

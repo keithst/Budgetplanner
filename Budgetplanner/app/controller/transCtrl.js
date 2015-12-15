@@ -111,7 +111,7 @@
             self.returnmsg = "";
             self.nullcheck(self.createtemp.amount, "Amount: ");
             self.amt = self.validateamt(self.createtemp.amount, true, false, self.create.type, "Amount: ");
-            self.nullcheck(self.createtemp.ramount, "Reconcile:");
+            self.nullcheck(self.createtemp.ramount, "Reconcile: ");
             self.ramt = self.validateamt(self.createtemp.ramount, false, true, self.create.type, "Reconcile");
             self.nullcheck(self.create.desc, "Description: ");
             self.validatedate(self.date, "Date: ");

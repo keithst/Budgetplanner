@@ -32,6 +32,7 @@
     self.nodelete = true;
     self.indelete = false;
     self.isloaded = false;
+    self.index = "";
 
     self.options = {
         chart: {
@@ -243,13 +244,9 @@
         self.edit.rec.Amount = self.master.amt;
         self.edit.type = self.master.type;
         self.edit.date = self.master.date;
-        for (x = 0; x < self.types.length; x++)
-        {
-            if(self.master.type == self.types[x].name)
-            {
-                self.budgetcheck[x].budget = $filter('currency')(self.master.amt, '$', 2);
-            }
-        }
+        self.budgetcheck[self.index].budget = self.master.amt;
+        self.buildchart();
+        self.buildmessages();
         self.error = ""
         self.editmode = false;
         self.inedit = false;
@@ -273,6 +270,7 @@
     self.buildbudgetcheck = function () {
         for (x = 0; x < self.types.length; x++) {
             if (self.edit.type == self.types[x].name) {
+                self.index = x;
                 self.edits.type = self.types[x].id;
                 self.budgetcheck[x].budget = $filter('currency')(self.amt, '$', 2);
             }
@@ -440,8 +438,52 @@
         if (self.error.length == 0) {
             var temp = amt;
             if (temp.charAt(0) == '$') {
-                temp = temp.substr(1, temp.length)
-                temp = temp.replace(",", "");
+                temp = temp.substr(1, temp.length);
+                var cents = temp.split(".");
+                if (cents.length == 1)
+                {
+                    var temp2 = cents[0];
+                    temp2 = temp2.split(",");
+                    if (temp2.length > 1) {
+                        if (temp2[0].length > 3) {
+                            self.style = { 'background-color': '#cc3333' };
+                            self.error = fieldname + "Bad comma format detected";
+                            return;
+                        }
+                        for (x = 1; x < temp2.length; x++) {
+                            if (temp2[x].length != 3) {
+                                self.style = { 'background-color': '#cc3333' };
+                                self.error = fieldname + "Bad comma format detected";
+                                return;
+                            }
+                        }
+                    }
+                }
+                if (cents.length == 2)
+                {
+                    if (cents[1].length > 2) {
+                        self.style = { 'background-color': '#cc3333' };
+                        self.error = fieldname + "Cents must be 2 digits";
+                        return;
+                    }
+                    var temp2 = cents[0];
+                    temp2 = temp2.split(",");
+                    if (temp2.length > 1) {
+                        if (temp2[0].length > 3) {
+                            self.style = { 'background-color': '#cc3333' };
+                            self.error = fieldname + "Bad comma format detected";
+                            return;
+                        }
+                        for (x = 1; x < temp2.length; x++) {
+                            if (temp2[x].length != 3) {
+                                self.style = { 'background-color': '#cc3333' };
+                                self.error = fieldname + "Bad comma format detected";
+                                return;
+                            }
+                        }
+                    }
+                }
+                temp = temp.split(",").join("");
                 if (isNaN(temp) || isNaN(parseFloat(temp)) || parseFloat(temp) < 0) {
                     self.style = { 'background-color': '#cc3333' };
                     self.error = fieldname + "Amount not a decimal value or negative";

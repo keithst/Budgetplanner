@@ -27,7 +27,7 @@ angular.module('app')
 
         var deferred = $q.defer();
 
-        $http.post(serviceBase + 'token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).success(function (response) {
+        $http.post(serviceBase + 'token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).then(function (response) {
 
             _authentication.isAuth = true;
             _authentication.userName = response.userName;
@@ -39,9 +39,9 @@ angular.module('app')
 
             deferred.resolve(response);
 
-        }).error(function (err, status) {
+        }, function (response) {
             _logout();
-            deferred.reject(err);
+            deferred.reject(response.data);
         });
 
         return deferred.promise;
