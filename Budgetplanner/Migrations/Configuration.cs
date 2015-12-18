@@ -29,7 +29,7 @@ namespace Budgetplanner.Migrations
                     fname = "Keith",
                     lname = "Sturzenbecker"
                 },
-                        "sturze");
+                        "*");
             }
             if (!context.Users.Any(u => u.Email == "test@test.com"))
             {
